@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Introduccion a Kubernetes - UNPHU</title>
+  <title>De 0 a Observabilidad - UNPHU 2026</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
@@ -11,61 +11,92 @@
   <style>
     .reveal .slides section { text-align: left; }
     .reveal .slides section h1, .reveal .slides section h2, .reveal .slides section h3 { text-align: center; }
-    .reveal section img.logo { border: none; box-shadow: none; background: none; max-height: 200px; }
-    .reveal section img.diagram { border: none; box-shadow: none; background: rgba(255,255,255,0.9); border-radius: 10px; padding: 15px; max-height: 450px; }
-    .columns { display: flex; gap: 2rem; align-items: flex-start; }
-    .columns > div { flex: 1; }
-    .center { text-align: center !important; }
-    .fragment-list li { margin-bottom: 0.4em; }
+    .reveal section img.logo { border:none; box-shadow:none; background:none; max-height:180px; }
+    .reveal section img.icon { border:none; box-shadow:none; background:none; max-height:60px; vertical-align:middle; }
+    .columns { display:flex; gap:2rem; align-items:flex-start; }
+    .columns > div { flex:1; }
+    .center { text-align:center !important; }
+    .fragment-list li { margin-bottom:0.4em; }
     .card {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 10px;
-      padding: 20px;
-      margin: 8px;
-      text-align: center;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:10px;
+      padding:18px;
+      margin:6px;
+      text-align:center;
     }
-    .card img { max-height: 80px; border: none; box-shadow: none; background: none; }
-    .card h4 { margin: 10px 0 5px; color: #326CE5; }
-    .card p { font-size: 0.6em; opacity: 0.8; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .k8s-blue { color: #326CE5; }
+    .card img { max-height:60px; border:none; box-shadow:none; background:none; }
+    .card h4 { margin:8px 0 4px; color:#326CE5; }
+    .card p { font-size:0.6em; opacity:0.8; }
+    .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; }
+    .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:15px; }
+    .grid-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:8px; }
+    .k8s-blue { color:#326CE5; }
     .tag {
-      display: inline-block;
-      background: #326CE5;
-      color: white;
-      padding: 4px 12px;
-      border-radius: 15px;
-      font-size: 0.55em;
-      margin: 3px;
+      display:inline-block;
+      background:#326CE5;
+      color:white;
+      padding:4px 12px;
+      border-radius:15px;
+      font-size:0.55em;
+      margin:3px;
     }
-    .timeline { position: relative; padding-left: 30px; }
+    .tag-green { background:#2ecc71; }
+    .tag-orange { background:#f39c12; }
+    .tag-red { background:#e74c3c; }
+    .timeline { position:relative; padding-left:30px; }
     .timeline::before {
-      content: '';
-      position: absolute;
-      left: 8px;
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: #326CE5;
+      content:''; position:absolute; left:8px; top:0; bottom:0;
+      width:3px; background:#326CE5;
     }
-    .timeline-item { margin-bottom: 20px; position: relative; }
+    .timeline-item { margin-bottom:20px; position:relative; }
     .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -26px;
-      top: 8px;
-      width: 13px;
-      height: 13px;
-      background: #326CE5;
-      border-radius: 50%;
+      content:''; position:absolute; left:-26px; top:8px;
+      width:13px; height:13px; background:#326CE5; border-radius:50%;
     }
-    .timeline-year { color: #326CE5; font-weight: bold; font-size: 0.75em; }
-    .reveal pre { width: 100%; font-size: 0.55em; }
-    .reveal pre code { padding: 15px; }
-    .small-font { font-size: 0.65em; }
-    .reveal section .speaker-note { display: none; }
+    .timeline-year { color:#326CE5; font-weight:bold; font-size:0.75em; }
+    .reveal pre { width:100%; font-size:0.5em; }
+    .reveal pre code { padding:12px; }
+    .small-font { font-size:0.6em; }
+    .stack-step {
+      border-left:4px solid #326CE5;
+      padding:8px 15px;
+      margin:8px 0;
+      background:rgba(50,108,229,0.1);
+      border-radius:0 8px 8px 0;
+    }
+    .stack-step.done {
+      border-left-color:#2ecc71;
+      background:rgba(46,204,113,0.1);
+    }
+    .stack-step.current {
+      border-left-color:#f39c12;
+      background:rgba(243,156,18,0.15);
+    }
+    .stack-step.next {
+      border-left-color:rgba(255,255,255,0.3);
+      background:rgba(255,255,255,0.03);
+    }
+    .stack-number {
+      display:inline-block;
+      width:28px; height:28px;
+      line-height:28px;
+      border-radius:50%;
+      text-align:center;
+      font-weight:bold;
+      font-size:0.7em;
+      margin-right:8px;
+    }
+    .stack-number.done { background:#2ecc71; color:white; }
+    .stack-number.current { background:#f39c12; color:white; }
+    .stack-number.next { background:rgba(255,255,255,0.2); color:rgba(255,255,255,0.5); }
+    .observe-pillar {
+      text-align:center;
+      padding:15px;
+      border-radius:10px;
+      margin:5px;
+    }
+    .observe-pillar img { max-height:50px; border:none; box-shadow:none; background:none; }
   </style>
 </head>
 <body>
@@ -74,494 +105,441 @@
 
       <!-- ==================== TITLE ==================== -->
       <section data-background-gradient="linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)">
-        <img class="logo" src="https://kubernetes.io/images/kubernetes-horizontal-white.png" alt="Kubernetes">
-        <h3 style="margin-top: 30px;">Introduccion al Orquestador de Contenedores</h3>
-        <p class="center" style="margin-top: 40px; font-size: 0.7em; opacity: 0.7;">
-          UNPHU &mdash; 2026
-        </p>
+        <img class="logo" src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="Kubernetes">
+        <h2 style="margin-top:20px;">De 0 a Observabilidad</h2>
+        <p class="center" style="font-size:0.75em; opacity:0.9;">Construyendo un stack completo con Kubernetes</p>
+        <p class="center" style="margin-top:30px; font-size:0.65em; opacity:0.6;">UNPHU &mdash; 10:00 AM - 12:00 PM &mdash; 2026</p>
         <aside class="notes">
-          Bienvenidos a esta introduccion a Kubernetes. Veremos los conceptos fundamentales, la arquitectura,
-          y como empezar a trabajar con la plataforma de orquestacion mas usada del mundo.
+          Bienvenidos. Esta charla es practica: vamos a construir un stack completo
+          desde cero hasta tener observabilidad total. 2 horas, manos a la obra.
         </aside>
       </section>
 
-      <!-- ==================== AGENDA ==================== -->
+      <!-- ==================== ROADMAP ==================== -->
       <section data-transition="zoom">
-        <h2>Agenda</h2>
-        <ol class="fragment-list">
-          <li class="fragment" data-fragment-index="1">El problema: por que necesitamos orquestacion</li>
-          <li class="fragment" data-fragment-index="2">Que es Kubernetes y su historia</li>
-          <li class="fragment" data-fragment-index="3">Arquitectura y componentes</li>
-          <li class="fragment" data-fragment-index="4">Objetos fundamentales (Pods, Deployments, Services)</li>
-          <li class="fragment" data-fragment-index="5">kubectl en accion</li>
-          <li class="fragment" data-fragment-index="6">Ecosistema CNCF y recursos</li>
-        </ol>
+        <h2>Hoja de Ruta</h2>
+        <p class="center small-font" style="opacity:0.6;">10:00 AM - 12:00 PM &bull; De un contenedor suelto a un stack observable</p>
+        <div style="margin-top:20px;">
+          <div class="stack-step done">
+            <span class="stack-number done">1</span>
+            <strong>Contenedores</strong> &mdash; <span class="small-font">Docker, imagenes, redes</span>
+          </div>
+          <div class="stack-step done">
+            <span class="stack-number done">2</span>
+            <strong>Compose</strong> &mdash; <span class="small-font">Multi-container local</span>
+          </div>
+          <div class="stack-step done">
+            <span class="stack-number done">3</span>
+            <strong>Kubernetes</strong> &mdash; <span class="small-font">Orquestacion, Pods, Deployments, Services</span>
+          </div>
+          <div class="stack-step current">
+            <span class="stack-number current">4</span>
+            <strong>Configuracion</strong> &mdash; <span class="small-font">ConfigMaps, Secrets, Namespaces</span>
+          </div>
+          <div class="stack-step next">
+            <span class="stack-number next">5</span>
+            <strong>Escalado</strong> &mdash; <span class="small-font">HPA, VPA, Cluster Autoscaler</span>
+          </div>
+          <div class="stack-step next">
+            <span class="stack-number next">6</span>
+            <strong>Observabilidad</strong> &mdash; <span class="small-font">Prometheus, Grafana, Loki, Tempo</span>
+          </div>
+        </div>
         <aside class="notes">
-          Cubriremos estos temas en orden. Si tienen preguntas, pueden hacerlas al final o anotarlas.
+          Este es el camino que recorreremos. Empezamos con lo basico (contenedores),
+          subimos a compose, luego Kubernetes, configuracion, escalado, y terminamos
+          con un stack completo de observabilidad. Todo en 2 horas.
         </aside>
       </section>
 
-      <!-- ==================== THE PROBLEM ==================== -->
+      <!-- ==================== STEP 1: CONTAINERS ==================== -->
       <section>
-        <section data-transition="convex">
-          <h2>El Problema</h2>
-          <p class="center" style="font-size: 0.8em;">Antes de Kubernetes... como escalabamos?</p>
-          <img class="diagram" data-src="https://d33wubrfki0l68.cloudfront.net/4cbf17d8563084ec79b8f227e53970920158ed1b/25c59/images/articles/2018-kubernetes-the-surprisingly-easy-way-to-get-started/containers_on_a_ship.jpg" alt="Containers">
-          <aside class="notes">
-            Imaginemos que tenemos una aplicacion que crece. De 1 servidor a 10, a 100, a 1000.
-            Como los gestionamos? Como aseguramos que esten saludables? Como hacemos updates sin downtime?
-          </aside>
+        <section data-background-gradient="linear-gradient(135deg, #1a1a2e, #0f3460)">
+          <p class="center small-font" style="opacity:0.5;">PASO 1</p>
+          <h2>Contenedores</h2>
+          <img class="logo" data-src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" style="max-height:100px;">
+          <p class="center" style="font-size:0.75em; margin-top:15px;">Empaquetando aplicaciones de forma portable</p>
         </section>
 
         <section data-auto-animate data-transition="convex">
-          <h2>El Problema</h2>
+          <h3>Por que contenedores?</h3>
           <div class="grid-2">
-            <div class="card fragment" data-fragment-index="1">
-              <h4 style="color: #e74c3c;">Sin Orquestacion</h4>
-              <ul class="small-font" style="text-align: left;">
-                <li>Escalado manual</li>
-                <li>Sin auto-healing</li>
-                <li>Deployments riesgosos</li>
-                <li>Configuracion inconsistente</li>
-                <li>Sin balanceo de carga</li>
+            <div class="card fragment">
+              <h4 style="color:#e74c3c;">Antes</h4>
+              <ul class="small-font" style="text-align:left;">
+                <li>"Funciona en mi maquina"</li>
+                <li>Dependencias conflictivas</li>
+                <li>Deployments inconsistentes</li>
+                <li>Provisioning lento (horas)</li>
               </ul>
             </div>
-            <div class="card fragment" data-fragment-index="2">
-              <h4 style="color: #2ecc71;">Con Orquestacion</h4>
-              <ul class="small-font" style="text-align: left;">
-                <li>Escalado automatico</li>
-                <li>Auto-healing nativo</li>
-                <li>Rolling updates</li>
-                <li>Configuracion declarativa</li>
-                <li>Service discovery + LB</li>
+            <div class="card fragment">
+              <h4 style="color:#2ecc71;">Ahora</h4>
+              <ul class="small-font" style="text-align:left;">
+                <li>Mismo entorno everywhere</li>
+                <li>Dependencias aisladas</li>
+                <li>Imagen inmutable</li>
+                <li>Provisioning en segundos</li>
               </ul>
             </div>
           </div>
           <aside class="notes">
-            La diferencia fundamental es pasar de gestion manual a declarativa.
-            Tu declaras el estado deseado y Kubernetes se encarga de mantenerlo.
+            Los contenedores resuelven el problema de "funciona en mi maquina".
+            Cada contenedor tiene su propio filesystem, red y procesos.
+          </aside>
+        </section>
+
+        <section data-transition="convex">
+          <h3>Dockerfile</h3>
+          <pre><code class="dockerfile" data-trim data-line-numbers="1-4|6-9|11-13">
+FROM python:3.12-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+EXPOSE 8000
+HEALTHCHECK CMD curl -f http://localhost:8000/health || exit 1
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+          </code></pre>
+          <pre class="fragment"><code class="bash" data-trim>
+docker build -t mi-app:v1 .
+docker run -p 8000:8000 mi-app:v1
+          </code></pre>
+          <aside class="notes">
+            Dockerfile define los pasos para construir la imagen.
+            FROM = base, COPY = archivos, RUN = comandos, CMD = proceso principal.
+            HEALTHCHECK es crucial para Kubernetes.
           </aside>
         </section>
       </section>
 
-      <!-- ==================== WHAT IS K8S ==================== -->
-      <section data-background-gradient="linear-gradient(135deg, #0f3460, #326CE5)">
-        <h2>Que es Kubernetes?</h2>
-        <p class="center" style="font-size: 0.85em;">
-          Kubernetes (K8s) es una plataforma de codigo abierto para<br>
-          <strong>automatizar el despliegue, escalado y gestion</strong><br>
-          de aplicaciones en contenedores.
-        </p>
-        <div class="grid-3 fragment" style="margin-top: 30px;">
-          <div class="card">
-            <h4>Portable</h4>
-            <p class="small-font">On-premise, cloud, hibrido</p>
-          </div>
-          <div class="card">
-            <h4>Extensible</h4>
-            <p class="small-font">CRDs, operators, plugins</p>
-          </div>
-          <div class="card">
-            <h4>Auto-sanable</h4>
-            <p class="small-font">Reinicio, reemplazo, salud</p>
-          </div>
-        </div>
-        <aside class="notes">
-          Originalmente desarrollado por Google, basado en su sistema interno Borg.
-          Ahora es mantenido por la Cloud Native Computing Foundation (CNCF).
-          El nombre "K8s" viene de las 8 letras entre la K y la s.
-        </aside>
-      </section>
-
-      <!-- ==================== HISTORY ==================== -->
-      <section data-transition="concave">
-        <h2>Historia</h2>
-        <div class="timeline">
-          <div class="timeline-item fragment">
-            <div class="timeline-year">2003-2015</div>
-            <div><strong>Borg / Omega</strong> &mdash; Sistemas internos de Google para gestion de contenedores a escala masiva</div>
-          </div>
-          <div class="timeline-item fragment">
-            <div class="timeline-year">2014</div>
-            <div><strong>Kubernetes</strong> &mdash; Google libera el codigo como open source</div>
-          </div>
-          <div class="timeline-item fragment">
-            <div class="timeline-year">2015</div>
-            <div><strong>v1.0</strong> &mdash; Primera release estable. Donado a la CNCF</div>
-          </div>
-          <div class="timeline-item fragment">
-            <div class="timeline-year">2016-2018</div>
-            <div><strong>Adopcion masiva</strong> &mdash; AWS EKS, Azure AKS, GCP GKE</div>
-          </div>
-          <div class="timeline-item fragment">
-            <div class="timeline-year">2026</div>
-            <div><strong>v1.32+</strong> &mdash; Estandar de la industria, usado por millones de organizaciones</div>
-          </div>
-        </div>
-        <aside class="notes">
-          Google ejecutaba billones de contenedores por semana con Borg.
-          Kubernetes es la evolucion de esa experiencia, hecha open source y democratizada.
-        </aside>
-      </section>
-
-      <!-- ==================== ARCHITECTURE ==================== -->
+      <!-- ==================== STEP 2: COMPOSE ==================== -->
       <section>
-        <section data-transition="zoom" data-background-color="#1a1a2e">
-          <h2>Arquitectura de Kubernetes</h2>
-          <img class="diagram" data-src="https://d33wubrfki0l68.cloudfront.net/2475489e88e74152a256441143e551b67e721b1e/43018/images/docs/components-of-kubernetes.svg" alt="Kubernetes Architecture" style="max-height: 500px;">
+        <section data-background-gradient="linear-gradient(135deg, #1a1a2e, #2d1b69)">
+          <p class="center small-font" style="opacity:0.5;">PASO 2</p>
+          <h2>Docker Compose</h2>
+          <p class="center" style="font-size:0.75em;">Multi-container en tu laptop</p>
+        </section>
+
+        <section data-transition="convex">
+          <h3>Stack local completo</h3>
+          <pre><code class="yaml" data-trim data-line-numbers="1-5|7-16|18-28|30-40">
+services:
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://user:pass@db:5432/mydb
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: mydb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 5s
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  pgdata:
+          </code></pre>
           <aside class="notes">
-            Kubernetes sigue un modelo cliente-servidor con un plano de control y nodos workers.
-            El plano de control toma decisiones globales, los nodos ejecutan las cargas de trabajo.
+            Compose nos permite definir un stack multi-container localmente.
+            App + Postgres + Redis con un solo docker compose up.
+            Los healthchecks son importantes para el orden de arranque.
+          </aside>
+        </section>
+      </section>
+
+      <!-- ==================== STEP 3: KUBERNETES ==================== -->
+      <section>
+        <section data-background-gradient="linear-gradient(135deg, #1a1a2e, #0f3460)">
+          <p class="center small-font" style="opacity:0.5;">PASO 3</p>
+          <h2>Kubernetes</h2>
+          <img class="logo" src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="K8s" style="max-height:80px;">
+          <p class="center" style="font-size:0.75em;">Orquestacion a escala</p>
+        </section>
+
+        <section data-transition="concave">
+          <h3>Historia rapida</h3>
+          <div class="timeline">
+            <div class="timeline-item fragment">
+              <div class="timeline-year">2003</div>
+              <div><strong>Borg</strong> &mdash; Google gestiona billones de contenedores/semana</div>
+            </div>
+            <div class="timeline-item fragment">
+              <div class="timeline-year">2014</div>
+              <div><strong>Kubernetes</strong> &mdash; Open source basado en 10 anos de experiencia</div>
+            </div>
+            <div class="timeline-item fragment">
+              <div class="timeline-year">2015</div>
+              <div><strong>v1.0</strong> &mdash; Donado a CNCF</div>
+            </div>
+            <div class="timeline-item fragment">
+              <div class="timeline-year">2026</div>
+              <div><strong>Estandar</strong> &mdash; EKS, AKS, GKE, y miles de empresas</div>
+            </div>
+          </div>
+          <aside class="notes">
+            La historia es importante porque K8s no nacio de la nada.
+            Viene de 10+ anos de Google corriendo contenedores a escala con Borg y Omega.
+          </aside>
+        </section>
+
+        <section data-transition="zoom" data-background-color="#1a1a2e">
+          <h3>Arquitectura</h3>
+          <div class="grid-2" style="margin-top:15px;">
+            <div>
+              <h4 class="k8s-blue center">Control Plane</h4>
+              <div class="card fragment"><h4 class="k8s-blue">API Server</h4><p class="small-font">Puerta de entrada. API REST.</p></div>
+              <div class="card fragment"><h4 class="k8s-blue">etcd</h4><p class="small-font">Estado del cluster (KV store).</p></div>
+              <div class="card fragment"><h4 class="k8s-blue">Scheduler</h4><p class="small-font">Asigna pods a nodos.</p></div>
+              <div class="card fragment"><h4 class="k8s-blue">Controllers</h4><p class="small-font">Mantiene estado deseado.</p></div>
+            </div>
+            <div>
+              <h4 class="k8s-blue center">Nodos</h4>
+              <div class="card fragment"><h4 class="k8s-blue">kubelet</h4><p class="small-font">Agente, gestiona pods.</p></div>
+              <div class="card fragment"><h4 class="k8s-blue">kube-proxy</h4><p class="small-font">Reglas de red/Services.</p></div>
+              <div class="card fragment"><h4 class="k8s-blue">containerd</h4><p class="small-font">Runtime de contenedores.</p></div>
+            </div>
+          </div>
+          <aside class="notes">
+            Dos partes: Control Plane (el cerebro) y Nodos (los trabajadores).
+            Todo se comunica via API Server. etcd guarda TODO el estado.
           </aside>
         </section>
 
         <section data-auto-animate data-transition="slide">
-          <h2>Control Plane</h2>
-          <div class="grid-2">
-            <div class="card fragment">
-              <h4 class="k8s-blue">kube-apiserver</h4>
-              <p class="small-font">API REST central. Todo comunica a traves de aqui.</p>
-            </div>
-            <div class="card fragment">
-              <h4 class="k8s-blue">etcd</h4>
-              <p class="small-font">Base de datos key-value distribuida. Estado del cluster.</p>
-            </div>
-            <div class="card fragment">
-              <h4 class="k8s-blue">kube-scheduler</h4>
-              <p class="small-font">Asigna pods a nodos segun recursos y reglas.</p>
-            </div>
-            <div class="card fragment">
-              <h4 class="k8s-blue">kube-controller-manager</h4>
-              <p class="small-font">Controladores: ReplicaSet, Deployment, Node, etc.</p>
-            </div>
-          </div>
-          <aside class="notes">
-            El API server es la puerta de entrada. etcd guarda TODO el estado.
-            El scheduler decide donde van los pods. Los controladores vigilan que el estado real coincida con el deseado.
-          </aside>
-        </section>
-
-        <section data-transition="slide">
-          <h2>Nodos (Workers)</h2>
-          <div class="grid-3">
-            <div class="card fragment">
-              <h4 class="k8s-blue">kubelet</h4>
-              <p class="small-font">Agente en cada nodo. Gestiona el ciclo de vida de los pods.</p>
-            </div>
-            <div class="card fragment">
-              <h4 class="k8s-blue">kube-proxy</h4>
-              <p class="small-font">Mantiene reglas de red. Implementa Services.</p>
-            </div>
-            <div class="card fragment">
-              <h4 class="k8s-blue">Container Runtime</h4>
-              <p class="small-font">containerd, CRI-O. Ejecuta los contenedores.</p>
-            </div>
-          </div>
-          <aside class="notes">
-            Cada nodo ejecuta kubelet (gestion de pods), kube-proxy (red) y un container runtime.
-            Los nodos se registran con el control plane para recibir instrucciones.
-          </aside>
-        </section>
-      </section>
-
-      <!-- ==================== PODS ==================== -->
-      <section data-background-gradient="linear-gradient(135deg, #1a1a2e, #2d1b69)">
-        <h2>Pods</h2>
-        <p class="center" style="font-size: 0.8em;">La unidad mas pequena y simple en Kubernetes</p>
-        <div class="columns fragment" style="margin-top: 20px;">
-          <div>
-            <ul class="fragment-list">
-              <li class="fragment">Contiene uno o mas contenedores</li>
-              <li class="fragment">Comparten red (misma IP) y almacenamiento</li>
-              <li class="fragment">Son efimeros: se crean y destruyen</li>
-              <li class="fragment">Nunca se crean directamente en produccion</li>
-            </ul>
-          </div>
-          <div>
-            <pre><code class="yaml" data-trim data-line-numbers>
+          <h3>Pods</h3>
+          <p class="center small-font">Unidad minima. Comparten red y storage.</p>
+          <div class="columns" style="margin-top:15px;">
+            <div>
+              <pre><code class="yaml" data-trim data-line-numbers>
 apiVersion: v1
 kind: Pod
 metadata:
-  name: mi-pod
+  name: mi-app
+  labels:
+    app: mi-app
 spec:
   containers:
-  - name: nginx
-    image: nginx:latest
+  - name: app
+    image: mi-app:v1
     ports:
-    - containerPort: 80
-            </code></pre>
+    - containerPort: 8000
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+      limits:
+        memory: "256Mi"
+        cpu: "500m"
+              </code></pre>
+            </div>
+            <div>
+              <ul class="fragment-list small-font">
+                <li class="fragment"><strong>1 o mas contenedores</strong> por pod</li>
+                <li class="fragment">Comparten <strong>misma IP</strong></li>
+                <li class="fragment"><strong>Efimeros</strong>: no crear directamente</li>
+                <li class="fragment"><strong>resources</strong>: siempre definir requests y limits</li>
+              </ul>
+              <p class="fragment small-font" style="margin-top:15px; color:#f39c12;">
+                En produccion: usar Deployments, nunca Pods solos.
+              </p>
+            </div>
           </div>
-        </div>
-        <aside class="notes">
-          Un Pod es como un "host logico" con sus contenedores compartiendo recursos.
-          Es efimero - si muere, se reemplaza. Por eso en produccion usamos Deployments.
-        </aside>
-      </section>
-
-      <!-- ==================== DEPLOYMENTS ==================== -->
-      <section>
-        <section data-auto-animate data-transition="convex">
-          <h2>Deployments</h2>
-          <p class="center" style="font-size: 0.8em;">Gestion declarativa de Pods y ReplicaSets</p>
-        </section>
-
-        <section data-auto-animate data-transition="convex">
-          <h2>Deployments</h2>
-          <pre><code class="yaml" data-trim data-line-numbers="1-15|3-6|8-14">
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment
-  labels:
-    app: nginx
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:1.25
-        ports:
-        - containerPort: 80
-          </code></pre>
-          <p class="small-font center" style="margin-top: 10px;">
-            <span class="tag">3 replicas</span>
-            <span class="tag">Rolling Update</span>
-            <span class="tag">Auto-healing</span>
-          </p>
           <aside class="notes">
-            Deployment es el objeto que usamos en produccion.
-            Define cuantas replicas queremos, que imagen usar, y como actualizar.
-            Si un pod muere, el Deployment crea uno nuevo automaticamente.
+            Un Pod es como un host logico. Los contenedores dentro comparten red.
+            Siempre definir resources - sin esto, el scheduler no puede tomar buenas decisiones.
           </aside>
         </section>
 
         <section data-transition="convex">
-          <h2>Estrategias de Update</h2>
-          <div class="grid-2">
-            <div class="card fragment">
-              <h4 style="color: #2ecc71;">Rolling Update</h4>
-              <p class="small-font">Actualiza gradualmente los pods sin downtime. Es el default.</p>
-              <pre><code class="yaml" data-trim>
+          <h3>Deployments</h3>
+          <pre><code class="yaml" data-trim data-line-numbers="1-8|10-14|16-23">
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mi-app
+  labels:
+    app: mi-app
 spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mi-app
   strategy:
     type: RollingUpdate
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 0
-              </code></pre>
+  template:
+    metadata:
+      labels:
+        app: mi-app
+    spec:
+      containers:
+      - name: app
+        image: mi-app:v1
+        ports:
+        - containerPort: 8000
+          </code></pre>
+          <p class="center small-font" style="margin-top:8px;">
+            <span class="tag">3 replicas</span>
+            <span class="tag">Rolling Update</span>
+            <span class="tag">Auto-healing</span>
+            <span class="tag">Rollback: kubectl rollout undo</span>
+          </p>
+          <aside class="notes">
+            Deployment gestiona ReplicaSets, que gestionan Pods.
+            Si un Pod muere, se recrea. Rolling update = zero downtime.
+            Si algo sale mal, rollback instantaneo.
+          </aside>
+        </section>
+
+        <section data-transition="concave">
+          <h3>Services</h3>
+          <div class="grid-3" style="margin-top:15px;">
+            <div class="card fragment">
+              <h4 style="color:#f39c12;">ClusterIP</h4>
+              <p class="small-font">Interno. DNS: mi-app.default.svc</p>
             </div>
             <div class="card fragment">
-              <h4 style="color: #e74c3c;">Recreate</h4>
-              <p class="small-font">Elimina todos los pods viejos antes de crear nuevos. Hay downtime.</p>
-              <pre><code class="yaml" data-trim>
-spec:
-  strategy:
-    type: Recreate
-              </code></pre>
+              <h4 style="color:#2ecc71;">NodePort</h4>
+              <p class="small-font">Puerto del nodo (30000+)</p>
+            </div>
+            <div class="card fragment">
+              <h4 style="color:#326CE5;">LoadBalancer</h4>
+              <p class="small-font">LB externo del cloud</p>
             </div>
           </div>
+          <pre class="fragment"><code class="yaml" data-trim data-line-numbers>
+apiVersion: v1
+kind: Service
+metadata:
+  name: mi-app
+spec:
+  selector:
+    app: mi-app
+  ports:
+  - port: 80
+    targetPort: 8000
+          </code></pre>
           <aside class="notes">
-            Rolling Update es ideal para produccion: los pods nuevos se crean antes de eliminar los viejos.
-            Recreate es util cuando la app no soporta versiones concurrentes.
+            Services dan una IP estable y DNS a pods efimeros.
+            ClusterIP es el default y suficiente para comunicacion interna.
+            LoadBalancer para exponer al mundo exterior.
           </aside>
         </section>
       </section>
 
-      <!-- ==================== SERVICES ==================== -->
-      <section data-transition="concave">
-        <h2>Services</h2>
-        <p class="center" style="font-size: 0.8em;">Abstraccion estable para acceder a un grupo de Pods</p>
-        <div class="grid-3" style="margin-top: 25px;">
-          <div class="card fragment">
-            <h4 style="color: #f39c12;">ClusterIP</h4>
-            <p class="small-font">IP interna. Solo accesible dentro del cluster. Default.</p>
-          </div>
-          <div class="card fragment">
-            <h4 style="color: #2ecc71;">NodePort</h4>
-            <p class="small-font">Expone en un puerto de cada nodo (30000-32767).</p>
-          </div>
-          <div class="card fragment">
-            <h4 style="color: #326CE5;">LoadBalancer</h4>
-            <p class="small-font">Crea un LB externo en el cloud provider.</p>
-          </div>
-        </div>
-        <pre class="fragment"><code class="yaml" data-trim data-line-numbers>
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx-service
-spec:
-  type: LoadBalancer
-  selector:
-    app: nginx
-  ports:
-  - port: 80
-    targetPort: 80
-        </code></pre>
-        <aside class="notes">
-          Los pods son efimeros y cambian de IP. Services proveen una IP estable y DNS.
-          El tipo LoadBalancer integra directamente con el cloud provider (AWS ELB, GCP LB, etc).
-        </aside>
-      </section>
+      <!-- ==================== STEP 4: CONFIG ==================== -->
+      <section>
+        <section data-background-gradient="linear-gradient(135deg, #1a1a2e, #0f3460)">
+          <p class="center small-font" style="opacity:0.5;">PASO 4</p>
+          <h2>Configuracion</h2>
+          <p class="center" style="font-size:0.75em;">ConfigMaps, Secrets y Namespaces</p>
+        </section>
 
-      <!-- ==================== CONFIGMAPS & SECRETS ==================== -->
-      <section data-transition="slide">
-        <h2>ConfigMaps y Secrets</h2>
-        <div class="columns">
-          <div class="card fragment">
-            <h4 style="color: #2ecc71;">ConfigMap</h4>
-            <p class="small-font">Configuracion no sensible</p>
-            <pre><code class="yaml" data-trim>
+        <section data-transition="slide">
+          <div class="columns">
+            <div class="card fragment">
+              <h4 style="color:#2ecc71;">ConfigMap</h4>
+              <p class="small-font">Config no sensible</p>
+              <pre><code class="yaml" data-trim>
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-config
 data:
-  DATABASE_HOST: "db.internal"
+  DB_HOST: "postgres.default"
   LOG_LEVEL: "info"
-            </code></pre>
-          </div>
-          <div class="card fragment">
-            <h4 style="color: #e74c3c;">Secret</h4>
-            <p class="small-font">Datos sensibles (base64)</p>
-            <pre><code class="yaml" data-trim>
+  CACHE_TTL: "300"
+              </code></pre>
+            </div>
+            <div class="card fragment">
+              <h4 style="color:#e74c3c;">Secret</h4>
+              <p class="small-font">Datos sensibles (base64)</p>
+              <pre><code class="yaml" data-trim>
 apiVersion: v1
 kind: Secret
 metadata:
   name: db-secret
 type: Opaque
 data:
-  DB_PASSWORD: c3VwZXJzZWNyZXQ=
-            </code></pre>
+  DB_PASS: c3VwZXJzZWNyZXQ=
+stringData:
+  API_KEY: "live-key-123"
+              </code></pre>
+            </div>
           </div>
-        </div>
-        <p class="center small-font fragment" style="margin-top: 15px;">
-          Separa configuracion del codigo &rarr; misma imagen, diferentes ambientes
-        </p>
-        <aside class="notes">
-          ConfigMaps y Secrets permiten externalizar la configuracion.
-          Secrets estan codificados en base64 (no encriptados por defecto).
-          Para produccion, habilitar encryption at rest en etcd.
-        </aside>
-      </section>
-
-      <!-- ==================== KUBECTL ==================== -->
-      <section>
-        <section data-transition="zoom" data-background-gradient="linear-gradient(135deg, #0f3460, #326CE5)">
-          <h2>kubectl</h2>
-          <p class="center" style="font-size: 0.85em;">La navaja suiza para interactuar con Kubernetes</p>
-          <img class="logo" data-src="https://kubernetes.io/images/kubectl.svg" alt="kubectl" style="max-height: 120px;">
+          <aside class="notes">
+            ConfigMaps y Secrets separan configuracion del codigo.
+            Misma imagen Docker, diferentes ConfigMaps para dev/staging/prod.
+            Secrets son base64, no encriptacion. Habilitar encryption at rest en produccion.
+          </aside>
         </section>
 
         <section data-transition="slide">
-          <h2>Comandos Esenciales</h2>
-          <pre><code class="bash" data-trim data-line-numbers>
-# Ver recursos del cluster
-kubectl get nodes
-kubectl get pods -A
-kubectl get deployments
-
-# Describir un recurso en detalle
-kubectl describe pod mi-pod
-
-# Aplicar manifiestos
-kubectl apply -f deployment.yaml
-
-# Escalar un deployment
-kubectl scale deployment nginx --replicas=5
-
-# Ver logs en tiempo real
-kubectl logs -f deployment/nginx
-
-# Ejecutar comando en un pod
-kubectl exec -it mi-pod -- /bin/bash
-
-# Port-forward para debugging local
-kubectl port-forward svc/nginx 8080:80
-          </code></pre>
+          <h3>Namespaces</h3>
+          <div class="grid-2">
+            <div>
+              <pre><code class="bash" data-trim>
+kubectl create namespace produccion
+kubectl apply -f app.yaml -n produccion
+kubectl get all -n produccion
+              </code></pre>
+            </div>
+            <div>
+              <ul class="fragment-list small-font">
+                <li>Aislamiento logico dentro del cluster</li>
+                <li>Cuotas de recursos (ResourceQuota)</li>
+                <li>Politicas de red (NetworkPolicy)</li>
+                <li>Defaults: <code>default</code>, <code>kube-system</code></li>
+              </ul>
+            </div>
+          </div>
           <aside class="notes">
-            Estos son los comandos que usaran el 90% del tiempo.
-            kubectl get y describe son los mas importantes para empezar.
-            apply es declarativo - define el estado deseado y kubectl lo aplica.
+            Namespaces son como "clusters virtuales". Separar por ambiente o equipo.
           </aside>
         </section>
       </section>
 
-      <!-- ==================== ECOSYSTEM ==================== -->
-      <section data-transition="convex">
-        <h2>Ecosistema CNCF</h2>
-        <p class="center" style="font-size: 0.75em;">Kubernetes es solo el inicio...</p>
-        <div class="grid-3 fragment" style="margin-top: 20px;">
-          <div class="card">
-            <h4 class="k8s-blue">Networking</h4>
-            <p class="small-font">Calico, Cilium, Flannel</p>
-          </div>
-          <div class="card">
-            <h4 class="k8s-blue">Service Mesh</h4>
-            <p class="small-font">Istio, Linkerd, Consul</p>
-          </div>
-          <div class="card">
-            <h4 class="k8s-blue">Observabilidad</h4>
-            <p class="small-font">Prometheus, Grafana, Jaeger</p>
-          </div>
-          <div class="card">
-            <h4 class="k8s-blue">CI/CD</h4>
-            <p class="small-font">ArgoCD, Flux, Tekton</p>
-          </div>
-          <div class="card">
-            <h4 class="k8s-blue">Package Mgmt</h4>
-            <p class="small-font">Helm, Kustomize, Carvel</p>
-          </div>
-          <div class="card">
-            <h4 class="k8s-blue">Storage</h4>
-            <p class="small-font">Rook, Longhorn, OpenEBS</p>
-          </div>
-        </div>
-        <p class="center small-font fragment" style="margin-top: 20px;">
-          <a href="https://landscape.cncf.io" target="_blank">landscape.cncf.io</a> &mdash; Mapa completo del ecosistema
-        </p>
-        <aside class="notes">
-          Kubernetes es la base, pero el ecosistema CNCF tiene cientos de proyectos.
-          Helm es como el "npm de Kubernetes" para empaquetar aplicaciones.
-          ArgoCD permite GitOps - deployments automaticos desde git.
-        </aside>
-      </section>
+      <!-- ==================== STEP 5: SCALING ==================== -->
+      <section>
+        <section data-background-gradient="linear-gradient(135deg, #1a1a2e, #2d1b69)">
+          <p class="center small-font" style="opacity:0.5;">PASO 5</p>
+          <h2>Escalado</h2>
+          <p class="center" style="font-size:0.75em;">De 3 replicas a auto-scaling inteligente</p>
+        </section>
 
-      <!-- ==================== MATH: Scaling ==================== -->
-      <section data-transition="fade" data-background-color="#1a1a2e">
-        <h2>Escalado en Kubernetes</h2>
-        <p class="center" style="font-size: 0.75em;">Horizontal Pod Autoscaler (HPA)</p>
-        <div class="columns" style="margin-top: 20px;">
-          <div>
-            <p class="fragment">El HPA escala pods automaticamente segun metricas:</p>
-            <ul class="fragment-list small-font">
-              <li class="fragment">CPU utilization</li>
-              <li class="fragment">Memoria</li>
-              <li class="fragment">Metricas custom (requests/sec, queue depth)</li>
-            </ul>
-            <p class="fragment small-font" style="margin-top: 15px;">
-              Formula: replicas deseadas =
-              <span class="k8s-blue">ceil</span>(replicas actuales &times; (metrica actual / metrica objetivo))
-            </p>
-          </div>
-          <div>
-            <pre class="fragment"><code class="yaml" data-trim data-line-numbers>
+        <section data-transition="convex">
+          <h3>Horizontal Pod Autoscaler</h3>
+          <pre><code class="yaml" data-trim data-line-numbers>
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: nginx-hpa
+  name: mi-app-hpa
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: nginx-deployment
+    name: mi-app
   minReplicas: 2
   maxReplicas: 10
   metrics:
@@ -571,97 +549,333 @@ spec:
       target:
         type: Utilization
         averageUtilization: 70
-            </code></pre>
-          </div>
-        </div>
-        <aside class="notes">
-          El HPA revisa periodicamente las metricas y ajusta las replicas.
-          La formula basicamente dice: si el uso de CPU supera el 70%, escala hacia arriba.
-          Si baja, escala hacia abajo. Tiene un periodo de estabilizacion para evitar flapping.
-        </aside>
+          </code></pre>
+          <p class="center fragment small-font" style="margin-top:10px;">
+            replicas = ceil(current &times; (actual / target)) &mdash; escala automaticamente
+          </p>
+          <aside class="notes">
+            HPA lee metricas del Metrics Server y ajusta replicas.
+            Si CPU > 70%, escala up. Si baja, escala down con cooldown.
+          </aside>
+        </section>
       </section>
 
-      <!-- ==================== NAMESPACE ==================== -->
-      <section data-transition="slide">
-        <h2>Namespaces</h2>
-        <p class="center" style="font-size: 0.8em;">Aislamiento logico dentro de un cluster</p>
-        <div class="grid-2 fragment" style="margin-top: 20px;">
+      <!-- ==================== STEP 6: OBSERVABILITY ==================== -->
+      <section>
+        <section data-background-gradient="linear-gradient(135deg, #1a1a2e, #0a4d2e)">
+          <p class="center small-font" style="opacity:0.5;">PASO 6</p>
+          <h2>Observabilidad</h2>
+          <p class="center" style="font-size:0.85em;">El stack final: <strong>Metricas + Logs + Traces</strong></p>
+          <div class="grid-3" style="margin-top:25px;">
+            <div class="observe-pillar fragment" style="background:rgba(232,145,58,0.15); border:1px solid #e8913a;">
+              <h4 style="color:#e8913a;">Metricas</h4>
+              <p class="small-font">Prometheus</p>
+            </div>
+            <div class="observe-pillar fragment" style="background:rgba(245,158,11,0.15); border:1px solid #f59e0b;">
+              <h4 style="color:#f59e0b;">Logs</h4>
+              <p class="small-font">Loki / Promtail</p>
+            </div>
+            <div class="observe-pillar fragment" style="background:rgba(59,130,246,0.15); border:1px solid #3b82f6;">
+              <h4 style="color:#3b82f6;">Traces</h4>
+              <p class="small-font">Tempo / OpenTelemetry</p>
+            </div>
+          </div>
+          <p class="center fragment small-font" style="margin-top:15px;">
+            Visualizado con <strong style="color:#f46800;">Grafana</strong>
+          </p>
+          <aside class="notes">
+            Los 3 pilares de observabilidad. No se puede debuguear produccion sin ellos.
+            Prometheus para metricas, Loki para logs, Tempo para traces.
+            Grafana unifica todo en dashboards.
+          </aside>
+        </section>
+
+        <section data-transition="convex">
+          <h3>Prometheus</h3>
+          <p class="center small-font">Metricas con pull-based scraping</p>
+          <div class="columns" style="margin-top:15px;">
+            <div>
+              <pre class="fragment"><code class="yaml" data-trim data-line-numbers>
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus
+spec:
+  serviceAccountName: prometheus
+  serviceMonitorSelector:
+    matchLabels:
+      team: frontend
+  resources:
+    requests:
+      memory: 400Mi
+  enableAdminAPI: false
+              </code></pre>
+            </div>
+            <div>
+              <ul class="fragment-list small-font">
+                <li class="fragment"><strong>Pull model</strong>: scrapea endpoints /metrics</li>
+                <li class="fragment"><strong>PromQL</strong>: lenguaje de consultas</li>
+                <li class="fragment"><strong>Alertmanager</strong>: alertas por email/slack</li>
+                <li class="fragment"><strong>ServiceMonitor</strong>: auto-discovery en K8s</li>
+                <li class="fragment"><strong>Time series DB</strong>: almacenamiento local</li>
+              </ul>
+              <pre class="fragment"><code class="promql" data-trim>
+# Requests por segundo
+rate(http_requests_total[5m])
+
+# P99 latency
+histogram_quantile(0.99,
+  rate(http_duration_seconds_bucket[5m]))
+              </code></pre>
+            </div>
+          </div>
+          <aside class="notes">
+            Prometheus es el estandar de facto para metricas en Kubernetes.
+            ServiceMonitores hacen auto-discovery de pods con labels.
+            PromQL es poderoso para consultas y alertas.
+          </aside>
+        </section>
+
+        <section data-transition="slide">
+          <h3>Loki + Promtail</h3>
+          <p class="center small-font">Logs agregados, como Prometheus pero para logs</p>
+          <div class="columns">
+            <div>
+              <pre class="fragment"><code class="yaml" data-trim data-line-numbers>
+# Promtail - recoge logs de cada nodo
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: promtail
+spec:
+  selector:
+    matchLabels:
+      app: promtail
+  template:
+    spec:
+      containers:
+      - name: promtail
+        image: grafana/promtail:latest
+        args:
+        - -config.file=/etc/promtail/config.yml
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: containers
+          mountPath: /var/lib/docker/containers
+              </code></pre>
+            </div>
+            <div>
+              <pre class="fragment"><code class="logql" data-trim>
+# LogQL - busca errores
+{app="mi-app"}
+  |= "error"
+  | json
+  | status >= 500
+
+# Rate de errores por servicio
+sum(rate({app="mi-app"}
+  |= "error" [5m])) by (pod)
+              </code></pre>
+              <ul class="fragment-list small-font">
+                <li>DaemonSet: un Promtail por nodo</li>
+                <li>Recoge logs de /var/log y containers</li>
+                <li>LogQL: consulta como PromQL</li>
+                <li>Indexa labels, no el texto completo</li>
+              </ul>
+            </div>
+          </div>
+          <aside class="notes">
+            Loki es mas economico que Elasticsearch porque solo indexa labels.
+            Promtail corre como DaemonSet en cada nodo para recoger logs.
+            LogQL permite filtrar y agregar logs como PromQL.
+          </aside>
+        </section>
+
+        <section data-transition="concave">
+          <h3>Tempo + OpenTelemetry</h3>
+          <p class="center small-font">Distributed tracing end-to-end</p>
+          <div class="columns">
+            <div>
+              <div class="fragment">
+                <h4 class="k8s-blue" style="text-align:left;">OpenTelemetry</h4>
+                <ul class="fragment-list small-font">
+                  <li>Instrumentacion automatica</li>
+                  <li>SDK para Python, Go, Java, Node...</li>
+                  <li>Exporta traces a cualquier backend</li>
+                  <li>W3C Trace Context standard</li>
+                </ul>
+              </div>
+              <div class="fragment" style="margin-top:15px;">
+                <h4 class="k8s-blue" style="text-align:left;">Tempo</h4>
+                <ul class="fragment-list small-font">
+                  <li>Backend de traces de Grafana</li>
+                  <li>Compatible con Jaeger, Zipkin</li>
+                  <li>Busca traces por traceID</li>
+                  <li>Conecta metricas + logs + traces</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <pre class="fragment"><code class="python" data-trim data-line-numbers>
+from opentelemetry import trace
+from opentelemetry.sdk.trace \
+  import TracerProvider
+
+trace.set_tracer_provider(
+  TracerProvider()
+)
+tracer = trace.get_tracer("mi-app")
+
+@app.get("/api/data")
+async def get_data():
+  with tracer.start_as_current_span(
+    "get_data"
+  ) as span:
+    span.set_attribute(
+      "http.method", "GET"
+    )
+    data = fetch_from_db()
+    return data
+              </code></pre>
+            </div>
+          </div>
+          <aside class="notes">
+            OpenTelemetry es el estandar abierto para instrumentacion.
+            Tempo guarda los traces y los conecta con metricas y logs via traceID.
+            Asi puedes saltar de una alerta en Grafana al log especifico y al trace exacto.
+          </aside>
+        </section>
+
+        <section data-transition="zoom" data-background-color="#1a1a2e">
+          <h3>Grafana: Unificando todo</h3>
+          <p class="center small-font">Un dashboard para gobernarlos a todos</p>
+          <div class="grid-3 fragment" style="margin-top:20px;">
+            <div class="card">
+              <h4 style="color:#e8913a;">Metricas</h4>
+              <p class="small-font">Prometheus datasource</p>
+              <p class="small-font">CPU, memoria, requests, latency</p>
+            </div>
+            <div class="card">
+              <h4 style="color:#f59e0b;">Logs</h4>
+              <p class="small-font">Loki datasource</p>
+              <p class="small-font">Errores, stack traces, eventos</p>
+            </div>
+            <div class="card">
+              <h4 style="color:#3b82f6;">Traces</h4>
+              <p class="small-font">Tempo datasource</p>
+              <p class="small-font">Flujo de requests, bottlenecks</p>
+            </div>
+          </div>
+          <p class="center fragment" style="margin-top:20px;">
+            <span class="tag tag-orange">Alerta en Prometheus</span>
+            &rarr;
+            <span class="tag">Ver log en Loki</span>
+            &rarr;
+            <span class="tag tag-green">Saltar al trace en Tempo</span>
+          </p>
+          <aside class="notes">
+            Grafana unifica los 3 pilares. Click en una metrica te lleva al log.
+            Click en el log te lleva al trace. Existe desde un solo dashboard.
+            Esto es observabilidad real.
+          </aside>
+        </section>
+      </section>
+
+      <!-- ==================== THE COMPLETE STACK ==================== -->
+      <section data-background-gradient="linear-gradient(135deg, #0f3460, #326CE5)">
+        <h2>El Stack Completo</h2>
+        <p class="center small-font">Lo que construimos hoy en 2 horas</p>
+        <div class="grid-2" style="margin-top:20px;">
           <div>
-            <pre><code class="bash" data-trim>
-# Listar namespaces
-kubectl get namespaces
-
-# Crear namespace
-kubectl create namespace produccion
-
-# Aplicar en un namespace
-kubectl apply -f app.yaml -n produccion
-
-# Ver pods en un namespace
-kubectl get pods -n produccion
-            </code></pre>
+            <div class="stack-step done" style="border-left-color:#326CE5;">
+              <span class="small-font"><strong>Docker</strong> &mdash; Imagenes y contenedores</span>
+            </div>
+            <div class="stack-step done" style="border-left-color:#326CE5;">
+              <span class="small-font"><strong>Compose</strong> &mdash; Stack local multi-container</span>
+            </div>
+            <div class="stack-step done" style="border-left-color:#326CE5;">
+              <span class="small-font"><strong>Kubernetes</strong> &mdash; Pods, Deployments, Services</span>
+            </div>
+            <div class="stack-step done" style="border-left-color:#326CE5;">
+              <span class="small-font"><strong>Config</strong> &mdash; ConfigMaps, Secrets, Namespaces</span>
+            </div>
+            <div class="stack-step done" style="border-left-color:#326CE5;">
+              <span class="small-font"><strong>Scaling</strong> &mdash; HPA, auto-scaling</span>
+            </div>
+            <div class="stack-step done" style="border-left-color:#2ecc71;">
+              <span class="small-font"><strong>Observabilidad</strong> &mdash; Prometheus + Loki + Tempo + Grafana</span>
+            </div>
           </div>
           <div>
-            <ul class="fragment-list small-font">
-              <li>Aisla recursos entre equipos/proyectos</li>
-              <li>Cuotas de recursos por namespace</li>
-              <li>Políticas de red entre namespaces</li>
-              <li>Namespaces default: <code>default</code>, <code>kube-system</code>, <code>kube-public</code></li>
-            </ul>
+            <pre><code class="yaml" data-trim style="font-size:0.45em;">
+# Todo desplegado con:
+kubectl get pods -A
+
+NAMESPACE      NAME                          READY
+monitoring     prometheus-0                   1/1
+monitoring     grafana-abc123                 1/1
+monitoring     loki-0                         1/1
+monitoring     tempo-0                        1/1
+monitoring     promtail-xyz                   1/1
+default        mi-app-7d4b8c9f-x2k5           1/1
+default        mi-app-7d4b8c9f-m8n3           1/1
+default        mi-app-7d4b8c9f-p4q7           1/1
+default        postgres-0                     1/1
+default        redis-master-0                 1/1
+            </code></pre>
           </div>
         </div>
         <aside class="notes">
-          Namespaces son como "clusters virtuales" dentro del cluster fisico.
-          Utiles para separar dev/staging/prod o diferentes equipos.
-          kube-system contiene los componentes del sistema.
+          Este es el resultado final. De un docker run a un stack completo
+          con observabilidad en 2 horas. Cada pieza cumple un rol especifico.
         </aside>
       </section>
 
       <!-- ==================== RESOURCES ==================== -->
       <section data-transition="concave">
-        <h2>Recursos para aprender</h2>
+        <h2>Recursos</h2>
         <div class="grid-2">
           <div class="card fragment">
-            <h4 class="k8s-blue">Documentacion Oficial</h4>
+            <h4 class="k8s-blue">Kubernetes</h4>
             <p class="small-font"><a href="https://kubernetes.io/docs/" target="_blank">kubernetes.io/docs</a></p>
           </div>
           <div class="card fragment">
-            <h4 class="k8s-blue">Tutoriales Interactivos</h4>
-            <p class="small-font"><a href="https://kubernetes.io/docs/tutorials/" target="_blank">kubernetes.io/tutorials</a></p>
-          </div>
-          <div class="card fragment">
-            <h4 class="k8s-blue">KodeKloud</h4>
-            <p class="small-font">Labs practicos para CKA/CKAD</p>
+            <h4 class="k8s-blue">Grafana Labs</h4>
+            <p class="small-font"><a href="https://grafana.com/tutorials/" target="_blank">grafana.com/tutorials</a></p>
           </div>
           <div class="card fragment">
             <h4 class="k8s-blue">container.training</h4>
             <p class="small-font"><a href="https://container.training" target="_blank">container.training</a></p>
           </div>
+          <div class="card fragment">
+            <h4 class="k8s-blue">OpenTelemetry</h4>
+            <p class="small-font"><a href="https://opentelemetry.io/docs/" target="_blank">opentelemetry.io</a></p>
+          </div>
         </div>
-        <p class="center fragment" style="margin-top: 20px; font-size: 0.7em;">
+        <p class="center fragment" style="margin-top:15px; font-size:0.7em;">
           Certificaciones: <span class="tag">CKA</span> <span class="tag">CKAD</span> <span class="tag">CKS</span>
         </p>
         <aside class="notes">
-          La documentacion oficial es excelente y tiene tutoriales interactivos con minikube.
-          CKA es la certificacion de administrador, CKAD de desarrollador, CKS de seguridad.
+          La documentacion oficial de Kubernetes es excelente.
+          Grafana tiene tutoriales para Prometheus, Loki y Tempo.
+          container.training tiene workshops completos y gratuitos.
         </aside>
       </section>
 
       <!-- ==================== CLOSING ==================== -->
       <section data-background-gradient="linear-gradient(135deg, #1a1a2e 0%, #326CE5 100%)">
-        <img class="logo" src="https://kubernetes.io/images/kubernetes-horizontal-white.png" alt="Kubernetes">
-        <h3 style="margin-top: 30px;">Gracias!</h3>
-        <p class="center" style="font-size: 0.7em; margin-top: 20px; opacity: 0.7;">
-          Preguntas?
-        </p>
-        <p class="center small-font" style="margin-top: 30px;">
-          <code>CTRL+Shift+F</code> para buscar en las slides &bull;
-          <code>S</code> para vista de presentador &bull;
-          <code>O</code> para overview
+        <img class="logo" src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="Kubernetes">
+        <h3 style="margin-top:20px;">Gracias!</h3>
+        <p class="center" style="font-size:0.7em; margin-top:15px; opacity:0.7;">Preguntas?</p>
+        <p class="center small-font" style="margin-top:25px; opacity:0.5;">
+          <code>S</code> speaker view &bull;
+          <code>O</code> overview &bull;
+          <code>Ctrl+Shift+F</code> buscar
         </p>
         <aside class="notes">
-          Gracias por su atencion. Abro el espacio para preguntas.
-          Recuerden: la mejor forma de aprender es practicando con minikube o kind.
+          Gracias por su atencion. Preguntas bienvenidas.
+          Todo el codigo de esta presentacion esta en GitHub.
         </aside>
       </section>
 
