@@ -15,19 +15,23 @@
     .columns > div { flex: 1; }
     .emoji-big { font-size: 2em; }
     .center { text-align: center !important; }
-    #sync-status {
-      position: fixed; bottom: 10px; left: 10px; z-index: 100;
-      font-size: 14px; padding: 4px 10px; border-radius: 4px;
-      background: rgba(0,0,0,0.6); color: #fff; font-family: monospace;
+    #sync-status, #source-status {
+      position: fixed; bottom: 10px; z-index: 100;
+      font-size: 12px; padding: 4px 10px; border-radius: 4px;
+      color: #fff; font-family: monospace;
     }
+    #sync-status { left: 10px; background: rgba(0,0,0,0.6); }
+    #source-status { right: 10px; background: rgba(0,0,0,0.6); }
   </style>
 </head>
 <body>
   <div id="sync-status"></div>
+  <div id="source-status">STATIC</div>
 
   <div class="reveal">
     <div class="slides">
-      <section data-markdown="slides/presentacion.md"
+      <section id="markdown-slide"
+               data-markdown="slides/presentacion.md"
                data-separator="^\n---\n"
                data-separator-vertical="^\n--\n"
                data-separator-notes="^Note:">
@@ -43,8 +47,70 @@
 
   <script>
     const SECRET = 'unphu-secret-2026';
+    const HEDGEDOC_NOTE = 'presentacion';
+    const REFRESH_INTERVAL = 5;
     const isMaster = new URLSearchParams(window.location.search).get('secret') === SECRET;
     const statusEl = document.getElementById('sync-status');
+    const sourceEl = document.getElementById('source-status');
+    let currentSource = 'static';
+
+    function loadFromHedgedoc() {
+      const urls = [
+        '/hedgedoc-api/download/' + HEDGEDOC_NOTE,
+        'http://hedgedoc:3000/download/' + HEDGEDOC_NOTE,
+      ];
+
+      return fetch(urls[0])
+        .then(r => {
+          if (!r.ok) throw new Error('not found');
+          return r.text();
+        })
+        .then(md => {
+          if (md && md.trim().length > 0 && !md.includes('<!DOCTYPE')) {
+            currentSource = 'hedgedoc';
+            sourceEl.textContent = 'HEDGEDOC (live)';
+            sourceEl.style.background = 'rgba(0,150,0,0.7)';
+            return md;
+          }
+          throw new Error('empty');
+        })
+        .catch(() => {
+          currentSource = 'static';
+          sourceEl.textContent = 'STATIC (local)';
+          sourceEl.style.background = 'rgba(100,100,100,0.5)';
+          return null;
+        });
+    }
+
+    function injectMarkdown(md) {
+      const section = document.getElementById('markdown-slide');
+      section.removeAttribute('data-markdown');
+      section.setAttribute('data-markdown', '');
+      section.innerHTML = '<script type="text/template">' + md + '<\/script>';
+    }
+
+    function reloadPresentation(md) {
+      const section = document.getElementById('markdown-slide');
+      const oldContent = section.querySelector('script[type="text/template"]');
+      const oldMd = oldContent ? oldContent.textContent : '';
+
+      if (oldMd.trim() === md.trim()) return;
+
+      section.innerHTML = '<script type="text/template">' + md + '<\/script>';
+
+      const currentState = Reveal.getState();
+
+      const slides = document.querySelector('.reveal .slides');
+      slides.innerHTML = '';
+      const newSection = document.createElement('section');
+      newSection.id = 'markdown-slide';
+      newSection.innerHTML = '<script type="text/template">' + md + '<\/script>';
+      slides.appendChild(newSection);
+
+      Reveal.sync();
+
+      try { Reveal.setState(currentState); } catch(e) {}
+    }
 
     Reveal.initialize({
       hash: true,
@@ -82,25 +148,27 @@
       };
 
       if (isMaster) {
-        Reveal.on('slidechanged', () => {
-          if (ws.readyState === 1) ws.send(JSON.stringify({ type: 'state', state: Reveal.getState() }));
-        });
-        Reveal.on('fragmentshown', () => {
-          if (ws.readyState === 1) ws.send(JSON.stringify({ type: 'state', state: Reveal.getState() }));
-        });
-        Reveal.on('fragmenthidden', () => {
-          if (ws.readyState === 1) ws.send(JSON.stringify({ type: 'state', state: Reveal.getState() }));
+        ['slidechanged', 'fragmentshown', 'fragmenthidden'].forEach(evt => {
+          Reveal.on(evt, () => {
+            if (ws.readyState === 1) {
+              ws.send(JSON.stringify({ type: 'state', state: Reveal.getState() }));
+            }
+          });
         });
       } else {
         ws.onmessage = (event) => {
           try {
             const msg = JSON.parse(event.data);
-            if (msg.type === 'state' && msg.state) {
-              Reveal.setState(msg.state);
-            }
+            if (msg.type === 'state' && msg.state) Reveal.setState(msg.state);
           } catch {}
         };
       }
+
+      setInterval(() => {
+        loadFromHedgedoc().then(md => {
+          if (md) reloadPresentation(md);
+        });
+      }, REFRESH_INTERVAL * 1000);
     });
   </script>
 </body>

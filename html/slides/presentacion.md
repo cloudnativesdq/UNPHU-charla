@@ -10,27 +10,28 @@ Note: Bienvenidos al sistema de presentaciones UNPHU
 
 Esta presentación está disponible públicamente en internet.
 
-- Cualquiera con el link puede verla
-- El presentador controla las slides
-- La audiencia sigue en sincronía
-
---
-
-## Cómo funciona
-
-| Rol | URL |
-|-----|-----|
-| **Presentador** | `https://tu-url.trycloudflare.com/?secret=unphu-secret-2026` |
-| **Audiencia** | `https://tu-url.trycloudflare.com/` |
+- **Editar**: Ambos editan en HedgeDoc simultáneamente
+- **Ver cambios**: La presentación se actualiza cada 5 segundos
+- **Presentar**: El presentador controla las slides con sync en vivo
 
 ---
 
-## Cómo editar las slides
+## Cómo editar
 
-1. Edita el archivo `slides/presentacion.md`
-2. Usa `---` para separar slides horizontales
-3. Usa `--` para separar slides verticales
-4. Recarga el navegador para ver cambios
+| Acción | URL |
+|--------|-----|
+| **Editar slides** | URL del túnel `tunnel-edit` + `/presentacion` |
+| **Ver presentación** | URL del túnel `tunnel` |
+| **Presentar** | URL del túnel `?secret=unphu-secret-2026` |
+
+--
+
+## Formato de slides
+
+- `---` separa slides horizontales
+- `--` separa slides verticales
+- `Note:` agrega notas del presentador
+- Markdown completo: **negrita**, *cursiva*, código, tablas
 
 ---
 
@@ -55,6 +56,7 @@ def hola_mundo():
 const presentacion = {
   tema: "Docker & Presentaciones",
   framework: "Reveal.js",
+  editor: "HedgeDoc",
   tunnel: "Cloudflare"
 };
 ```
@@ -66,12 +68,6 @@ const presentacion = {
 > "La mejor manera de aprender es enseñar"
 
 Basado en el formato de [container.training](https://qconuk2019.container.training/)
-
----
-
-## Imágenes
-
-![Reveal.js](https://revealjs.com/images/logo/reveal-black-text.svg)
 
 ---
 
@@ -104,10 +100,10 @@ Basado en el formato de [container.training](https://qconuk2019.container.traini
 
 ### Pasos siguientes
 
-1. Edita `slides/presentacion.md` con tu contenido
-2. Ejecuta `docker compose up -d`
-3. Revisa los logs: `docker compose logs tunnel`
-4. Comparte la URL pública
+1. Abre el editor HedgeDoc (URL del túnel edit)
+2. Crea/edita la nota `presentacion`
+3. Comparte la URL de presentación
+4. Presenta con `?secret=unphu-secret-2026`
 
 <div class="center">
 

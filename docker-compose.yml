@@ -13,10 +13,37 @@ services:
     build: ./sync-server
     restart: unless-stopped
 
+  hedgedoc:
+    image: quay.io/hedgedoc/hedgedoc:1.10.0
+    ports:
+      - "3001:3000"
+    environment:
+      - CMD_DB_URL=sqlite:///data/hedgedoc.sqlite
+      - CMD_ALLOW_ORIGIN=["*"]
+      - CMD_ALLOW_ANONYMOUS=true
+      - CMD_ALLOW_ANONYMOUS_EDITS=true
+      - CMD_ALLOW_FREEURL=true
+      - CMD_DEFAULT_PERMISSION=freely
+      - CMD_USECDN=true
+    volumes:
+      - hedgedoc-data:/data
+    restart: unless-stopped
+
   tunnel:
     image: cloudflare/cloudflared:latest
     command: tunnel --url http://revealjs:80
     depends_on:
       - revealjs
       - sync
+      - hedgedoc
     restart: unless-stopped
+
+  tunnel-edit:
+    image: cloudflare/cloudflared:latest
+    command: tunnel --url http://hedgedoc:3000
+    depends_on:
+      - hedgedoc
+    restart: unless-stopped
+
+volumes:
+  hedgedoc-data:
