@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Presentaciones UNPHU</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+  <style>
+    .reveal .slides section { text-align: left; }
+    .reveal .slides section h1, .reveal .slides section h2 { text-align: center; }
+    .reveal section img { border: none; box-shadow: none; max-height: 500px; }
+    .columns { display: flex; gap: 2rem; }
+    .columns > div { flex: 1; }
+    .emoji-big { font-size: 2em; }
+    .center { text-align: center !important; }
+    #sync-status {
+      position: fixed; bottom: 10px; left: 10px; z-index: 100;
+      font-size: 14px; padding: 4px 10px; border-radius: 4px;
+      background: rgba(0,0,0,0.6); color: #fff; font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div id="sync-status"></div>
+
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown="slides/presentacion.md"
+               data-separator="^\n---\n"
+               data-separator-vertical="^\n--\n"
+               data-separator-notes="^Note:">
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/markdown/markdown.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/zoom/zoom.js"></script>
+
+  <script>
+    const SECRET = 'unphu-secret-2026';
+    const isMaster = new URLSearchParams(window.location.search).get('secret') === SECRET;
+    const statusEl = document.getElementById('sync-status');
+
+    Reveal.initialize({
+      hash: true,
+      history: true,
+      transition: 'slide',
+      backgroundTransition: 'fade',
+      slideNumber: 'c/t',
+      showSlideNumber: 'all',
+      overview: true,
+      center: true,
+      touch: true,
+      loop: false,
+      width: 1920,
+      height: 1080,
+      margin: 0.04,
+      plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealZoom]
+    }).then(() => {
+      const wsUrl = (location.protocol === 'https:' ? 'wss:' : 'ws:') + '//' + location.host + '/sync';
+      const ws = new WebSocket(wsUrl);
+
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ type: 'role', role: isMaster ? 'master' : 'client' }));
+        statusEl.textContent = isMaster ? 'PRESENTER' : 'AUDIENCE';
+        statusEl.style.background = isMaster ? 'rgba(0,150,0,0.7)' : 'rgba(0,0,150,0.7)';
+      };
+
+      ws.onclose = () => {
+        statusEl.textContent = 'DISCONNECTED';
+        statusEl.style.background = 'rgba(150,0,0,0.7)';
+      };
+
+      ws.onerror = () => {
+        statusEl.textContent = 'SYNC OFF';
+        statusEl.style.background = 'rgba(100,100,100,0.5)';
+      };
+
+      if (isMaster) {
+        Reveal.on('slidechanged', () => {
+          if (ws.readyState === 1) ws.send(JSON.stringify({ type: 'state', state: Reveal.getState() }));
+        });
+        Reveal.on('fragmentshown', () => {
+          if (ws.readyState === 1) ws.send(JSON.stringify({ type: 'state', state: Reveal.getState() }));
+        });
+        Reveal.on('fragmenthidden', () => {
+          if (ws.readyState === 1) ws.send(JSON.stringify({ type: 'state', state: Reveal.getState() }));
+        });
+      } else {
+        ws.onmessage = (event) => {
+          try {
+            const msg = JSON.parse(event.data);
+            if (msg.type === 'state' && msg.state) {
+              Reveal.setState(msg.state);
+            }
+          } catch {}
+        };
+      }
+    });
+  </script>
+</body>
+</html>
