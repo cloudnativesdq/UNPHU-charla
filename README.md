@@ -87,19 +87,38 @@ vim html/index.html
 docker compose restart revealjs
 ```
 
-### Opcion 2: Usar la skill de Reveal.js con IA (opencode)
+### Opcion 2: Usar la skill de Reveal.js con IA
 
-La skill permite generar y editar presentaciones con comandos de lenguaje natural usando [opencode](https://opencode.ai).
+La skill permite generar y editar presentaciones con comandos de lenguaje natural. Funciona con [Claude Code](https://docs.anthropic.com/en/docs/claude-code) y [opencode](https://opencode.ai).
+
+#### Con Claude Code
 
 ```bash
-# Instalar dependencias de la skill
+# Instalar la skill como plugin de Claude
+claude plugin marketplace add ryanbbrown/revealjs-skill
+claude plugin install revealjs@revealjs-skill
+
+# Instalar dependencias
+npm install --prefix ~/.claude/plugins/cache/revealjs
+
+# O instalar manualmente copiando al directorio de skills
+cp -r .opencode/skills/revealjs ~/.claude/skills/
+
+# Usar desde el directorio del proyecto
+claude
+```
+
+#### Con opencode
+
+```bash
+# Instalar dependencias de la skill (ya incluida en el repo)
 npm install --prefix .opencode/skills/revealjs
 
 # Iniciar opencode en el directorio del proyecto
 opencode
 ```
 
-Dentro de opencode, la skill se activa automaticamente cuando pidas crear o editar presentaciones. Ejemplos:
+#### Ejemplos de prompts
 
 ```
 > Agrega un slide sobre Ingress Controllers despues del slide de Services
