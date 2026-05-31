@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>De 0 a Observabilidad - UNPHU 2026</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- TITLE -->
+      <section id="title" class="section-divider" data-state="is-section-divider">
+        <p><img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="K8s" style="max-height:120px; border:none; box-shadow:none; background:none;"></p>
+        <h1>De 0 a Observabilidad</h1>
+        <p>Construyendo un stack completo con Kubernetes</p>
+        <p class="text-muted" style="margin-top:20pt;">UNPHU &bull; 10:00 AM - 12:00 PM &bull; 2026</p>
+        <aside class="notes">Bienvenidos. En 2 horas construiremos un stack completo desde un contenedor suelto hasta observabilidad total.</aside>
+      </section>
+
+      <!-- DIVIDER: PASO 1 -->
+      <section id="divider-containers" class="section-divider" data-state="is-section-divider">
+        <p class="text-muted text-uppercase">Paso 1</p>
+        <h1><i class="fa-brands fa-docker"></i> Contenedores</h1>
+        <p>Empaquetando aplicaciones de forma portable</p>
+      </section>
+
+      <!-- WHY CONTAINERS -->
+      <section>
+        <section id="why-containers">
+          <h2>Por que contenedores?</h2>
+          <div class="content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+            <div style="background:rgba(231,76,60,0.1); border:1px solid rgba(231,76,60,0.3); border-radius:8px; padding:20px;">
+              <h3 style="color:var(--accent-red);"><i class="fa-solid fa-xmark"></i> Sin contenedores</h3>
+              <ul>
+                <li>"Funciona en mi maquina"</li>
+                <li>Dependencias conflictivas</li>
+                <li>Deployments inconsistentes</li>
+                <li>Provisioning lento (horas)</li>
+              </ul>
+            </div>
+            <div style="background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); border-radius:8px; padding:20px;">
+              <h3 style="color:var(--accent-green);"><i class="fa-solid fa-check"></i> Con contenedores</h3>
+              <ul>
+                <li>Mismo entorno everywhere</li>
+                <li>Dependencias aisladas</li>
+                <li>Imagen inmutable</li>
+                <li>Provisioning en segundos</li>
+              </ul>
+            </div>
+          </div>
+          <aside class="notes">Los contenedores resuelven el problema de "funciona en mi maquina". Cada contenedor tiene su propio filesystem, red y procesos.</aside>
+        </section>
+
+        <section id="dockerfile">
+          <h2>Dockerfile</h2>
+          <div class="content">
+            <pre><code class="dockerfile" data-trim data-line-numbers>
+FROM python:3.12-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+EXPOSE 8000
+HEALTHCHECK CMD curl -f http://localhost:8000/health || exit 1
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+            </code></pre>
+            <p style="margin-top:15pt;" class="text-muted"><i class="fa-solid fa-terminal"></i> <code>docker build -t mi-app:v1 . && docker run -p 8000:8000 mi-app:v1</code></p>
+          </div>
+          <aside class="notes">Dockerfile define los pasos para construir la imagen. FROM=base, COPY=archivos, RUN=comandos, CMD=proceso principal. HEALTHCHECK es crucial para Kubernetes.</aside>
+        </section>
+      </section>
+
+      <!-- COMPOSE -->
+      <section id="compose">
+        <h2>Docker Compose: Stack local</h2>
+        <div class="content">
+          <pre><code class="yaml" data-trim data-line-numbers>
+services:
+  app:
+    build: .
+    ports: ["8000:8000"]
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      DATABASE_URL: postgres://user:pass@db:5432/mydb
+
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: mydb
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 5s
+
+  redis:
+    image: redis:7-alpine
+          </code></pre>
+          <p style="margin-top:12pt;" class="text-muted"><i class="fa-solid fa-arrow-right"></i> App + Postgres + Redis con un solo <code>docker compose up -d</code></p>
+        </div>
+        <aside class="notes">Compose nos permite definir un stack multi-container localmente. Los healthchecks son importantes para el orden de arranque.</aside>
+      </section>
+
+      <!-- DIVIDER: KUBERNETES -->
+      <section id="divider-k8s" class="section-divider" data-state="is-section-divider">
+        <p class="text-muted text-uppercase">Paso 2</p>
+        <h1><img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="" style="max-height:50px; border:none; box-shadow:none; background:none; vertical-align:middle;"> Kubernetes</h1>
+        <p>Orquestacion de contenedores a escala</p>
+      </section>
+
+      <!-- K8S HISTORY -->
+      <section id="k8s-history">
+        <h2>Historia rapida</h2>
+        <div class="content">
+          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:15px;">
+            <div style="background:rgba(50,108,229,0.1); border:1px solid rgba(50,108,229,0.3); border-radius:8px; padding:15px; text-align:center;">
+              <p class="text-primary font-bold">2003</p>
+              <p><strong>Borg</strong></p>
+              <p class="text-muted">Google gestiona billones de contenedores/semana</p>
+            </div>
+            <div style="background:rgba(50,108,229,0.1); border:1px solid rgba(50,108,229,0.3); border-radius:8px; padding:15px; text-align:center;">
+              <p class="text-primary font-bold">2014</p>
+              <p><strong>Open Source</strong></p>
+              <p class="text-muted">Google libera Kubernetes basado en 10 anos de experiencia</p>
+            </div>
+            <div style="background:rgba(50,108,229,0.1); border:1px solid rgba(50,108,229,0.3); border-radius:8px; padding:15px; text-align:center;">
+              <p class="text-primary font-bold">2015</p>
+              <p><strong>v1.0</strong></p>
+              <p class="text-muted">Primera release estable. Donado a la CNCF</p>
+            </div>
+            <div style="background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); border-radius:8px; padding:15px; text-align:center;">
+              <p class="font-bold" style="color:var(--accent-green);">2026</p>
+              <p><strong>Estandar</strong></p>
+              <p class="text-muted">EKS, AKS, GKE. Miles de empresas</p>
+            </div>
+          </div>
+        </div>
+        <aside class="notes">K8s viene de 10+ anos de Google corriendo contenedores a escala con Borg y Omega.</aside>
+      </section>
+
+      <!-- DIVIDER: ARCHITECTURE -->
+      <section id="divider-arch" class="section-divider" data-state="is-section-divider">
+        <p class="text-muted text-uppercase">Arquitectura</p>
+        <h1><i class="fa-solid fa-diagram-project"></i> Como funciona K8s</h1>
+      </section>
+
+      <!-- CONTROL PLANE -->
+      <section id="control-plane">
+        <h2>Control Plane</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+          <div style="background:rgba(50,108,229,0.08); border:1px solid rgba(50,108,229,0.2); border-radius:8px; padding:18px;">
+            <p><i class="fa-solid fa-server text-primary"></i> <strong>API Server</strong></p>
+            <p class="text-muted">Puerta de entrada. API REST central. Todo comunica a traves de aqui.</p>
+          </div>
+          <div style="background:rgba(50,108,229,0.08); border:1px solid rgba(50,108,229,0.2); border-radius:8px; padding:18px;">
+            <p><i class="fa-solid fa-database text-primary"></i> <strong>etcd</strong></p>
+            <p class="text-muted">Base de datos key-value distribuida. Guarda TODO el estado del cluster.</p>
+          </div>
+          <div style="background:rgba(50,108,229,0.08); border:1px solid rgba(50,108,229,0.2); border-radius:8px; padding:18px;">
+            <p><i class="fa-solid fa-calendar-check text-primary"></i> <strong>Scheduler</strong></p>
+            <p class="text-muted">Asigna pods a nodos segun recursos disponibles y reglas.</p>
+          </div>
+          <div style="background:rgba(50,108,229,0.08); border:1px solid rgba(50,108,229,0.2); border-radius:8px; padding:18px;">
+            <p><i class="fa-solid fa-gears text-primary"></i> <strong>Controllers</strong></p>
+            <p class="text-muted">Vigilan que el estado real coincida con el estado deseado.</p>
+          </div>
+        </div>
+        <aside class="notes">El API server es la puerta de entrada. etcd guarda TODO. El scheduler decide donde van los pods. Los controladores mantienen el estado deseado.</aside>
+      </section>
+
+      <!-- WORKERS -->
+      <section id="worker-nodes">
+        <h2>Nodos Worker</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
+          <div style="background:rgba(50,108,229,0.08); border:1px solid rgba(50,108,229,0.2); border-radius:8px; padding:18px; text-align:center;">
+            <p><i class="fa-solid fa-cube text-primary text-2xl"></i></p>
+            <p><strong>kubelet</strong></p>
+            <p class="text-muted">Agente en cada nodo. Gestiona ciclo de vida de pods.</p>
+          </div>
+          <div style="background:rgba(50,108,229,0.08); border:1px solid rgba(50,108,229,0.2); border-radius:8px; padding:18px; text-align:center;">
+            <p><i class="fa-solid fa-network-wired text-primary text-2xl"></i></p>
+            <p><strong>kube-proxy</strong></p>
+            <p class="text-muted">Reglas de red. Implementa Services y routing.</p>
+          </div>
+          <div style="background:rgba(50,108,229,0.08); border:1px solid rgba(50,108,229,0.2); border-radius:8px; padding:18px; text-align:center;">
+            <p><i class="fa-solid fa-box text-primary text-2xl"></i></p>
+            <p><strong>containerd</strong></p>
+            <p class="text-muted">Runtime que ejecuta los contenedores.</p>
+          </div>
+        </div>
+        <aside class="notes">Cada nodo ejecuta kubelet, kube-proxy y un container runtime. Se registran con el control plane.</aside>
+      </section>
+
+      <!-- DIVIDER: OBJECTS -->
+      <section id="divider-objects" class="section-divider" data-state="is-section-divider">
+        <p class="text-muted text-uppercase">Paso 3</p>
+        <h1><i class="fa-solid fa-cubes"></i> Objetos de K8s</h1>
+        <p>Pods, Deployments, Services</p>
+      </section>
+
+      <!-- PODS -->
+      <section id="pods">
+        <h2>Pods</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
+          <div>
+            <ul>
+              <li><strong>1 o mas contenedores</strong> por pod</li>
+              <li>Comparten <strong>misma IP</strong> y almacenamiento</li>
+              <li>Son <strong>efimeros</strong>: se crean y destruyen</li>
+              <li>En produccion: usar <strong>Deployments</strong></li>
+              <li>Siempre definir <strong>resources</strong> (requests/limits)</li>
+            </ul>
+          </div>
+          <div>
+            <pre><code class="yaml" data-trim data-line-numbers>
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mi-app
+  labels:
+    app: mi-app
+spec:
+  containers:
+  - name: app
+    image: mi-app:v1
+    ports:
+    - containerPort: 8000
+    resources:
+      requests:
+        memory: "128Mi"
+        cpu: "100m"
+            </code></pre>
+          </div>
+        </div>
+        <aside class="notes">Un Pod es como un host logico. Contenedores comparten red. Es efimero - si muere, se reemplaza. Por eso en produccion usamos Deployments.</aside>
+      </section>
+
+      <!-- DEPLOYMENTS -->
+      <section id="deployments">
+        <h2>Deployments</h2>
+        <div class="content">
+          <pre><code class="yaml" data-trim data-line-numbers="1-8|10-16|18-25">
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mi-app
+  labels:
+    app: mi-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mi-app
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: mi-app
+    spec:
+      containers:
+      - name: app
+        image: mi-app:v1
+          </code></pre>
+          <p style="margin-top:10pt;">
+            <span class="tag tag-blue">3 replicas</span>
+            <span class="tag tag-green">Rolling Update</span>
+            <span class="tag tag-orange">Auto-healing</span>
+            <span class="tag tag-red">Rollback</span>
+          </p>
+        </div>
+        <aside class="notes">Deployment gestiona ReplicaSets que gestionan Pods. Rolling update = zero downtime. Rollback instantaneo con kubectl rollout undo.</aside>
+      </section>
+
+      <!-- DIVIDER: SERVICES -->
+      <section id="divider-services" class="section-divider" data-state="is-section-divider">
+        <p class="text-muted text-uppercase">Paso 4</p>
+        <h1><i class="fa-solid fa-network-wired"></i> Services y Config</h1>
+      </section>
+
+      <!-- SERVICES -->
+      <section id="services">
+        <h2>Services</h2>
+        <div class="content">
+          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px; margin-bottom:15px;">
+            <div style="background:rgba(243,156,18,0.1); border:1px solid rgba(243,156,18,0.3); border-radius:8px; padding:12px; text-align:center;">
+              <p><strong style="color:var(--accent-orange);">ClusterIP</strong></p>
+              <p class="text-muted">Interno. DNS automatico.</p>
+            </div>
+            <div style="background:rgba(46,204,113,0.1); border:1px solid rgba(46,204,113,0.3); border-radius:8px; padding:12px; text-align:center;">
+              <p><strong style="color:var(--accent-green);">NodePort</strong></p>
+              <p class="text-muted">Puerto del nodo (30000+)</p>
+            </div>
+            <div style="background:rgba(50,108,229,0.1); border:1px solid rgba(50,108,229,0.3); border-radius:8px; padding:12px; text-align:center;">
+              <p><strong class="text-primary">LoadBalancer</strong></p>
+              <p class="text-muted">LB externo del cloud</p>
+            </div>
+          </div>
+          <pre><code class="yaml" data-trim data-line-numbers>
+apiVersion: v1
+kind: Service
+metadata:
+  name: mi-app
+spec:
+  selector:
+    app: mi-app
+  ports:
+  - port: 80
+    targetPort: 8000
+          </code></pre>
+        </div>
+        <aside class="notes">Services dan IP estable y DNS a pods efimeros. ClusterIP es default para comunicacion interna.</aside>
+      </section>
+
+      <!-- CONFIGMAPS & SECRETS -->
+      <section id="config">
+        <h2>ConfigMaps y Secrets</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+          <div style="background:rgba(46,204,113,0.08); border:1px solid rgba(46,204,113,0.2); border-radius:8px; padding:15px;">
+            <p><i class="fa-solid fa-sliders" style="color:var(--accent-green);"></i> <strong style="color:var(--accent-green);">ConfigMap</strong></p>
+            <p class="text-muted">Configuracion no sensible</p>
+            <pre><code class="yaml" data-trim>
+data:
+  DB_HOST: "postgres.default"
+  LOG_LEVEL: "info"
+  CACHE_TTL: "300"
+            </code></pre>
+          </div>
+          <div style="background:rgba(231,76,60,0.08); border:1px solid rgba(231,76,60,0.2); border-radius:8px; padding:15px;">
+            <p><i class="fa-solid fa-key" style="color:var(--accent-red);"></i> <strong style="color:var(--accent-red);">Secret</strong></p>
+            <p class="text-muted">Datos sensibles (base64)</p>
+            <pre><code class="yaml" data-trim>
+type: Opaque
+data:
+  DB_PASS: c3VwZXJzZWNyZXQ=
+stringData:
+  API_KEY: "live-key-123"
+            </code></pre>
+          </div>
+        </div>
+        <aside class="notes">Misma imagen, diferentes ConfigMaps para dev/staging/prod. Secrets son base64, no encriptacion. Habilitar encryption at rest en produccion.</aside>
+      </section>
+
+      <!-- DIVIDER: SCALING -->
+      <section id="divider-scaling" class="section-divider" data-state="is-section-divider">
+        <p class="text-muted text-uppercase">Paso 5</p>
+        <h1><i class="fa-solid fa-arrows-up-down"></i> Escalado</h1>
+      </section>
+
+      <!-- HPA -->
+      <section id="hpa">
+        <h2>Horizontal Pod Autoscaler</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
+          <div>
+            <p>Escala pods automaticamente segun metricas:</p>
+            <ul>
+              <li><i class="fa-solid fa-microchip text-primary"></i> CPU utilization</li>
+              <li><i class="fa-solid fa-memory text-primary"></i> Memoria</li>
+              <li><i class="fa-solid fa-chart-line text-primary"></i> Metricas custom</li>
+            </ul>
+            <p style="margin-top:15pt;" class="text-muted">replicas = ceil(current x (actual / target))</p>
+          </div>
+          <div>
+            <pre><code class="yaml" data-trim data-line-numbers>
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mi-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: mi-app
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+            </code></pre>
+          </div>
+        </div>
+        <aside class="notes">HPA lee metricas del Metrics Server. Si CPU > 70% escala up, si baja escala down con cooldown.</aside>
+      </section>
+
+      <!-- DIVIDER: OBSERVABILITY -->
+      <section id="divider-obs" class="section-divider" data-state="is-section-divider">
+        <p class="text-muted text-uppercase">Paso 6</p>
+        <h1><i class="fa-solid fa-eye"></i> Observabilidad</h1>
+        <p>Metricas + Logs + Traces</p>
+      </section>
+
+      <!-- 3 PILLARS -->
+      <section id="three-pillars">
+        <h2>Los 3 pilares</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
+          <div style="background:rgba(232,145,58,0.12); border:2px solid rgba(232,145,58,0.4); border-radius:10px; padding:20px; text-align:center;">
+            <p><i class="fa-solid fa-chart-line" style="color:#e8913a; font-size:28pt;"></i></p>
+            <h3 style="color:#e8913a;">Metricas</h3>
+            <p><strong>Prometheus</strong></p>
+            <p class="text-muted">CPU, memoria, requests, latency</p>
+          </div>
+          <div style="background:rgba(245,158,11,0.12); border:2px solid rgba(245,158,11,0.4); border-radius:10px; padding:20px; text-align:center;">
+            <p><i class="fa-solid fa-scroll" style="color:#f59e0b; font-size:28pt;"></i></p>
+            <h3 style="color:#f59e0b;">Logs</h3>
+            <p><strong>Loki + Promtail</strong></p>
+            <p class="text-muted">Errores, stack traces, eventos</p>
+          </div>
+          <div style="background:rgba(59,130,246,0.12); border:2px solid rgba(59,130,246,0.4); border-radius:10px; padding:20px; text-align:center;">
+            <p><i class="fa-solid fa-route" style="color:#3b82f6; font-size:28pt;"></i></p>
+            <h3 style="color:#3b82f6;">Traces</h3>
+            <p><strong>Tempo + OpenTelemetry</strong></p>
+            <p class="text-muted">Flujo de requests end-to-end</p>
+          </div>
+        </div>
+        <aside class="notes">Los 3 pilares de observabilidad. No se puede debuguear produccion sin ellos. Grafana unifica todo.</aside>
+      </section>
+
+      <!-- PROMETHEUS -->
+      <section id="prometheus">
+        <h2>Prometheus</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+          <div>
+            <ul>
+              <li><strong>Pull model</strong>: scrapea endpoints /metrics</li>
+              <li><strong>PromQL</strong>: lenguaje de consultas poderoso</li>
+              <li><strong>Alertmanager</strong>: alertas a email/slack</li>
+              <li><strong>ServiceMonitor</strong>: auto-discovery en K8s</li>
+            </ul>
+            <pre><code class="promql" data-trim>
+# Requests por segundo
+rate(http_requests_total[5m])
+
+# P99 latency
+histogram_quantile(0.99,
+  rate(http_duration_bucket[5m]))
+            </code></pre>
+          </div>
+          <div>
+            <pre><code class="yaml" data-trim data-line-numbers>
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus
+spec:
+  serviceAccountName: prometheus
+  serviceMonitorSelector:
+    matchLabels:
+      team: frontend
+  resources:
+    requests:
+      memory: 400Mi
+            </code></pre>
+          </div>
+        </div>
+        <aside class="notes">Prometheus es el estandar de facto para metricas en Kubernetes. ServiceMonitores hacen auto-discovery de pods.</aside>
+      </section>
+
+      <!-- LOKI -->
+      <section id="loki">
+        <h2>Loki + Promtail</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+          <div>
+            <pre><code class="yaml" data-trim data-line-numbers>
+# Promtail - DaemonSet en cada nodo
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: promtail
+spec:
+  template:
+    spec:
+      containers:
+      - name: promtail
+        image: grafana/promtail:latest
+        volumeMounts:
+        - name: varlog
+          mountPath: /var/log
+        - name: containers
+          mountPath: /var/lib/docker/containers
+            </code></pre>
+          </div>
+          <div>
+            <pre><code class="logql" data-trim>
+# Buscar errores
+{app="mi-app"}
+  |= "error"
+  | json
+  | status >= 500
+
+# Rate de errores por pod
+sum(rate({app="mi-app"}
+  |= "error" [5m])) by (pod)
+            </code></pre>
+            <ul>
+              <li>DaemonSet: un Promtail por nodo</li>
+              <li>LogQL: consulta como PromQL</li>
+              <li>Indexa labels, no texto completo</li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">Loki es mas economico que Elasticsearch. Promtail corre como DaemonSet. LogQL permite filtrar y agregar.</aside>
+      </section>
+
+      <!-- GRAFANA + TRACES -->
+      <section id="grafana-unified">
+        <h2>Grafana: Unificando todo</h2>
+        <div class="content">
+          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px; margin-bottom:15px;">
+            <div style="background:rgba(232,145,58,0.1); border:1px solid rgba(232,145,58,0.3); border-radius:8px; padding:15px; text-align:center;">
+              <p><strong style="color:#e8913a;">Metricas</strong></p>
+              <p class="text-muted">Prometheus datasource</p>
+            </div>
+            <div style="background:rgba(245,158,11,0.1); border:1px solid rgba(245,158,11,0.3); border-radius:8px; padding:15px; text-align:center;">
+              <p><strong style="color:#f59e0b;">Logs</strong></p>
+              <p class="text-muted">Loki datasource</p>
+            </div>
+            <div style="background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.3); border-radius:8px; padding:15px; text-align:center;">
+              <p><strong style="color:#3b82f6;">Traces</strong></p>
+              <p class="text-muted">Tempo datasource</p>
+            </div>
+          </div>
+          <p class="text-center text-lg" style="margin-top:10pt;">
+            <span class="tag tag-orange">Alerta en Prometheus</span>
+            <i class="fa-solid fa-arrow-right text-muted"></i>
+            <span class="tag tag-blue">Ver log en Loki</span>
+            <i class="fa-solid fa-arrow-right text-muted"></i>
+            <span class="tag tag-green">Saltar al trace en Tempo</span>
+          </p>
+        </div>
+        <aside class="notes">Grafana unifica los 3 pilares. Click en metrica te lleva al log, click en log te lleva al trace.</aside>
+      </section>
+
+      <!-- COMPLETE STACK -->
+      <section id="complete-stack">
+        <h2>El Stack Completo</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+          <div>
+            <div style="border-left:4px solid var(--primary-color); padding:8px 15px; margin:6px 0; background:rgba(50,108,229,0.08); border-radius:0 8px 8px 0;">
+              <p><strong>Docker</strong> &mdash; Imagenes y contenedores</p>
+            </div>
+            <div style="border-left:4px solid var(--primary-color); padding:8px 15px; margin:6px 0; background:rgba(50,108,229,0.08); border-radius:0 8px 8px 0;">
+              <p><strong>Compose</strong> &mdash; Multi-container local</p>
+            </div>
+            <div style="border-left:4px solid var(--primary-color); padding:8px 15px; margin:6px 0; background:rgba(50,108,229,0.08); border-radius:0 8px 8px 0;">
+              <p><strong>Kubernetes</strong> &mdash; Pods, Deployments, Services</p>
+            </div>
+            <div style="border-left:4px solid var(--primary-color); padding:8px 15px; margin:6px 0; background:rgba(50,108,229,0.08); border-radius:0 8px 8px 0;">
+              <p><strong>Config</strong> &mdash; ConfigMaps, Secrets</p>
+            </div>
+            <div style="border-left:4px solid var(--primary-color); padding:8px 15px; margin:6px 0; background:rgba(50,108,229,0.08); border-radius:0 8px 8px 0;">
+              <p><strong>Scaling</strong> &mdash; HPA auto-scaling</p>
+            </div>
+            <div style="border-left:4px solid var(--accent-green); padding:8px 15px; margin:6px 0; background:rgba(46,204,113,0.08); border-radius:0 8px 8px 0;">
+              <p><strong>Observabilidad</strong> &mdash; Prometheus + Loki + Tempo + Grafana</p>
+            </div>
+          </div>
+          <div>
+            <pre><code class="bash" data-trim style="font-size:10pt;">
+kubectl get pods -A
+
+NAMESPACE    NAME                       READY
+monitoring   prometheus-0                1/1
+monitoring   grafana-abc123              1/1
+monitoring   loki-0                      1/1
+monitoring   tempo-0                     1/1
+monitoring   promtail-xyz                1/1
+default      mi-app-7d4b8c9f-x2k5        1/1
+default      mi-app-7d4b8c9f-m8n3        1/1
+default      mi-app-7d4b8c9f-p4q7        1/1
+default      postgres-0                  1/1
+default      redis-master-0              1/1
+            </code></pre>
+          </div>
+        </div>
+        <aside class="notes">De un docker run a un stack completo con observabilidad en 2 horas.</aside>
+      </section>
+
+      <!-- CLOSING -->
+      <section id="closing" class="section-divider" data-state="is-section-divider">
+        <p><img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="K8s" style="max-height:100px; border:none; box-shadow:none; background:none;"></p>
+        <h1>Gracias!</h1>
+        <p>Preguntas?</p>
+        <p class="text-muted" style="margin-top:20pt; font-size:14pt;">
+          <i class="fa-solid fa-keyboard"></i> S speaker view &bull;
+          <i class="fa-solid fa-border-all"></i> O overview &bull;
+          <i class="fa-solid fa-search"></i> Ctrl+Shift+F buscar
+        </p>
+        <aside class="notes">Gracias. Todo el codigo esta en github.com/cloudnativesdq/UNPHU-charla</aside>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chart/plugin.js"></script>
+  <script>
+    Reveal.initialize({
+      width: 1280,
+      height: 720,
+      margin: 0,
+      controls: true,
+      progress: true,
+      slideNumber: 'c/t',
+      hash: true,
+      history: true,
+      transition: 'slide',
+      center: false,
+      plugins: [RevealChart],
+      chart: {
+        defaults: Object.assign({
+          color: 'rgba(230, 237, 243, 0.8)',
+          borderColor: 'rgba(230, 237, 243, 0.8)',
+          devicePixelRatio: 2
+        }, window.location.search.includes('export') ? { animation: false } : {})
+      }
+    });
+  </script>
+</body>
+</html>

@@ -4,8 +4,7 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./html/slides:/usr/share/nginx/html/slides:ro
-      - ./html/index.html:/usr/share/nginx/html/index.html:ro
+      - ./html/presentation:/usr/share/nginx/html:ro
       - ./html/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     restart: unless-stopped
 
