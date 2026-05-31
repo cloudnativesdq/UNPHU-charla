@@ -46,7 +46,7 @@ link-shortener-app/
 - **GET /<short_code>** - Redirecciona a la URL original (HTTP 302)
 - **GET /stats/<short_code>** - Obtiene estadísticas de un código (TTL, URL original)
 - **GET /health** - Health check del servicio
-
+- **GET /ping** - Health check del servicio sin DB
 ### Frontend
 
 - Interfaz minimalista con diseño responsive
