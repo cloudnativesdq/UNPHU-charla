@@ -41,10 +41,10 @@ minikube dashboard
 eval $(minikube docker-env)
 
 # Construir imágenes dentro de Minikube
-cd ~/Desktop/link-shortener-app/apps/backend
+cd ./apps/backend
 docker build -t link-backend:v1 .
 
-cd ~/Desktop/link-shortener-app/apps/frontend
+cd ./apps/frontend
 docker build -t link-frontend:v1 .
 
 # Verificar
@@ -56,7 +56,7 @@ docker images | grep link-
 ### Paso 2.1: Crear Namespace
 
 ```bash
-cd ~/Desktop/link-shortener-app/practice/lab-03-kubernetes-essentials
+cd ./practice/lab-03-kubernetes-essentials
 mkdir -p manifests
 ```
 
@@ -436,7 +436,7 @@ curl -X POST $BACKEND_URL/shorten \
 
 ```bash
 # Simular cambio en código
-cd ~/Desktop/link-shortener-app/apps/backend
+cd ./apps/backend
 docker build -t link-backend:v2 .
 
 # Ver estrategia actual

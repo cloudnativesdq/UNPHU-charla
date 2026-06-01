@@ -40,11 +40,18 @@ docker --version  # Debe ser 20.10+
 docker ps
 
 # Instalar Trivy (escáner de vulnerabilidades)
+# docs: https://github.com/aquasecurity/trivy
 # WSL2/Linux:
 wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
 echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
 sudo apt-get update
 sudo apt-get install trivy
+
+# Windows
+choco install trivy
+
+# MacOs
+brew install trivy
 
 # Alternativa con Docker:
 alias trivy='docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy'
@@ -55,7 +62,7 @@ alias trivy='docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquase
 ### Paso 1.1: Examinar el Código del Backend
 
 ```bash
-cd ~/Desktop/link-shortener-app/apps/backend
+cd ./apps/backend
 ls -la
 # Verás: app/ requirements.txt Dockerfile
 ```
@@ -208,7 +215,7 @@ docker images | grep link-backend
 ### Paso 3.1: Ir al Directorio Frontend
 
 ```bash
-cd ~/Desktop/link-shortener-app/apps/frontend
+cd ./apps/frontend
 ```
 
 ### Paso 3.2: Crear Dockerfile Multi-Stage

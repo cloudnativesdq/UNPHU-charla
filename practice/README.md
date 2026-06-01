@@ -13,6 +13,8 @@ Aprender a containerizar, orquestar y gestionar aplicaciones en producción usan
 - **Minikube** (v1.30+)
 - **kubectl** (cliente de Kubernetes)
 - **Git**
+- **jq**
+- **trivy** (escaner de vulnerabilidades) (Opcional)
 
 ### Conocimientos Previos
 - Comandos básicos de Linux (cd, ls, cat, grep)
@@ -119,9 +121,8 @@ Resuelve incidentes reales simulados: crashloops, fallos de conexión, OOM kills
 ### 1. Clonar el Repositorio
 
 ```bash
-cd ~/Desktop
-git clone <URL_DEL_REPO>
-cd link-shortener-app
+git clone git@github.com:cloudnativesdq/UNPHU-charla.git
+cd UNPHU-charla
 ```
 
 ### 2. Verificar Estructura

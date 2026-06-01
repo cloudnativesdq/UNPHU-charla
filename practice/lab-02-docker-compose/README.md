@@ -24,7 +24,7 @@
 ### Paso 1.1: Crear Estructura
 
 ```bash
-cd ~/Desktop/link-shortener-app/practice/lab-02-docker-compose
+cd ./practice/lab-02-docker-compose
 mkdir -p configs
 ```
 
@@ -33,8 +33,6 @@ mkdir -p configs
 Crea `docker-compose.starter.yml`:
 
 ```yaml
-version: '3.8'
-
 services:
   redis:
     image: redis:7-alpine
@@ -87,8 +85,6 @@ docker-compose -f docker-compose.starter.yml ps
 Crea `docker-compose.networks.yml`:
 
 ```yaml
-version: '3.8'
-
 services:
   redis:
     image: redis:7-alpine
@@ -150,8 +146,6 @@ docker-compose -f docker-compose.networks.yml exec frontend ping redis
 Crea `docker-compose.volumes.yml`:
 
 ```yaml
-version: '3.8'
-
 services:
   redis:
     image: redis:7-alpine
@@ -199,29 +193,7 @@ volumes:
     driver: local
 ```
 
-### Paso 3.2: Crear Configuración de Redis
-
-Crea `configs/redis.conf`:
-
-```conf
-# Persistencia
-save 60 1000
-appendonly yes
-appendfsync everysec
-
-# Seguridad
-protected-mode yes
-bind 0.0.0.0
-
-# Memoria
-maxmemory 256mb
-maxmemory-policy allkeys-lru
-
-# Logs
-loglevel notice
-```
-
-### Paso 3.3: Probar Persistencia
+### Paso 3.2: Probar Persistencia
 
 ```bash
 docker-compose -f docker-compose.volumes.yml up -d
@@ -240,7 +212,7 @@ docker-compose -f docker-compose.volumes.yml down
 docker-compose -f docker-compose.volumes.yml up -d
 
 # Verificar que el dato persiste
-curl http://localhost:5000/stats/abc123
+curl http://localhost:5000/stats/`hash_codigo`
 # Debe devolver los stats guardados
 ```
 
@@ -251,8 +223,6 @@ curl http://localhost:5000/stats/abc123
 Crea `docker-compose.complete.yml`:
 
 ```yaml
-version: '3.8'
-
 services:
   redis:
     image: redis:7-alpine
@@ -289,7 +259,12 @@ services:
       redis:
         condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      test: [
+        "CMD", 
+        "python", 
+        "-c", 
+        "\"import requests; requests.get('http://localhost:5000/health')\""
+      ]
       interval: 30s
       timeout: 3s
       retries: 3
@@ -384,7 +359,7 @@ docker-compose -f docker-compose.complete.yml start redis
 
 ```bash
 # Simular crash
-docker-compose -f docker-compose.complete.yml exec backend kill 1
+docker-compose -f docker-compose.complete.yml exec backend bash -c "kill 1"
 
 # Verificar restart automático
 docker-compose -f docker-compose.complete.yml ps
