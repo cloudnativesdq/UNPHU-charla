@@ -87,6 +87,7 @@ docker-compose up --build -d
 | GET | /<short_code> | Redirect to original |
 | GET | /stats/<short_code> | Get statistics |
 | GET | /health | Health check |
+| GET | /ping | Health check sin DB|
 
 ## Features
 
