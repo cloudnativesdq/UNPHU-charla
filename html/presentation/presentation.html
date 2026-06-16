@@ -6,9 +6,9 @@
   <title>De 0 a Observabilidad - UNPHU 2026</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <div class="reveal">
@@ -28,36 +28,35 @@
         <p>Empaquetando aplicaciones de forma portable</p>
       </section>
 
-      <section>
-        <section id="why-containers">
-          <h2>Por que contenedores?</h2>
-          <div class="content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-            <div class="card" style="border-color: rgba(248,81,73,0.25);">
-              <h3 style="color:var(--accent-red);"><i class="fa-solid fa-xmark"></i> Sin contenedores</h3>
-              <ul>
-                <li>"Funciona en mi maquina"</li>
-                <li>Dependencias conflictivas</li>
-                <li>Deployments inconsistentes</li>
-                <li>Provisioning lento (horas)</li>
-              </ul>
-            </div>
-            <div class="card" style="border-color: rgba(63,185,80,0.25);">
-              <h3 style="color:var(--accent-green);"><i class="fa-solid fa-check"></i> Con contenedores</h3>
-              <ul>
-                <li>Mismo entorno everywhere</li>
-                <li>Dependencias aisladas</li>
-                <li>Imagen inmutable</li>
-                <li>Provisioning en segundos</li>
-              </ul>
-            </div>
+      <section id="why-containers">
+        <h2>Por que contenedores?</h2>
+        <div class="content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+          <div class="card" style="border-color: rgba(248,81,73,0.25);">
+            <h3 style="color:var(--accent-red);"><i class="fa-solid fa-xmark"></i> Sin contenedores</h3>
+            <ul>
+              <li>"Funciona en mi maquina"</li>
+              <li>Dependencias conflictivas</li>
+              <li>Deployments inconsistentes</li>
+              <li>Provisioning lento (horas)</li>
+            </ul>
           </div>
-          <aside class="notes">Los contenedores resuelven el problema de "funciona en mi maquina". Cada contenedor tiene su propio filesystem, red y procesos.</aside>
-        </section>
+          <div class="card" style="border-color: rgba(63,185,80,0.25);">
+            <h3 style="color:var(--accent-green);"><i class="fa-solid fa-check"></i> Con contenedores</h3>
+            <ul>
+              <li>Mismo entorno everywhere</li>
+              <li>Dependencias aisladas</li>
+              <li>Imagen inmutable</li>
+              <li>Provisioning en segundos</li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">Los contenedores resuelven el problema de "funciona en mi maquina". Cada contenedor tiene su propio filesystem, red y procesos.</aside>
+      </section>
 
-        <section id="dockerfile">
-          <h2>Dockerfile</h2>
-          <div class="content">
-            <pre><code class="dockerfile" data-trim data-line-numbers>
+      <section id="dockerfile">
+        <h2>Dockerfile</h2>
+        <div class="content">
+          <pre><code class="language-dockerfile" data-trim data-line-numbers>
 FROM python:3.12-slim
 
 WORKDIR /app
@@ -69,17 +68,16 @@ EXPOSE 8000
 HEALTHCHECK CMD curl -f http://localhost:8000/health || exit 1
 
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-            </code></pre>
-            <p style="margin-top:15pt;" class="text-muted"><i class="fa-solid fa-terminal"></i> <code>docker build -t mi-app:v1 . && docker run -p 8000:8000 mi-app:v1</code></p>
-          </div>
-          <aside class="notes">Dockerfile define los pasos para construir la imagen. FROM=base, COPY=archivos, RUN=comandos, CMD=proceso principal. HEALTHCHECK es crucial para Kubernetes.</aside>
-        </section>
+          </code></pre>
+          <p style="margin-top:15pt;" class="text-muted"><i class="fa-solid fa-terminal"></i> <code>docker build -t mi-app:v1 . && docker run -p 8000:8000 mi-app:v1</code></p>
+        </div>
+        <aside class="notes">Dockerfile define los pasos para construir la imagen. FROM=base, COPY=archivos, RUN=comandos, CMD=proceso principal. HEALTHCHECK es crucial para Kubernetes.</aside>
       </section>
 
       <section id="compose">
         <h2>Docker Compose: Stack local</h2>
         <div class="content">
-          <pre><code class="yaml" data-trim data-line-numbers>
+          <pre><code class="language-yaml" data-trim data-line-numbers>
 services:
   app:
     build: .
@@ -95,7 +93,7 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: mydb
-    volumes: [pgdata:/var/lib/postgresql/data]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
     healthcheck:
       test: ["CMD", "pg_isready"]
       interval: 5s
@@ -112,6 +110,31 @@ services:
         <p class="text-muted"><span class="step-number">2</span></p>
         <h1><img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="" style="max-height:50px; border:none; box-shadow:none; background:none; vertical-align:middle;"> Kubernetes</h1>
         <p>Orquestacion de contenedores a escala</p>
+      </section>
+
+      <section id="why-k8s">
+        <h2>Por que Kubernetes?</h2>
+        <div class="content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+          <div class="card" style="border-color: rgba(248,81,73,0.25);">
+            <h3 style="color:var(--accent-red);"><i class="fa-solid fa-xmark"></i> Docker solo</h3>
+            <ul>
+              <li>Si un contenedor muere, se queda muerto</li>
+              <li>Escalar manualmente</li>
+              <li>Sin balanceo de carga automatico</li>
+              <li>Dificil actualizar sin downtime</li>
+            </ul>
+          </div>
+          <div class="card" style="border-color: rgba(63,185,80,0.25);">
+            <h3 style="color:var(--accent-green);"><i class="fa-solid fa-check"></i> Con K8s</h3>
+            <ul>
+              <li>Auto-healing: reemplaza pods muertos</li>
+              <li>Auto-scaling segun demanda</li>
+              <li>Service discovery + load balancing</li>
+              <li>Rolling updates con rollback instantaneo</li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">Kubernetes resuelve los problemas de operar contenedores en produccion a escala.</aside>
       </section>
 
       <section id="k8s-history">
@@ -143,13 +166,8 @@ services:
         <aside class="notes">K8s viene de 10+ anos de Google corriendo contenedores a escala con Borg y Omega.</aside>
       </section>
 
-      <section id="divider-arch" class="section-divider" data-state="is-section-divider">
-        <p class="text-muted">Arquitectura</p>
-        <h1><i class="fa-solid fa-diagram-project"></i> Como funciona K8s</h1>
-      </section>
-
       <section id="control-plane">
-        <h2>Control Plane</h2>
+        <h2>Control Plane (El cerebro)</h2>
         <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
           <div class="card">
             <p><i class="fa-solid fa-server text-primary"></i> <strong>API Server</strong></p>
@@ -172,7 +190,7 @@ services:
       </section>
 
       <section id="worker-nodes">
-        <h2>Nodos Worker</h2>
+        <h2>Nodos Worker (Los manos)</h2>
         <div class="content" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
           <div class="card" style="text-align:center;">
             <p><i class="fa-solid fa-cube text-primary text-2xl"></i></p>
@@ -212,7 +230,7 @@ services:
             </ul>
           </div>
           <div>
-            <pre><code class="yaml" data-trim data-line-numbers>
+            <pre><code class="language-yaml" data-trim data-line-numbers>
 apiVersion: v1
 kind: Pod
 metadata:
@@ -238,7 +256,7 @@ spec:
       <section id="deployments">
         <h2>Deployments</h2>
         <div class="content">
-          <pre><code class="yaml" data-trim data-line-numbers="1-8|10-16|18-25">
+          <pre><code class="language-yaml" data-trim data-line-numbers="1-8|10-16|18-25">
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -296,7 +314,7 @@ spec:
               <p class="text-muted">LB externo del cloud</p>
             </div>
           </div>
-          <pre><code class="yaml" data-trim data-line-numbers>
+          <pre><code class="language-yaml" data-trim data-line-numbers>
 apiVersion: v1
 kind: Service
 metadata:
@@ -318,7 +336,7 @@ spec:
           <div class="card" style="border-color: rgba(63,185,80,0.25);">
             <p><i class="fa-solid fa-sliders" style="color:var(--accent-green);"></i> <strong style="color:var(--accent-green);">ConfigMap</strong></p>
             <p class="text-muted">Configuracion no sensible</p>
-            <pre><code class="yaml" data-trim>
+            <pre><code class="language-yaml" data-trim>
 data:
   DB_HOST: "postgres.default"
   LOG_LEVEL: "info"
@@ -328,7 +346,7 @@ data:
           <div class="card" style="border-color: rgba(248,81,73,0.25);">
             <p><i class="fa-solid fa-key" style="color:var(--accent-red);"></i> <strong style="color:var(--accent-red);">Secret</strong></p>
             <p class="text-muted">Datos sensibles (base64)</p>
-            <pre><code class="yaml" data-trim>
+            <pre><code class="language-yaml" data-trim>
 type: Opaque
 data:
   DB_PASS: c3VwZXJzZWNyZXQ=
@@ -358,7 +376,7 @@ stringData:
             <p style="margin-top:15pt;" class="text-muted">replicas = ceil(current x (actual / target))</p>
           </div>
           <div>
-            <pre><code class="yaml" data-trim data-line-numbers>
+            <pre><code class="language-yaml" data-trim data-line-numbers>
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -387,6 +405,31 @@ spec:
         <p class="text-muted"><span class="step-number">6</span></p>
         <h1><i class="fa-solid fa-eye"></i> Observabilidad</h1>
         <p>Metricas + Logs + Traces</p>
+      </section>
+
+      <section id="why-observability">
+        <h2>Por que observabilidad?</h2>
+        <div class="content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+          <div class="card" style="border-color: rgba(248,81,73,0.25);">
+            <h3 style="color:var(--accent-red);"><i class="fa-solid fa-xmark"></i> Sin observabilidad</h3>
+            <ul>
+              <li>"Algo paso pero no se que"</li>
+              <li>Debuguear a ciegas en produccion</li>
+              <li>MTTR alto (horas)</li>
+              <li>Usuarios reportan antes que tu</li>
+            </ul>
+          </div>
+          <div class="card" style="border-color: rgba(63,185,80,0.25);">
+            <h3 style="color:var(--accent-green);"><i class="fa-solid fa-check"></i> Con observabilidad</h3>
+            <ul>
+              <li>Deteccion proactiva de problemas</li>
+              <li>Root cause en minutos</li>
+              <li>MTTR bajo (minutos)</li>
+              <li>Alertas antes de que el usuario note</li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">Sin observabilidad estas volando a ciegas. No se puede arreglar lo que no se puede ver.</aside>
       </section>
 
       <section id="three-pillars">
@@ -424,7 +467,7 @@ spec:
               <li><strong>Alertmanager</strong>: alertas a email/slack</li>
               <li><strong>ServiceMonitor</strong>: auto-discovery en K8s</li>
             </ul>
-            <pre><code class="promql" data-trim>
+            <pre><code class="language-promql" data-trim>
 # Requests por segundo
 rate(http_requests_total[5m])
 
@@ -434,7 +477,7 @@ histogram_quantile(0.99,
             </code></pre>
           </div>
           <div>
-            <pre><code class="yaml" data-trim data-line-numbers>
+            <pre><code class="language-yaml" data-trim data-line-numbers>
 apiVersion: monitoring.coreos.com/v1
 kind: Prometheus
 metadata:
@@ -457,7 +500,7 @@ spec:
         <h2>Loki + Promtail</h2>
         <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
           <div>
-            <pre><code class="yaml" data-trim data-line-numbers>
+            <pre><code class="language-yaml" data-trim data-line-numbers>
 # Promtail - DaemonSet en cada nodo
 apiVersion: apps/v1
 kind: DaemonSet
@@ -477,7 +520,7 @@ spec:
             </code></pre>
           </div>
           <div>
-            <pre><code class="logql" data-trim>
+            <pre><code class="language-logql" data-trim>
 # Buscar errores
 {app="mi-app"}
   |= "error"
@@ -538,7 +581,7 @@ sum(rate({app="mi-app"}
             <div class="stack-item" style="border-left-color:var(--accent-green);"><p><strong>Observabilidad</strong> &mdash; Prometheus + Loki + Tempo + Grafana</p></div>
           </div>
           <div>
-            <pre><code class="bash" data-trim style="font-size:10pt;">
+            <pre><code class="language-bash" data-trim style="font-size:10pt;">
 kubectl get pods -A
 
 NAMESPACE    NAME                       READY
@@ -574,7 +617,7 @@ default      redis-master-0              1/1
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chart/plugin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
   <script>
     Reveal.initialize({
       width: 1280,
@@ -587,14 +630,7 @@ default      redis-master-0              1/1
       history: true,
       transition: 'slide',
       center: false,
-      plugins: [RevealChart],
-      chart: {
-        defaults: Object.assign({
-          color: 'rgba(230, 237, 243, 0.8)',
-          borderColor: 'rgba(230, 237, 243, 0.8)',
-          devicePixelRatio: 2
-        }, window.location.search.includes('export') ? { animation: false } : {})
-      }
+      plugins: [RevealHighlight]
     });
   </script>
 </body>

@@ -112,15 +112,26 @@
 .reveal blockquote { border-left: 3px solid var(--primary-color); padding-left: 20px; margin: 20px 0; font-style: italic; background: none; box-shadow: none; width: 100%; max-width: none; }
 .reveal blockquote cite { display: block; margin-top: 10px; font-style: normal; color: var(--muted-color); }
 
-.reveal pre { width: 100%; font-size: 11pt; }
+.reveal pre { width: 100%; font-size: 11pt; margin: 0; }
 .reveal pre code {
   padding: 14px 16px;
   border-radius: var(--box-radius);
   font-family: var(--code-font);
-  background: var(--card-bg) !important;
+  background: #0d1117 !important;
   border: 1px solid var(--card-border);
   line-height: 1.55;
+  color: #e6edf3;
 }
+.reveal pre code .hljs-comment { color: #7d8590; font-style: italic; }
+.reveal pre code .hljs-keyword { color: #ff7b72; }
+.reveal pre code .hljs-string { color: #a5d6ff; }
+.reveal pre code .hljs-number { color: #79c0ff; }
+.reveal pre code .hljs-attr { color: #79c0ff; }
+.reveal pre code .hljs-built_in { color: #ffa657; }
+.reveal pre code .hljs-type { color: #ffa657; }
+.reveal pre code .hljs-meta { color: #7d8590; }
+.reveal pre code .hljs-title { color: #d2a8ff; }
+.reveal pre code .hljs-params { color: #e6edf3; }
 
 .reveal .slides section > h1, .reveal .slides section > h2 {
   flex-shrink: 0; margin: 0; padding-bottom: 14px;
