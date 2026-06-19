@@ -1,2 +1,4 @@
 .DS_Store
 hedgedoc-data/
+.vscode/
+.kiro/
