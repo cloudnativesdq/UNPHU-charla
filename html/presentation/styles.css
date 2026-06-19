@@ -380,3 +380,50 @@
 img[src*="assets/"] {
   user-select: none;
 }
+
+.interview-tip {
+  position: absolute;
+  bottom: 12px;
+  right: 60px;
+  max-width: 340px;
+  padding: 10px 14px;
+  background: rgba(50, 108, 229, 0.08);
+  border-left: 3px solid var(--primary-color);
+  border-radius: 0 8px 8px 0;
+  font-size: 11pt;
+  line-height: 1.4;
+  text-align: left;
+}
+.interview-tip p { margin: 4px 0; }
+.interview-tip p.tip-q {
+  color: var(--text-color);
+  font-style: italic;
+  font-size: 11pt;
+}
+.interview-tip p.tip-q::before {
+  content: '\f0eb';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: var(--accent-orange);
+  margin-right: 8px;
+  font-style: normal;
+}
+.interview-tip p.tip-trap {
+  color: var(--accent-red);
+  font-size: 10pt;
+  margin-top: 6px;
+}
+.interview-tip p.tip-trap::before {
+  content: '\f071';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  margin-right: 6px;
+}
+.interview-tip p.tip-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 9pt;
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 6px;
+}

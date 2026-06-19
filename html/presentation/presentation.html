@@ -144,7 +144,14 @@
             </ul>
           </div>
         </div>
-        <aside class="notes">Pregunta: cuantos han tenido el problema de instalar algo y que no funcione? Ese es el problema que Docker resuelve.</aside>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Cual es la diferencia entre VM y container?"</p>
+          <p class="tip-trap">Watch out: "Docker es un VM ligero" - NO, no hay hipervisor ni guest OS</p>
+        </div>
+        <aside class="notes">Pregunta: cuantos han tenido el problema de instalar algo y que no funcione? Ese es el problema que Docker resuelve.
+
+INTERVIEW TIP (Q3): "Cual es la diferencia entre virtualizacion y containerization?". VMs virtualizan el HARDWARE (hipervisor + SO completo por VM, GB, boot lento). Containers virtualizan el OS (comparten kernel, namespaces, MB, boot en ms). TRAMPA comun: decir "Docker es un VM ligero" - NO. No hay hipervisor, no hay guest OS. Follow-up tricky: "Si containers son mas ligeros, por que usar VMs?" (Aislamiento mas fuerte, correr diferentes OSes, apps legacy, seguridad).</aside>
       </section>
 
       <section id="vm-vs-container">
@@ -207,7 +214,14 @@
             <img src="assets/lunchbox.svg" class="lunchbox-svg" alt="Container como lunchbox">
           </div>
         </div>
-        <aside class="notes">La analogia de programacion orientada a objetos: la imagen es la clase, el contenedor es la instancia. O la receta (imagen) vs el pastel ya horneado (contenedor).</aside>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Cual es la diferencia entre imagen y contenedor?"</p>
+          <p class="tip-trap">Watch out: "El contenedor ES la imagen" - NO. Imagen = clase (read-only), contenedor = instancia viva</p>
+        </div>
+        <aside class="notes">La analogia de programacion orientada a objetos: la imagen es la clase, el contenedor es la instancia. O la receta (imagen) vs el pastel ya horneado (contenedor).
+
+INTERVIEW TIP (Q1): "Cual es la diferencia entre Docker image y Docker container?". Imagen = clase, blueprint read-only con tu codigo y dependencias. Contenedor = instancia de la imagen, es lo que esta corriendo. Puedes tener N contenedores de 1 imagen. TRAMPA: candidatos dicen "el contenedor ES la imagen" o confunden layers con imagenes. La imagen se construye de layers, el contenedor es lo que corre. Follow-up tricky: "Puede un contenedor cambiar su imagen?" (No - la imagen es inmutable. Construyes una nueva imagen y recreas el contenedor).</aside>
       </section>
 
       <section id="docker-hub">
@@ -260,7 +274,14 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
             <code>docker build -t mi-app:v1 . && docker run -p 8000:8000 mi-app:v1</code>
           </p>
         </div>
-        <aside class="notes">Explica cada instruccion: FROM=base, WORKDIR=donde trabajamos, COPY=traer archivos, RUN=ejecutar al construir, EXPOSE=documentar puerto, CMD=que corre el contenedor. HEALTHCHECK es crucial para K8s despues.</aside>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Cual es la diferencia entre CMD y ENTRYPOINT?"</p>
+          <p class="tip-trap">Watch out: "Son lo mismo" - CMD se override, ENTRYPOINT se mantiene</p>
+        </div>
+        <aside class="notes">Explica cada instruccion: FROM=base, WORKDIR=donde trabajamos, COPY=traer archivos, RUN=ejecutar al construir, EXPOSE=documentar puerto, CMD=que corre el contenedor. HEALTHCHECK es crucial para K8s despues.
+
+INTERVIEW TIP (Q2): "Cual es la diferencia entre CMD y ENTRYPOINT en un Dockerfile?". CMD = default command, facil de override. ENTRYPOINT = fixed command que siempre corre. Best practice: ENTRYPOINT para el main executable, CMD para default flags. TRAMPA comun: decir "son lo mismo". No lo son - `docker run image ls` reemplaza CMD pero se agrega a ENTRYPOINT. Follow-up: "Que pasa si tienes multiples CMD?" (Solo gana el ultimo).</aside>
       </section>
 
       <section id="docker-commands">
@@ -467,7 +488,14 @@ graph TB
             <p class="text-muted"><i class="fa-solid fa-cube text-primary"></i> <strong>kubelet</strong> &mdash; corre pods en su nodo</p>
           </div>
         </div>
-        <aside class="notes">El control plane es el cerebro. El API server es la puerta. etcd guarda todo. El scheduler decide donde van las cosas. Los workers ejecutan los pods reales.</aside>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Explica la arquitectura de un cluster K8s"</p>
+          <p class="tip-trap">Watch out: confundir kubelet (agente) con kubectl (CLI)</p>
+        </div>
+        <aside class="notes">El control plane es el cerebro. El API server es la puerta. etcd guarda todo. El scheduler decide donde van las cosas. Los workers ejecutan los pods reales.
+
+INTERVIEW TIP (Q5): "Explica la arquitectura de un cluster K8s". Control plane: kube-apiserver, etcd (key-value store), kube-scheduler, kube-controller-manager, cloud-controller-manager. Worker nodes: kubelet, kube-proxy, container runtime. TRAMPA: confundir kubelet (agente en el nodo) con kubectl (el CLI que tu usas). Tambien: decir que el control plane corre containers (no - solo el API server interactua, los containers corren en workers). Follow-up tricky: "Que pasa si etcd se cae?" (Cluster muerto - no hay estado, no hay scheduling. Hay que restaurar del backup).</aside>
       </section>
 
       <section id="k8s-components-detail">
@@ -532,7 +560,14 @@ spec:
             <img src="assets/pod-building.svg" class="building-svg" alt="Pod como edificio">
           </div>
         </div>
-        <aside class="notes">Un Pod es como un apartamento donde viven 1 o mas roommates (contenedores). Comparten todo (red, storage). Son efimeros. Por eso usamos Deployments para gestionarlos.</aside>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Diferencia entre Pod, Deployment y StatefulSet?"</p>
+          <p class="tip-trap">Watch out: poner databases en Deployments - pierdes data al reschedule</p>
+        </div>
+        <aside class="notes">Un Pod es como un apartamento donde viven 1 o mas roommates (contenedores). Comparten todo (red, storage). Son efimeros. Por eso usamos Deployments para gestionarlos.
+
+INTERVIEW TIP (Q6): "Cual es la diferencia entre Pod, Deployment y StatefulSet?". Pod = unit de scheduling (1+ containers, shared net, ephemeral). Deployment = manages ReplicaSets, rolling updates, para apps stateless. StatefulSet = stable network IDs, persistent storage per pod, ordered scaling (db-0, db-1, db-2), para stateful apps como databases. TRAMPA: "Deployment = Pod" - NO, Deployment crea ReplicaSets que crean Pods. Tambien: candidatos ponen databases en Deployments. Follow-up: "Puedes usar Deployment para una database?" (Tecnicamente si, pero pierdes data al reschedule. Usa StatefulSet + PVC).</aside>
       </section>
 
       <section id="deployments">
@@ -618,7 +653,14 @@ spec:
             <img src="assets/hotel.svg" class="hotel-svg" alt="Service como recepcionista">
           </div>
         </div>
-        <aside class="notes">El Service es el recepcionista. Los clientes piden "la app" y el recepcionista los enruta a un pod disponible. Sin importar cuantos pods hay o si cambian.</aside>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Diferencia entre Service, Ingress y NodePort?"</p>
+          <p class="tip-trap">Watch out: "Ingress es un Service type" - NO, es un objeto separado</p>
+        </div>
+        <aside class="notes">El Service es el recepcionista. Los clientes piden "la app" y el recepcionista los enruta a un pod disponible. Sin importar cuantos pods hay o si cambian.
+
+INTERVIEW TIP (Q7): "Cual es la diferencia entre Service, Ingress y NodePort?". Service = internal phone number para un set de pods (IP estable dentro del cluster). NodePort = abre un puerto en cada nodo (30000-32767) para acceso externo via NodeIP:NodePort. LoadBalancer = pide al cloud un LB real. Ingress = L7 HTTP routing por hostname/path (necesita un Ingress Controller como nginx). TRAMPA: "Ingress es un Service type" - NO, es un objeto separado. El default Service type es ClusterIP, no NodePort. Follow-up: "Pueden coexistir NodePort e Ingress?" (Si - el Ingress tipicamente esta backed por un Service, a menudo ClusterIP, a veces NodePort en bare-metal).</aside>
       </section>
 
       <section id="config">
@@ -648,7 +690,14 @@ stringData:
             <p class="text-muted" style="font-size:13pt;">base64 NO es encriptacion. Habilitar encryption at rest.</p>
           </div>
         </div>
-        <aside class="notes">Misma imagen de Docker, pero diferentes ConfigMaps para cada ambiente. Los secrets son base64 (no es encriptacion real). En produccion se usa encryption at rest.</aside>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Cual es la diferencia entre ConfigMap y Secret?"</p>
+          <p class="tip-trap">Watch out: "Secrets son encriptados" - NO, son base64. Cualquiera con kubectl get secret -o yaml los lee</p>
+        </div>
+        <aside class="notes">Misma imagen de Docker, pero diferentes ConfigMaps para cada ambiente. Los secrets son base64 (no es encriptacion real). En produccion se usa encryption at rest.
+
+INTERVIEW TIP (Q9): "Que es un ConfigMap y que es un Secret? Por que dos?". ConfigMap = non-sensitive config (feature flags, log levels, URLs). Secret = sensitive stuff (passwords, API keys, tokens). Ambos inyectan config en pods sin bakearlo en la imagen. Usa Secrets para que la data este base64-encoded en etcd y puedas habilitar encryption at rest. TRAMPA: "Secrets son encriptados por default". NO - son base64-encoded, no encriptados. Cualquiera con `kubectl get secret -o yaml` los lee. Follow-up: "Como mantener los secrets realmente secret en produccion?" (External Secrets Operator + AWS Secrets Manager/Vault, o sealed-secrets, nunca commit a git).</aside>
       </section>
 
       <section id="kubectl-basics">
@@ -677,7 +726,14 @@ kubectl exec -it mi-app-abc123 -- bash
             <i class="fa-solid fa-keyboard"></i> Igual que Docker: estos 5 comandos son el 80% del uso diario
           </p>
         </div>
-        <aside class="notes">kubectl es como docker CLI pero para un cluster. apply despliega, get lista, describe muestra detalle, logs muestra logs, scale escala.</aside>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Si un Pod no schedula, como debugueas?"</p>
+          <p class="tip-trap">Watch out: hacer `kubectl logs` en un pod Pending - no hay logs, nunca arranco</p>
+        </div>
+        <aside class="notes">kubectl es como docker CLI pero para un cluster. apply despliega, get lista, describe muestra detalle, logs muestra logs, scale escala.
+
+INTERVIEW TIP (Q10): "Si un Pod no schedula, como lo debugueas?". Step 1: `kubectl describe pod <name>` - lee la seccion Events al final, te dira exactamente por que (ImagePullBackOff? Insufficient cpu? Tainted node?). Step 2: `kubectl get events --sort-by=.metadata.creationTimestamp` para ver el timeline. Step 3: `kubectl describe node` para ver recursos. El 80% de los failures de scheduling son: missing resources, wrong nodeSelector, o unsatisfied taints. TRAMPA: hacer `kubectl logs` en un Pending pod - no hay logs porque el container nunca arranco. Follow-up: "Cual es la diferencia entre Pending y ImagePullBackOff?" (Pending = scheduler no lo ha colocado. ImagePullBackOff = ya esta scheduled pero la imagen no se descarga).</aside>
       </section>
 
       <section id="demo-k8s" class="demo-slide">
