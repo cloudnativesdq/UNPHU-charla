@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" fill="none">
+  <rect x="0" y="0" width="500" height="320" fill="#080b12"/>
+
+  <text x="250" y="28" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="16" font-weight="700" fill="#e6edf3">Service = Recepcionista del hotel</text>
+  <text x="250" y="48" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#7d8590">Una direccion estable. Enruta a las habitaciones (pods).</text>
+
+  <g transform="translate(30, 70)">
+    <rect x="0" y="0" width="100" height="200" rx="8" fill="#1a2540" stroke="#326CE5" stroke-width="1.5"/>
+    <circle cx="50" cy="35" r="18" fill="#326CE5"/>
+    <text x="50" y="40" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="20" fill="white">?</text>
+    <text x="50" y="85" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700" fill="#e6edf3">Cliente</text>
+    <text x="50" y="102" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" fill="#7d8590">browser</text>
+    <text x="50" y="115" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" fill="#7d8590">mobile</text>
+    <text x="50" y="130" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#58a6ff">GET /</text>
+    <text x="50" y="170" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#7d8590">"Quiero la app"</text>
+  </g>
+
+  <g stroke="#58a6ff" stroke-width="2" stroke-dasharray="4,3" fill="none">
+    <path d="M 135 170 L 200 170" marker-end="url(#arrow)"/>
+  </g>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#58a6ff"/>
+    </marker>
+  </defs>
+
+  <g transform="translate(200, 80)">
+    <rect x="0" y="0" width="140" height="180" rx="8" fill="#0d1f3c" stroke="#f59e0b" stroke-width="2"/>
+    <circle cx="70" cy="40" r="22" fill="#f59e0b" opacity="0.15"/>
+    <text x="70" y="48" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="22">🛎️</text>
+    <text x="70" y="85" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="12" font-weight="700" fill="#e6edf3">SERVICE</text>
+    <text x="70" y="102" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="9" fill="#7d8590">mi-app:80</text>
+    <rect x="15" y="118" width="110" height="20" rx="3" fill="#1a2540" stroke="#3fb950" stroke-width="1"/>
+    <text x="70" y="132" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#a8e6b4">IP estable + DNS</text>
+    <rect x="15" y="144" width="110" height="20" rx="3" fill="#1a2540" stroke="#58a6ff" stroke-width="1"/>
+    <text x="70" y="158" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="8" fill="#a3c4ff">Load balancing</text>
+  </g>
+
+  <g stroke="#3fb950" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <path d="M 345 130 L 400 90"/>
+    <path d="M 345 160 L 400 160"/>
+    <path d="M 345 190 L 400 230"/>
+  </g>
+
+  <g transform="translate(400, 70)">
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="70" height="40" rx="5" fill="#1a2540" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="35" y="18" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700" fill="#a8e6b4">Pod 1</text>
+      <text x="35" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#7d8590">app-abc</text>
+    </g>
+    <g transform="translate(0, 140)">
+      <rect x="0" y="0" width="70" height="40" rx="5" fill="#1a2540" stroke="#3fb950" stroke-width="1.5"/>
+      <text x="35" y="18" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700" fill="#a8e6b4">Pod 3</text>
+      <text x="35" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#7d8590">app-xyz</text>
+    </g>
+  </g>
+  <g transform="translate(400, 140)">
+    <rect x="0" y="0" width="70" height="40" rx="5" fill="#1a2540" stroke="#3fb950" stroke-width="1.5"/>
+    <text x="35" y="18" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" font-weight="700" fill="#a8e6b4">Pod 2</text>
+    <text x="35" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#7d8590">app-def</text>
+  </g>
+
+  <g font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#7d8590">
+    <text x="30" y="290">Cliente &rarr; una sola direccion</text>
+    <text x="280" y="290">Recepcionista &rarr; balancea</text>
+    <text x="430" y="290">Pods</text>
+  </g>
+</svg>

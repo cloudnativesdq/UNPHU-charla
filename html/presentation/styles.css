@@ -279,3 +279,91 @@
   line-height: 1.4;
   color: var(--muted-color);
 }
+
+.stack-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 12px;
+  font-family: var(--code-font);
+  font-size: 11pt;
+}
+.sd-layer {
+  display: flex;
+  gap: 3px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.sd-layer > span {
+  flex: 1;
+  padding: 8px 4px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 10pt;
+}
+.sd-layer:not(:has(span)) {
+  padding: 8px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 11pt;
+  color: var(--text-color);
+}
+.sd-app > span { background: #2d4a3e; color: #a8e6b4; border: 1px solid #3fb950; }
+.sd-libs > span { background: #3a3a2a; color: #f5d56e; border: 1px solid #d29922; }
+.sd-guest > span { background: #4a2d3a; color: #f5a3b8; border: 1px solid #f85149; }
+.sd-hypervisor { background: #2d2d4a; border: 1px solid #6e40c9; }
+.sd-engine { background: #1a3a4a; border: 1px solid #1f9eff; }
+.sd-host { background: #1a2a3a; border: 1px solid #58a6ff; }
+.sd-hardware { background: #0d1f3c; border: 1px solid #326CE5; color: var(--muted-color); }
+
+.mermaid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent !important;
+  margin: 0 !important;
+}
+.mermaid svg {
+  max-width: 100% !important;
+  max-height: 480px !important;
+  height: auto !important;
+}
+
+.lunchbox-svg, .hotel-svg, .building-svg, .replicas-svg {
+  max-height: 320px;
+  width: auto;
+  margin: 0 auto;
+  display: block;
+}
+
+.split-with-illust {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  align-items: center;
+}
+
+.illust-callout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+.illust-callout .illust-text {
+  margin-top: 12px;
+  font-size: 14pt;
+  color: var(--muted-color);
+  font-style: italic;
+}
+
+.qa-emoji {
+  font-size: 90pt;
+  margin-bottom: 20px;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}

@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="owl-body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a8aff"/>
+      <stop offset="1" stop-color="#326CE5"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(100, 100)">
+    <ellipse cx="0" cy="20" rx="55" ry="60" fill="url(#owl-body)" stroke="#1a4aaf" stroke-width="2"/>
+
+    <ellipse cx="-22" cy="-20" rx="20" ry="22" fill="white"/>
+    <ellipse cx="22" cy="-20" rx="20" ry="22" fill="white"/>
+    <circle cx="-22" cy="-18" r="8" fill="#080b12"/>
+    <circle cx="22" cy="-18" r="8" fill="#080b12"/>
+    <circle cx="-19" cy="-21" r="3" fill="white"/>
+    <circle cx="25" cy="-21" r="3" fill="white"/>
+
+    <path d="M -8 0 L 0 -6 L 8 0 L 4 8 L -4 8 Z" fill="#d29922" stroke="#a87b1a" stroke-width="1.5"/>
+
+    <ellipse cx="-40" cy="-30" rx="10" ry="6" fill="#4a8aff" transform="rotate(-30 -40 -30)"/>
+    <ellipse cx="40" cy="-30" rx="10" ry="6" fill="#4a8aff" transform="rotate(30 40 -30)"/>
+
+    <path d="M -45 -10 Q -50 30 -30 55" stroke="#1a4aaf" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M 45 -10 Q 50 30 30 55" stroke="#1a4aaf" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+    <path d="M -25 45 L -25 65 M -15 50 L -15 65 M -5 50 L -5 65 M 5 50 L 5 65 M 15 50 L 15 65 M 25 45 L 25 65"
+      stroke="#1a4aaf" stroke-width="2" stroke-linecap="round"/>
+
+    <circle cx="0" cy="-50" r="6" fill="#3fb950" stroke="#2d8a3a" stroke-width="1.5"/>
+    <path d="M 0 -50 L 0 -75" stroke="#3fb950" stroke-width="2"/>
+    <path d="M -8 -68 L 0 -75 L 8 -68" fill="none" stroke="#3fb950" stroke-width="2"/>
+  </g>
+
+  <text x="100" y="190" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="700" fill="#326CE5">CAPTAIN KUBE</text>
+</svg>

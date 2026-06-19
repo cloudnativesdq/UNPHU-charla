@@ -19,8 +19,12 @@
            ============================================================ -->
 
       <section id="title" class="section-divider" data-state="is-section-divider">
-        <p><img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="K8s" style="max-height:120px; border:none; box-shadow:none; background:none;"></p>
-        <h1>De 0 a Observabilidad</h1>
+        <div style="display:flex; align-items:center; justify-content:center; gap:30px;">
+          <img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="K8s" style="max-height:120px; border:none; box-shadow:none; background:none;">
+          <div style="font-size:50pt; color:var(--muted-color); font-weight:300;">+</div>
+          <i class="fa-brands fa-docker" style="font-size:90pt; color:#2496ED;"></i>
+        </div>
+        <h1 style="margin-top:20px;">De 0 a Observabilidad</h1>
         <p>Construyendo un stack completo con Kubernetes</p>
         <p class="text-muted" style="margin-top:20pt;">UNPHU &bull; 10:00 AM - 12:00 PM &bull; 2026</p>
         <aside class="notes">Bienvenidos. En 1.5 horas construiremos un stack completo desde un contenedor suelto hasta observabilidad total.</aside>
@@ -137,45 +141,29 @@
       <section id="vm-vs-container">
         <h2>VMs vs Contenedores</h2>
         <div class="content">
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
-            <div class="card" style="border-color: rgba(248,81,73,0.2);">
-              <h3 style="color:var(--accent-red); font-size:18pt;"><i class="fa-solid fa-computer"></i> Virtual Machines</h3>
-              <p style="font-size:13pt; color:var(--text-color); margin-top:10px;">
-                Cada VM tiene su propio SO completo<br>
-                <span class="text-muted">Pesado. Gigabytes. Lento de arrancar.</span>
-              </p>
-              <pre style="margin-top:10px;"><code class="language-text" data-trim style="font-size:10pt;">
-+-----+  +-----+  +-----+
-| App |  | App |  | App |
-+-----+  +-----+  +-----+
-| Libs|  | Libs|  | Libs|
-+-----+  +-----+  +-----+
-|Guest|  |Guest|  |Guest|  <- SO completo!
-| OS  |  | OS  |  | OS  |
-+=====+==+=====+==+=====+
-|     Hypervisor        |
-+=======================+
-|    Host Operating OS  |
-+=======================+
-              </code></pre>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+            <div class="card" style="border-color: rgba(248,81,73,0.25);">
+              <h3 style="color:var(--accent-red); font-size:18pt; text-align:center;"><i class="fa-solid fa-computer"></i> Virtual Machines</h3>
+              <p style="font-size:13pt; text-align:center; margin-top:6px;" class="text-muted">Pesado. GB. Lento.</p>
+              <div class="stack-diagram vm">
+                <div class="sd-layer sd-app"><span>App</span><span>App</span><span>App</span></div>
+                <div class="sd-layer sd-libs"><span>Libs</span><span>Libs</span><span>Libs</span></div>
+                <div class="sd-layer sd-guest"><span>Guest OS</span><span>Guest OS</span><span>Guest OS</span></div>
+                <div class="sd-layer sd-hypervisor">Hypervisor</div>
+                <div class="sd-layer sd-host">Host OS</div>
+                <div class="sd-layer sd-hardware">Hardware</div>
+              </div>
             </div>
-            <div class="card" style="border-color: rgba(63,185,80,0.2);">
-              <h3 style="color:var(--accent-green); font-size:18pt;"><i class="fa-brands fa-docker"></i> Contenedores</h3>
-              <p style="font-size:13pt; color:var(--text-color); margin-top:10px;">
-                Comparten el kernel del host<br>
-                <span class="text-muted">Ligero. Megabytes. Arranca en segundos.</span>
-              </p>
-              <pre style="margin-top:10px;"><code class="language-text" data-trim style="font-size:10pt;">
-+-----+  +-----+  +-----+
-| App |  | App |  | App |
-+-----+  +-----+  +-----+
-| Libs|  | Libs|  | Libs|
-+=====+==+=====+==+=====+
-|   Container Engine    |
-+=======================+
-|    Host Operating OS  |  <- 1 solo SO!
-+=======================+
-              </code></pre>
+            <div class="card" style="border-color: rgba(63,185,80,0.25);">
+              <h3 style="color:var(--accent-green); font-size:18pt; text-align:center;"><i class="fa-brands fa-docker"></i> Contenedores</h3>
+              <p style="font-size:13pt; text-align:center; margin-top:6px;" class="text-muted">Ligero. MB. Rapido.</p>
+              <div class="stack-diagram container">
+                <div class="sd-layer sd-app"><span>App</span><span>App</span><span>App</span></div>
+                <div class="sd-layer sd-libs"><span>Libs</span><span>Libs</span><span>Libs</span></div>
+                <div class="sd-layer sd-engine">Container Engine</div>
+                <div class="sd-layer sd-host">Host OS</div>
+                <div class="sd-layer sd-hardware">Hardware</div>
+              </div>
             </div>
           </div>
         </div>
@@ -184,33 +172,32 @@
 
       <section id="image-vs-container">
         <h2>Imagen vs Contenedor</h2>
-        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
-          <div class="card" style="text-align:center;">
-            <p><i class="fa-solid fa-file-lines text-primary" style="font-size:36pt;"></i></p>
-            <h3>Imagen (Image)</h3>
-            <p class="text-muted">Es la <strong>receta</strong></p>
-            <ul style="text-align:left;">
-              <li>Inmutable (no cambia)</li>
-              <li>Plantilla de solo lectura</li>
-              <li>Se versiona con tags</li>
-              <li>Vive en un registry (Docker Hub)</li>
-            </ul>
+        <div class="content split-with-illust">
+          <div>
+            <div class="card" style="margin-bottom:14px;">
+              <p><i class="fa-solid fa-file-lines text-primary" style="font-size:24pt;"></i> <strong>Imagen</strong> = la <strong style="color:var(--accent-orange);">receta</strong></p>
+              <ul>
+                <li>Inmutable, versionada con tags</li>
+                <li>Plantilla de solo lectura</li>
+                <li>Vive en un registry (Docker Hub)</li>
+              </ul>
+            </div>
+            <div class="card">
+              <p><i class="fa-solid fa-box text-primary" style="font-size:24pt;"></i> <strong>Contenedor</strong> = el <strong style="color:var(--accent-green);">lunchbox</strong></p>
+              <ul>
+                <li>Instancia viva de una imagen</li>
+                <li>Proceso, red y storage propios</li>
+                <li>Puedes tener N de la misma imagen</li>
+              </ul>
+            </div>
+            <p style="margin-top:12pt; text-align:center;" class="text-muted">
+              <i class="fa-solid fa-arrow-right"></i> Imagen = clase &nbsp;&bull;&nbsp; Contenedor = instancia
+            </p>
           </div>
-          <div class="card" style="text-align:center;">
-            <p><i class="fa-solid fa-box text-primary" style="font-size:36pt;"></i></p>
-            <h3>Contenedor (Container)</h3>
-            <p class="text-muted">Es el <strong>lunchbox</strong></p>
-            <ul style="text-align:left;">
-              <li>Instancia viva de una imagen</li>
-              <li>Tiene su proceso, red y storage</li>
-              <li>Se crea con <code>docker run</code></li>
-              <li>Puedes tener N contenedores de 1 imagen</li>
-            </ul>
+          <div class="illust-callout">
+            <img src="assets/lunchbox.svg" class="lunchbox-svg" alt="Container como lunchbox">
           </div>
         </div>
-        <p style="margin-top:15pt;" class="text-center text-muted">
-          <i class="fa-solid fa-arrow-right"></i> Imagen = clase &nbsp;&bull;&nbsp; Contenedor = objeto
-        </p>
         <aside class="notes">La analogia de programacion orientada a objetos: la imagen es la clase, el contenedor es la instancia. O la receta (imagen) vs el pastel ya horneado (contenedor).</aside>
       </section>
 
@@ -354,9 +341,12 @@ services:
            ============================================================ -->
 
       <section id="break-1" class="section-divider" data-state="is-section-divider">
-        <h1><i class="fa-solid fa-users"></i></h1>
-        <p style="font-size:24pt;">Como escalarias tu app de 10 usuarios a 10,000?</p>
-        <p style="margin-top:20pt;" class="text-muted">Piensa 30 segundos &bull; Comenta con tu companero</p>
+        <div class="qa-emoji"><i class="fa-solid fa-people-arrows" style="color:var(--primary-color);"></i></div>
+        <h1 style="font-size:40pt;">Como escalarias tu app</h1>
+        <h1 style="font-size:40pt;">de 10 a 10,000 usuarios?</h1>
+        <p style="font-size:20pt; margin-top:30px;" class="text-muted">
+          <i class="fa-solid fa-clock"></i> Piensa 30 segundos &bull; Comenta con tu companero
+        </p>
       </section>
 
       <!-- ============================================================
@@ -426,54 +416,76 @@ services:
       </section>
 
       <section id="control-plane">
-        <h2>Arquitectura: Control Plane</h2>
+        <h2>Arquitectura de un Cluster</h2>
         <div class="content">
-          <p class="text-muted" style="margin-bottom:15px;">El <strong>cerebro</strong> del cluster &mdash; toma las decisiones</p>
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
-            <div class="card">
-              <p><i class="fa-solid fa-server text-primary"></i> <strong>API Server</strong></p>
-              <p class="text-muted">Puerta de entrada. Todo pasa por aqui. <code>kubectl</code> habla con este.</p>
-            </div>
-            <div class="card">
-              <p><i class="fa-solid fa-database text-primary"></i> <strong>etcd</strong></p>
-              <p class="text-muted">Base de datos key-value. Guarda TODO el estado del cluster.</p>
-            </div>
-            <div class="card">
-              <p><i class="fa-solid fa-calendar-check text-primary"></i> <strong>Scheduler</strong></p>
-              <p class="text-muted">Decide en que nodo va cada pod segun recursos y reglas.</p>
-            </div>
-            <div class="card">
-              <p><i class="fa-solid fa-gears text-primary"></i> <strong>Controllers</strong></p>
-              <p class="text-muted">Bucle constante: estado deseado vs estado real. Lo corrige si hay diferencia.</p>
-            </div>
+          <div class="mermaid">
+graph TB
+    subgraph CP["🧠 CONTROL PLANE (cerebro)"]
+        API["API Server<br/>puerta de entrada"]
+        ETCD[("etcd<br/>base de datos")]
+        SCH["Scheduler<br/>asigna pods"]
+        CM["Controllers<br/>estado deseado"]
+    end
+    subgraph W1["💪 Worker Node 1"]
+        K1["kubelet"]
+        P1["Pod"]
+        P2["Pod"]
+    end
+    subgraph W2["💪 Worker Node 2"]
+        K2["kubelet"]
+        P3["Pod"]
+    end
+    API --> K1
+    API --> K2
+    API <--> ETCD
+    API --> SCH
+    API --> CM
+    SCH -.asigna.-> K1
+    SCH -.asigna.-> K2
+    style API fill:#1a3a4a,stroke:#58a6ff
+    style ETCD fill:#3a2d4a,stroke:#6e40c9
+    style SCH fill:#3a3a2a,stroke:#d29922
+    style CM fill:#2d4a3a,stroke:#3fb950
+    style K1 fill:#1a2540,stroke:#326CE5
+    style K2 fill:#1a2540,stroke:#326CE5
+    style P1 fill:#2d4a3a,stroke:#3fb950
+    style P2 fill:#2d4a3a,stroke:#3fb950
+    style P3 fill:#2d4a3a,stroke:#3fb950
+          </div>
+          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:10px; font-size:11pt;">
+            <p class="text-muted"><i class="fa-solid fa-server text-primary"></i> <strong>API Server</strong> &mdash; <code>kubectl</code> habla aqui</p>
+            <p class="text-muted"><i class="fa-solid fa-database text-primary"></i> <strong>etcd</strong> &mdash; estado del cluster</p>
+            <p class="text-muted"><i class="fa-solid fa-cube text-primary"></i> <strong>kubelet</strong> &mdash; corre pods en su nodo</p>
           </div>
         </div>
-        <aside class="notes">El control plane es el cerebro. API server es la puerta. etcd guarda todo. El scheduler decide donde van las cosas. Los controllers mantienen el estado deseado.</aside>
+        <aside class="notes">El control plane es el cerebro. El API server es la puerta. etcd guarda todo. El scheduler decide donde van las cosas. Los workers ejecutan los pods reales.</aside>
       </section>
 
-      <section id="worker-nodes">
-        <h2>Arquitectura: Nodos Worker</h2>
-        <div class="content">
-          <p class="text-muted" style="margin-bottom:15px;">Los <strong>musculos</strong> del cluster &mdash; ejecutan los contenedores</p>
-          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
-            <div class="card" style="text-align:center;">
-              <p><i class="fa-solid fa-cube text-primary text-2xl"></i></p>
-              <p><strong>kubelet</strong></p>
-              <p class="text-muted">El capataz. Recibe ordenes del API Server. Gestiona pods en su nodo.</p>
-            </div>
-            <div class="card" style="text-align:center;">
-              <p><i class="fa-solid fa-network-wired text-primary text-2xl"></i></p>
-              <p><strong>kube-proxy</strong></p>
-              <p class="text-muted">Reglas de red. Implementa Services y balanceo de carga.</p>
-            </div>
-            <div class="card" style="text-align:center;">
-              <p><i class="fa-brands fa-docker text-primary text-2xl"></i></p>
-              <p><strong>containerd</strong></p>
-              <p class="text-muted">El runtime. Ejecuta los contenedores (Docker, containerd, CRI-O).</p>
-            </div>
+      <section id="k8s-components-detail">
+        <h2>Componentes clave</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+          <div>
+            <h3 style="color:var(--accent-cyan); font-size:18pt;"><i class="fa-solid fa-brain"></i> Control Plane</h3>
+            <ul>
+              <li><strong>API Server</strong> &mdash; puerta de entrada, <code>kubectl</code> habla con el</li>
+              <li><strong>etcd</strong> &mdash; base de datos key-value. Guarda TODO</li>
+              <li><strong>Scheduler</strong> &mdash; decide en que nodo va cada pod</li>
+              <li><strong>Controllers</strong> &mdash; bucle: deseado vs real. Corrige diferencias</li>
+            </ul>
+          </div>
+          <div>
+            <h3 style="color:var(--accent-green); font-size:18pt;"><i class="fa-solid fa-dumbbell"></i> Worker Nodes</h3>
+            <ul>
+              <li><strong>kubelet</strong> &mdash; el capataz. Recibe ordenes, gestiona pods</li>
+              <li><strong>kube-proxy</strong> &mdash; reglas de red + load balancing</li>
+              <li><strong>container runtime</strong> &mdash; ejecuta los contenedores (containerd, CRI-O)</li>
+            </ul>
+            <p class="text-muted" style="margin-top:15px; font-size:12pt;">
+              <i class="fa-solid fa-lightbulb"></i> Si un nodo se cae, K8s reubica los pods en otro automaticamente
+            </p>
           </div>
         </div>
-        <aside class="notes">Los worker nodes hacen el trabajo pesado. Cada uno tiene kubelet (capataz), kube-proxy (red) y un container runtime. Se registran con el control plane.</aside>
+        <aside class="notes">Los componentes trabajan juntos. El API server recibe tus comandos, el scheduler decide donde van los pods, el kubelet los ejecuta y los controllers vigilan que todo siga como debe.</aside>
       </section>
 
       <section id="divider-objects" class="section-divider" data-state="is-section-divider">
@@ -484,7 +496,7 @@ services:
 
       <section id="pods">
         <h2>Pods</h2>
-        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:30px;">
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px; align-items:center;">
           <div>
             <p><i class="fa-solid fa-house-user text-primary"></i> Analogia: <strong>roommates compartiendo apartamento</strong></p>
             <ul>
@@ -494,26 +506,21 @@ services:
               <li>Nunca se reubican &mdash; si mueren, se crean nuevos</li>
               <li>En produccion: usar <strong>Deployments</strong></li>
             </ul>
-          </div>
-          <div>
-            <pre><code class="language-yaml" data-trim data-line-numbers>
+            <pre style="margin-top:10px;"><code class="language-yaml" data-trim data-line-numbers>
 apiVersion: v1
 kind: Pod
 metadata:
   name: mi-app
-  labels:
-    app: mi-app
 spec:
   containers:
   - name: app
     image: mi-app:v1
-    ports:
-    - containerPort: 8000
-    resources:
-      requests:
-        memory: "128Mi"
-        cpu: "100m"
+  - name: logger
+    image: logger:v1
             </code></pre>
+          </div>
+          <div class="illust-callout">
+            <img src="assets/pod-building.svg" class="building-svg" alt="Pod como edificio">
           </div>
         </div>
         <aside class="notes">Un Pod es como un apartamento donde viven 1 o mas roommates (contenedores). Comparten todo (red, storage). Son efimeros. Por eso usamos Deployments para gestionarlos.</aside>
@@ -571,23 +578,21 @@ spec:
 
       <section id="services">
         <h2>Services</h2>
-        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1.2fr; gap:20px; align-items:center;">
           <div>
-            <p><i class="fa-solid fa-bell-concierge text-primary"></i> Analogia: el <strong>recepcionista</strong> de un hotel</p>
+            <p><i class="fa-solid fa-bell-concierge text-primary"></i> Analogia: el <strong>recepcionista</strong> del hotel</p>
             <ul>
-              <li>Los pods son efimeros &mdash; IPs cambian</li>
+              <li>Pods son efimeros &mdash; IPs cambian</li>
               <li>Service da una <strong>IP estable</strong> + DNS</li>
-              <li>Enruta trafico automaticamente a pods vivos</li>
-              <li>Load balancing incluido</li>
+              <li>Enruta trafico a pods vivos</li>
+              <li>Load balancing automatico</li>
             </ul>
-            <div style="margin-top:15px;">
+            <div style="margin-top:12px;">
               <p><strong style="color:var(--accent-orange);">ClusterIP</strong> &mdash; <span class="text-muted">interno</span></p>
               <p><strong style="color:var(--accent-green);">NodePort</strong> &mdash; <span class="text-muted">puerto del nodo</span></p>
               <p><strong class="text-primary">LoadBalancer</strong> &mdash; <span class="text-muted">LB del cloud</span></p>
             </div>
-          </div>
-          <div>
-            <pre><code class="language-yaml" data-trim data-line-numbers>
+            <pre style="margin-top:10px;"><code class="language-yaml" data-trim data-line-numbers>
 apiVersion: v1
 kind: Service
 metadata:
@@ -599,6 +604,9 @@ spec:
   - port: 80
     targetPort: 8000
             </code></pre>
+          </div>
+          <div class="illust-callout">
+            <img src="assets/hotel.svg" class="hotel-svg" alt="Service como recepcionista">
           </div>
         </div>
         <aside class="notes">El Service es el recepcionista. Los clientes piden "la app" y el recepcionista los enruta a un pod disponible. Sin importar cuantos pods hay o si cambian.</aside>
@@ -732,185 +740,35 @@ spec:
       <section id="divider-obs" class="section-divider" data-state="is-section-divider">
         <p class="text-muted"><span class="step-number">6</span></p>
         <h1><i class="fa-solid fa-eye"></i> Observabilidad</h1>
-        <p>Metricas + Logs + Traces</p>
+        <p>Ver que esta pasando en tu sistema</p>
       </section>
 
-      <section id="why-observability">
-        <h2>Por que observabilidad?</h2>
-        <div class="content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-          <div class="card" style="border-color: rgba(248,81,73,0.25);">
-            <h3 style="color:var(--accent-red);"><i class="fa-solid fa-car-burst"></i> Sin observabilidad</h3>
-            <p style="font-size:14pt; color:var(--text-color);">Conducir de noche, sin luces, sin tablero</p>
-            <ul>
-              <li>"Algo se cayo pero no se que"</li>
-              <li>Debuguear a ciegas en produccion</li>
-              <li>Usuarios reportan antes que tu</li>
-              <li>MTTR alto (horas o dias)</li>
-            </ul>
-          </div>
-          <div class="card" style="border-color: rgba(63,185,80,0.25);">
-            <h3 style="color:var(--accent-green);"><i class="fa-solid fa-car-side"></i> Con observabilidad</h3>
-            <p style="font-size:14pt; color:var(--text-color);">Tablero completo + mecanico diagnostico</p>
-            <ul>
-              <li>Deteccion proactiva de problemas</li>
-              <li>Root cause en minutos</li>
-              <li>Alertas antes de que el usuario note</li>
-              <li>MTTR bajo (minutos)</li>
-            </ul>
-          </div>
-        </div>
-        <aside class="notes">Observabilidad es como el tablero de tu carro. Sin el, vas a ciegas. No puedes arreglar lo que no puedes ver. MTTR = Mean Time To Recovery.</aside>
-      </section>
-
-      <section id="three-pillars">
-        <h2>Los 3 pilares</h2>
+      <section id="observability-summary">
+        <h2>Los 3 pilares (resumen)</h2>
         <div class="content" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
           <div class="card" style="text-align:center; border-color: rgba(232,145,58,0.35);">
             <p><i class="fa-solid fa-chart-line" style="color:#e8913a; font-size:28pt;"></i></p>
             <h3 style="color:#e8913a;">Metricas</h3>
             <p><strong>Prometheus</strong></p>
-            <p class="text-muted">Numeros en tiempo real: CPU, memoria, requests, latencia</p>
+            <p class="text-muted">Numeros: CPU, requests, latencia</p>
           </div>
           <div class="card" style="text-align:center; border-color: rgba(245,158,11,0.35);">
             <p><i class="fa-solid fa-scroll" style="color:#f59e0b; font-size:28pt;"></i></p>
             <h3 style="color:#f59e0b;">Logs</h3>
-            <p><strong>Loki + Promtail</strong></p>
-            <p class="text-muted">Errores, stack traces, eventos: que paso exactamente</p>
+            <p><strong>Loki</strong></p>
+            <p class="text-muted">Errores y eventos</p>
           </div>
           <div class="card" style="text-align:center; border-color: rgba(88,166,255,0.35);">
             <p><i class="fa-solid fa-route" style="color:#58a6ff; font-size:28pt;"></i></p>
             <h3 style="color:#58a6ff;">Traces</h3>
-            <p><strong>Tempo + OpenTelemetry</strong></p>
-            <p class="text-muted">Flujo de un request end-to-end: donde se tardo</p>
+            <p><strong>Tempo</strong></p>
+            <p class="text-muted">Flujo de un request</p>
           </div>
         </div>
-        <aside class="notes">Los 3 pilares. Metricas te dicen ALGO esta mal. Logs te dicen QUE esta mal. Traces te dicen DONDE. Grafana unifica los tres.</aside>
-      </section>
-
-      <section id="prometheus">
-        <h2>Prometheus: Metricas</h2>
-        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-          <div>
-            <ul>
-              <li><strong>Pull model</strong>: scrapea <code>/metrics</code></li>
-              <li><strong>PromQL</strong>: lenguaje de consultas</li>
-              <li><strong>Alertmanager</strong>: alertas a email/slack</li>
-              <li><strong>ServiceMonitor</strong>: auto-discovery en K8s</li>
-            </ul>
-            <pre><code class="language-promql" data-trim>
-# Requests por segundo
-rate(http_requests_total[5m])
-
-# P99 latency
-histogram_quantile(0.99,
-  rate(http_duration_bucket[5m]))
-            </code></pre>
-          </div>
-          <div>
-            <pre><code class="language-yaml" data-trim data-line-numbers>
-apiVersion: monitoring.coreos.com/v1
-kind: Prometheus
-metadata:
-  name: prometheus
-spec:
-  serviceAccountName: prometheus
-  serviceMonitorSelector:
-    matchLabels:
-      team: frontend
-  resources:
-    requests:
-      memory: 400Mi
-            </code></pre>
-          </div>
+        <div style="margin-top:25px; padding:18px; background:rgba(50,108,229,0.06); border-left:3px solid var(--primary-color); border-radius:0 8px 8px 0;">
+          <p><i class="fa-solid fa-lightbulb text-primary"></i> <strong>Stack tipico en K8s:</strong> Prometheus + Loki + Tempo + Grafana. Todo corre en pods dentro del mismo cluster.</p>
         </div>
-        <aside class="notes">Prometheus es el estandar de facto. En vez de que la app envie metricas (push), Prometheus las pide (pull) cada 15-30 segundos.</aside>
-      </section>
-
-      <section id="loki">
-        <h2>Loki + Promtail: Logs</h2>
-        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-          <div>
-            <pre><code class="language-yaml" data-trim data-line-numbers>
-# Promtail - DaemonSet en cada nodo
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: promtail
-spec:
-  template:
-    spec:
-      containers:
-      - name: promtail
-        image: grafana/promtail:latest
-        volumeMounts:
-        - name: varlog
-          mountPath: /var/log
-            </code></pre>
-          </div>
-          <div>
-            <pre><code class="language-logql" data-trim>
-# Buscar errores
-{app="mi-app"}
-  |= "error"
-  | json
-  | status >= 500
-
-# Rate de errores por pod
-sum(rate({app="mi-app"}
-  |= "error" [5m])) by (pod)
-            </code></pre>
-            <ul>
-              <li>Loki = como Elasticsearch pero <strong>mas barato</strong></li>
-              <li>Indexa labels, no texto completo</li>
-              <li>LogQL: filtra como PromQL</li>
-            </ul>
-          </div>
-        </div>
-        <aside class="notes">Loki es la alternativa economica a ELK/Elasticsearch. Promtail corre en cada nodo (DaemonSet) y envia logs a Loki.</aside>
-      </section>
-
-      <section id="grafana-unified">
-        <h2>Grafana: Unificando todo</h2>
-        <div class="content">
-          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px; margin-bottom:15px;">
-            <div class="card" style="text-align:center; border-color: rgba(232,145,58,0.3);">
-              <p><strong style="color:#e8913a;">Metricas</strong></p>
-              <p class="text-muted">Prometheus datasource</p>
-            </div>
-            <div class="card" style="text-align:center; border-color: rgba(245,158,11,0.3);">
-              <p><strong style="color:#f59e0b;">Logs</strong></p>
-              <p class="text-muted">Loki datasource</p>
-            </div>
-            <div class="card" style="text-align:center; border-color: rgba(88,166,255,0.3);">
-              <p><strong style="color:#58a6ff;">Traces</strong></p>
-              <p class="text-muted">Tempo datasource</p>
-            </div>
-          </div>
-          <p class="text-center text-lg" style="margin-top:10pt;">
-            <span class="tag tag-orange">Alerta en Prometheus</span>
-            <i class="fa-solid fa-arrow-right text-muted"></i>
-            <span class="tag tag-blue">Click &rarr; ver log en Loki</span>
-            <i class="fa-solid fa-arrow-right text-muted"></i>
-            <span class="tag tag-green">Click &rarr; saltar al trace en Tempo</span>
-          </p>
-        </div>
-        <aside class="notes">Grafana es la interfaz visual. Un click en una metrica te lleva al log relacionado. Un click en el log te lleva al trace. Todo conectado.</aside>
-      </section>
-
-      <section id="demo-grafana" class="demo-slide">
-        <h2><i class="fa-solid fa-play-circle"></i> DEMO: Grafana en vivo</h2>
-        <div class="content">
-          <div class="demo-checklist">
-            <div><i class="fa-solid fa-square-check"></i> Abrir Grafana <code>localhost:3000</code></div>
-            <div><i class="fa-solid fa-square-check"></i> Dashboard de metricas (Prometheus)</div>
-            <div><i class="fa-solid fa-square-check"></i> Buscar logs en Loki</div>
-            <div><i class="fa-solid fa-square-check"></i> Ver metricas en tiempo real mientras generamos trafico</div>
-          </div>
-          <p style="margin-top:20pt;" class="text-center text-muted">
-            <i class="fa-solid fa-fire" style="color:var(--accent-orange);"></i> Ver el dashboard "respirar" en vivo
-          </p>
-        </div>
-        <aside class="notes">DEMO EN VIVO. Mostrar el dashboard con datos reales. Generar trafico y ver como las metricas suben. Buscar un error en los logs.</aside>
+        <aside class="notes">Solo mencionar. No profundizar. Estos 3 pilares son el estandar en K8s. Grafana los unifica. Para profundizar: docs oficiales.</aside>
       </section>
 
       <!-- ============================================================
@@ -1006,7 +864,7 @@ default      redis-master-0     1/1
       </section>
 
       <section id="closing" class="section-divider" data-state="is-section-divider">
-        <p><img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="K8s" style="max-height:100px; border:none; box-shadow:none; background:none;"></p>
+        <img src="assets/captain-kube.svg" alt="Captain Kube" style="max-height:140px; margin-bottom:20px;">
         <h1>Gracias!</h1>
         <p style="font-size:22pt;">Preguntas?</p>
         <div style="margin-top:30px;">
@@ -1026,7 +884,39 @@ default      redis-master-0     1/1
 
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
   <script>
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: 'dark',
+      themeVariables: {
+        primaryColor: '#1a2540',
+        primaryTextColor: '#e6edf3',
+        primaryBorderColor: '#326CE5',
+        lineColor: '#58a6ff',
+        secondaryColor: '#0d1f3c',
+        tertiaryColor: '#0a1628',
+        fontFamily: 'Plus Jakarta Sans, sans-serif',
+        fontSize: '14px'
+      },
+      flowchart: { curve: 'basis', padding: 12 }
+    });
+
+    Reveal.on('ready', async () => {
+      const diagrams = document.querySelectorAll('.mermaid');
+      for (let i = 0; i < diagrams.length; i++) {
+        const el = diagrams[i];
+        if (el.dataset.processed) continue;
+        try {
+          const svg = await mermaid.render('mermaid-' + i, el.textContent);
+          el.innerHTML = svg.svg;
+          el.dataset.processed = '1';
+        } catch (e) {
+          console.error('Mermaid error', e);
+        }
+      }
+    });
+
     Reveal.initialize({
       width: 1280,
       height: 720,
