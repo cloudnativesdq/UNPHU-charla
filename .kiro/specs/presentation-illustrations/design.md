@@ -6,7 +6,7 @@ Este feature agrega 5 ilustraciones visuales SVG/HTML inline a la presentación 
 
 La estrategia de integración es conservadora: las ilustraciones **reemplazan** las cards de texto donde ya existe una sección visual débil (VM vs Contenedor, Arquitectura K8s, Stack de Observabilidad, Roadmap), y **agregan** un nuevo slide en la sección de la app demo (Flujo del Acortador de URLs). El diseño prioriza legibilidad a distancia, jerarquía visual clara y consistencia con los estilos CSS ya definidos en el `<head>`.
 
-## Paleta de Colores y Estilos CSS Compartidos
+## Architecture
 
 ```
 Colores base (ya definidos en el proyecto):
@@ -33,7 +33,7 @@ Gradientes de sección:
 ```
 
 
-## Componentes e Interfaces
+## Components and Interfaces
 
 ### Ilustración 1: Diagrama VM vs Contenedor
 
@@ -751,7 +751,7 @@ Gradientes de sección:
 
 ---
 
-## Modelos de Datos
+## Data Models
 
 ### Modelo: Mapa de Integración de Slides
 
@@ -813,7 +813,7 @@ RenderConstraints = {
 }
 ```
 
-## Manejo de Errores
+## Error Handling
 
 ### Escenario 1: Íconos SVG externos no cargan (CDN caído)
 
@@ -833,7 +833,7 @@ RenderConstraints = {
 **Respuesta**: Reveal.js maneja el estado de fragments automáticamente — retroceder oculta fragmentos en orden inverso.  
 **Recuperación**: No requiere acción especial; el comportamiento es nativo de Reveal.js.
 
-## Estrategia de Testing
+## Testing Strategy
 
 ### Unit Testing: Validación Visual
 
@@ -880,3 +880,62 @@ Todos los elementos informativos deben tener `aria-label` o texto alternativo vi
 | Reveal.js 5.1.0 | `https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/` | Framework de presentación | Scripts/CSS ya cargados |
 
 Todas las dependencias de CDN ya están referenciadas en el proyecto o son del mismo origen (`cdn.jsdelivr.net`). No se introducen nuevos dominios externos.
+
+
+## Correctness Properties
+
+*Una propiedad es una característica o comportamiento que debe mantenerse en todas las ejecuciones válidas del sistema — esencialmente, una afirmación formal sobre lo que el sistema debe hacer. Las propiedades sirven como puente entre las especificaciones legibles por humanos y las garantías de corrección verificables.*
+
+### Property 1: Todos los SVGs de ilustración son responsivos
+
+*Para todo* SVG perteneciente a las 5 ilustraciones en `html/index.html`, el elemento debe tener el atributo `viewBox` definido y el estilo `width:100%`, de modo que Reveal.js pueda escalar la ilustración proporcionalmente mediante su sistema `transform: scale()` en cualquier resolución.
+
+**Validates: Requirements 6.4**
+
+---
+
+### Property 2: Todos los SVGs de ilustración respetan el límite de altura
+
+*Para todo* SVG perteneciente a las 5 ilustraciones, el estilo `max-height` debe tener un valor entre 300 px y 520 px, para prevenir desbordamiento visual en resolución 1920×1080 con el margin de 0.04 configurado en Reveal.js.
+
+**Validates: Requirements 6.5**
+
+---
+
+### Property 3: Todos los slides modificados conservan las notas del presentador
+
+*Para todo* slide modificado o insertado por las 5 ilustraciones, el elemento `<section>` debe contener un elemento `<aside class="notes">`, preservando el contexto de presentación para el presentador en la vista de notas de Reveal.js.
+
+**Validates: Requirements 6.9**
+
+---
+
+### Property 4: Todos los colores en los SVGs pertenecen a la paleta del proyecto
+
+*Para todo* atributo de color (`fill`, `stroke`, `stop-color`) en los SVGs de las 5 ilustraciones, el valor debe pertenecer al conjunto de colores definido en la paleta del proyecto: `#326CE5`, `#2ecc71`, `#f39c12`, `#e74c3c`, `#1a1a2e`, `#f46800`, `#e6522c`, `#f0a500`, `#3b82f6`, `#61dafb`, `#dc382c`, o ser un valor `rgba()` derivado de uno de esos colores o de blancos/grises neutros (`#ffffff`, `#718096`, `#a0aec0`, `#2d3748`, `#1a3a2a`, `#1a2a3a`, etc.) para fondos y texto secundario.
+
+**Validates: Requirements 7.1**
+
+---
+
+### Property 5: Todos los rectángulos de componentes tienen bordes redondeados
+
+*Para todo* elemento `<rect>` que representa un componente de arquitectura en los SVGs de las 5 ilustraciones, el atributo `rx` debe tener un valor entre 4 y 16 (inclusive), garantizando el estilo visual redondeado consistente con el diseño de la presentación.
+
+**Validates: Requirements 7.3**
+
+---
+
+### Property 6: Todos los textos SVG tienen tamaño de fuente mínimo legible
+
+*Para todo* elemento `<text>` en los SVGs de las 5 ilustraciones, el atributo `font-size` debe tener un valor mayor o igual a 9 (en coordenadas de viewBox), donde 9 aplica a textos secundarios y descriptivos, y 11 o más aplica a nombres de componentes primarios, garantizando legibilidad a distancia de proyector.
+
+**Validates: Requirements 8.1**
+
+---
+
+### Property 7: Todos los bordes y flechas tienen grosor mínimo visible
+
+*Para todo* elemento `<rect>` o `<g>` de componente en los SVGs de las 5 ilustraciones, el atributo `stroke-width` debe ser mayor o igual a 1.5. *Para todo* elemento de flecha (`<line>`, `<path>`) que represente una conexión entre componentes, el atributo `stroke-width` debe ser mayor o igual a 2, garantizando visibilidad de líneas en proyector.
+
+**Validates: Requirements 8.2**

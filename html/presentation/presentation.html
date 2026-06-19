@@ -19,10 +19,12 @@
            ============================================================ -->
 
       <section id="title" class="section-divider" data-state="is-section-divider">
-        <div style="display:flex; align-items:center; justify-content:center; gap:30px;">
-          <img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="K8s" style="max-height:120px; border:none; box-shadow:none; background:none;">
-          <div style="font-size:50pt; color:var(--muted-color); font-weight:300;">+</div>
-          <i class="fa-brands fa-docker" style="font-size:90pt; color:#2496ED;"></i>
+        <div style="display:flex; align-items:center; justify-content:center; gap:20px;">
+          <img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="K8s" style="max-height:90px; border:none; box-shadow:none; background:none;">
+          <div style="font-size:40pt; color:var(--muted-color); font-weight:300;">+</div>
+          <i class="fa-brands fa-docker" style="font-size:70pt; color:#2496ED;"></i>
+          <div style="font-size:40pt; color:var(--muted-color); font-weight:300;">+</div>
+          <img src="assets/captain-kube.svg" alt="Captain Kube" style="max-height:90px; background:none;">
         </div>
         <h1 style="margin-top:20px;">De 0 a Observabilidad</h1>
         <p>Construyendo un stack completo con Kubernetes</p>
@@ -76,29 +78,36 @@
       <section id="agenda">
         <h2>Que veremos hoy</h2>
         <div class="content">
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-            <div class="stack-item">
-              <p><span class="step-number">1</span> <strong>Docker</strong> &mdash; Contenedores</p>
+          <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:25px; align-items:center;">
+            <div>
+              <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                <div class="stack-item">
+                  <p><span class="step-number">1</span> <strong>Docker</strong> &mdash; Contenedores</p>
+                </div>
+                <div class="stack-item">
+                  <p><span class="step-number">2</span> <strong>Kubernetes</strong> &mdash; Orquestacion</p>
+                </div>
+                <div class="stack-item">
+                  <p><span class="step-number">3</span> <strong>Objetos</strong> &mdash; Pods, Deployments, Services</p>
+                </div>
+                <div class="stack-item">
+                  <p><span class="step-number">4</span> <strong>Config</strong> &mdash; ConfigMaps y Secrets</p>
+                </div>
+                <div class="stack-item">
+                  <p><span class="step-number">5</span> <strong>Escalado</strong> &mdash; HPA</p>
+                </div>
+                <div class="stack-item" style="border-left-color:var(--accent-green);">
+                  <p><span class="step-number">6</span> <strong>Observabilidad</strong> &mdash; Prometheus + Grafana</p>
+                </div>
+              </div>
+              <p style="margin-top:15pt;" class="text-muted">
+                <i class="fa-solid fa-clock"></i> 6 bloques &bull; demos en vivo &bull; Q&amp;A al final
+              </p>
             </div>
-            <div class="stack-item">
-              <p><span class="step-number">2</span> <strong>Kubernetes</strong> &mdash; Orquestacion</p>
-            </div>
-            <div class="stack-item">
-              <p><span class="step-number">3</span> <strong>Objetos</strong> &mdash; Pods, Deployments, Services</p>
-            </div>
-            <div class="stack-item">
-              <p><span class="step-number">4</span> <strong>Config</strong> &mdash; ConfigMaps y Secrets</p>
-            </div>
-            <div class="stack-item">
-              <p><span class="step-number">5</span> <strong>Escalado</strong> &mdash; HPA</p>
-            </div>
-            <div class="stack-item" style="border-left-color:var(--accent-green);">
-              <p><span class="step-number">6</span> <strong>Observabilidad</strong> &mdash; Prometheus + Grafana</p>
+            <div class="illust-callout">
+              <img src="assets/container-ship.svg" alt="Container ship" style="max-width:100%; max-height:280px; width:auto;">
             </div>
           </div>
-          <p style="margin-top:15pt;" class="text-muted text-center">
-            <i class="fa-solid fa-clock"></i> 6 bloques &bull; demos en vivo &bull; Q&amp;A al final
-          </p>
         </div>
         <aside class="notes">Muestra la ruta. Cada bloque tiene una demo. El objetivo es que salgan sabiendo que existe cada herramienta y como encajan.</aside>
       </section>
@@ -765,8 +774,13 @@ spec:
             <p class="text-muted">Flujo de un request</p>
           </div>
         </div>
-        <div style="margin-top:25px; padding:18px; background:rgba(50,108,229,0.06); border-left:3px solid var(--primary-color); border-radius:0 8px 8px 0;">
-          <p><i class="fa-solid fa-lightbulb text-primary"></i> <strong>Stack tipico en K8s:</strong> Prometheus + Loki + Tempo + Grafana. Todo corre en pods dentro del mismo cluster.</p>
+        <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:20px; align-items:center; margin-top:20px;">
+          <div style="padding:18px; background:rgba(50,108,229,0.06); border-left:3px solid var(--primary-color); border-radius:0 8px 8px 0;">
+            <p><i class="fa-solid fa-lightbulb text-primary"></i> <strong>Stack tipico en K8s:</strong> Prometheus + Loki + Tempo + Grafana. Todo corre en pods dentro del mismo cluster.</p>
+          </div>
+          <div class="illust-callout" style="padding:0;">
+            <img src="assets/observability-server.svg" alt="Server with observability" style="max-width:100%; max-height:180px; width:auto;">
+          </div>
         </div>
         <aside class="notes">Solo mencionar. No profundizar. Estos 3 pilares son el estandar en K8s. Grafana los unifica. Para profundizar: docs oficiales.</aside>
       </section>
@@ -809,28 +823,33 @@ default      redis-master-0     1/1
 
       <section id="careers">
         <h2>Donde puedes trabajar</h2>
-        <div class="content">
-          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
-            <div class="card" style="text-align:center;">
-              <p><i class="fa-solid fa-laptop-code text-primary text-2xl"></i></p>
-              <h3>DevOps Engineer</h3>
-              <p class="text-muted">Automatiza CI/CD, maneja infraestructura como codigo</p>
+        <div class="content" style="display:grid; grid-template-columns: 1.2fr 1fr; gap:25px; align-items:center;">
+          <div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:15px;">
+              <div class="card" style="text-align:center;">
+                <p><i class="fa-solid fa-laptop-code text-primary text-2xl"></i></p>
+                <h3 style="font-size:14pt;">DevOps Engineer</h3>
+                <p class="text-muted" style="font-size:11pt;">Automatiza CI/CD, infraestructura como codigo</p>
+              </div>
+              <div class="card" style="text-align:center;">
+                <p><i class="fa-solid fa-shield-halved text-primary text-2xl"></i></p>
+                <h3 style="font-size:14pt;">SRE</h3>
+                <p class="text-muted" style="font-size:11pt;">Garantiza que los sistemas no se caigan</p>
+              </div>
+              <div class="card" style="text-align:center;">
+                <p><i class="fa-solid fa-layer-group text-primary text-2xl"></i></p>
+                <h3 style="font-size:14pt;">Platform Eng</h3>
+                <p class="text-muted" style="font-size:11pt;">Plataformas internas para developers</p>
+              </div>
             </div>
-            <div class="card" style="text-align:center;">
-              <p><i class="fa-solid fa-shield-halved text-primary text-2xl"></i></p>
-              <h3>Site Reliability Eng (SRE)</h3>
-              <p class="text-muted">Garantiza que los sistemas no se caigan. Google creo este rol</p>
-            </div>
-            <div class="card" style="text-align:center;">
-              <p><i class="fa-solid fa-layer-group text-primary text-2xl"></i></p>
-              <h3>Platform Engineer</h3>
-              <p class="text-muted">Construye plataformas internas para otros developers</p>
-            </div>
+            <p style="margin-top:18pt;" class="text-center">
+              <i class="fa-solid fa-trophy" style="color:var(--accent-orange);"></i>
+              <span class="text-lg">Kubernetes es la skill #1 en cloud native</span>
+            </p>
           </div>
-          <p style="margin-top:20pt;" class="text-center">
-            <i class="fa-solid fa-trophy" style="color:var(--accent-orange);"></i>
-            <span class="text-lg">Kubernetes es la skill #1 mas solicitada en cloud native</span>
-          </p>
+          <div class="illust-callout" style="padding:0;">
+            <img src="assets/teamwork.svg" alt="Teamwork" style="max-width:100%; max-height:280px; width:auto;">
+          </div>
         </div>
         <aside class="notes">Estos roles estan en alta demanda. Empresas locales e internacionales buscan gente con K8s. El salario inicial en LATAM para DevOps con K8s es competitivo.</aside>
       </section>
@@ -864,17 +883,23 @@ default      redis-master-0     1/1
       </section>
 
       <section id="closing" class="section-divider" data-state="is-section-divider">
-        <img src="assets/captain-kube.svg" alt="Captain Kube" style="max-height:140px; margin-bottom:20px;">
-        <h1>Gracias!</h1>
+        <img src="assets/captain-kube.svg" alt="Captain Kube" style="max-height:120px; margin-bottom:15px;">
+        <h1 style="font-size:54pt;">Gracias!</h1>
         <p style="font-size:22pt;">Preguntas?</p>
-        <div style="margin-top:30px;">
-          <p><i class="fa-brands fa-github"></i> github.com/cloudnativesdq/UNPHU-charla</p>
-          <p><i class="fa-solid fa-globe"></i> cloudnativesdq.github.io/UNPHU-charla</p>
+        <div style="display:flex; align-items:center; justify-content:center; gap:30px; margin-top:25px;">
+          <div style="text-align:left; font-size:13pt;">
+            <p><i class="fa-brands fa-github"></i> <strong>github.com/cloudnativesdq/UNPHU-charla</strong></p>
+            <p><i class="fa-solid fa-globe"></i> <strong>cloudnativesdq.github.io/UNPHU-charla</strong></p>
+            <p class="text-muted" style="font-size:11pt; margin-top:10px;">
+              <i class="fa-solid fa-keyboard"></i> S = speaker view &bull;
+              <i class="fa-solid fa-border-all"></i> O = overview &bull;
+              <i class="fa-solid fa-search"></i> Ctrl+Shift+F = buscar
+            </p>
+          </div>
+          <img src="assets/qr-repo.svg" alt="QR repo" style="width:130px; height:130px; border-radius:8px;">
         </div>
-        <p class="text-muted" style="margin-top:20pt; font-size:14pt;">
-          <i class="fa-solid fa-keyboard"></i> S = speaker view &bull;
-          <i class="fa-solid fa-border-all"></i> O = overview &bull;
-          <i class="fa-solid fa-search"></i> Ctrl+Shift+F = buscar
+        <p class="text-muted" style="margin-top:12pt; font-size:11pt;">
+          <i class="fa-solid fa-qrcode"></i> Escanea el QR para acceder al repo
         </p>
         <aside class="notes">Gracias. El repo tiene toda la presentacion. Anima a clonar y experimentar. Abre el espacio para preguntas - minimo 10 minutos.</aside>
       </section>

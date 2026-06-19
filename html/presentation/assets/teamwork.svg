@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" fill="none">
+  <defs>
+    <linearGradient id="grad-bg-team" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a2540"/>
+      <stop offset="1" stop-color="#0a1628"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="500" height="400" fill="url(#grad-bg-team)"/>
+
+  <g transform="translate(150, 120)">
+    <rect x="0" y="0" width="200" height="180" rx="8" fill="#1a2540" stroke="#326CE5" stroke-width="2"/>
+    <text x="100" y="25" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" font-weight="700" fill="#3fb950">~/cloud-native</text>
+
+    <g transform="translate(15, 45)">
+      <text font-family="JetBrains Mono, monospace" font-size="9" fill="#58a6ff">$ kubectl</text>
+      <text x="60" font-family="JetBrains Mono, monospace" font-size="9" fill="#e6edf3"> apply -f</text>
+      <text y="14" x="15" font-family="JetBrains Mono, monospace" font-size="9" fill="#a8e6b4">deployment.yaml</text>
+    </g>
+
+    <g transform="translate(15, 90)">
+      <rect x="0" y="0" width="170" height="3" rx="1" fill="#3fb950" opacity="0.3"/>
+      <rect x="0" y="0" width="120" height="3" rx="1" fill="#3fb950"/>
+    </g>
+
+    <g transform="translate(15, 100)">
+      <text font-family="JetBrains Mono, monospace" font-size="8" fill="#7d8590">deployment.apps/mi-app</text>
+      <text y="12" font-family="JetBrains Mono, monospace" font-size="8" fill="#3fb950">✓ created (3 replicas)</text>
+    </g>
+
+    <g transform="translate(15, 130)">
+      <text font-family="JetBrains Mono, monospace" font-size="8" fill="#7d8590">pod/mi-app-7d4b</text>
+      <text y="12" font-family="JetBrains Mono, monospace" font-size="8" fill="#3fb950">✓ Running</text>
+    </g>
+    <g transform="translate(15, 158)">
+      <text font-family="JetBrains Mono, monospace" font-size="8" fill="#7d8590">pod/mi-app-m8n3</text>
+      <text y="12" font-family="JetBrains Mono, monospace" font-size="8" fill="#3fb950">✓ Running</text>
+    </g>
+  </g>
+
+  <g transform="translate(80, 180)">
+    <circle cx="0" cy="0" r="28" fill="#3fb950" opacity="0.15"/>
+    <circle cx="0" cy="0" r="20" fill="#3fb950" opacity="0.3"/>
+    <circle cx="0" cy="0" r="14" fill="#3fb950"/>
+    <text x="0" y="5" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="700" fill="white">U</text>
+  </g>
+
+  <g transform="translate(420, 200)">
+    <circle cx="0" cy="0" r="28" fill="#58a6ff" opacity="0.15"/>
+    <circle cx="0" cy="0" r="20" fill="#58a6ff" opacity="0.3"/>
+    <circle cx="0" cy="0" r="14" fill="#58a6ff"/>
+    <text x="0" y="5" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="700" fill="white">D</text>
+  </g>
+
+  <g transform="translate(110, 80)">
+    <circle cx="0" cy="0" r="18" fill="#d29922" opacity="0.15"/>
+    <text x="0" y="6" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14">☁️</text>
+  </g>
+
+  <g transform="translate(390, 80)">
+    <circle cx="0" cy="0" r="18" fill="#f59e0b" opacity="0.15"/>
+    <text x="0" y="6" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14">🚀</text>
+  </g>
+
+  <g stroke="#3fb950" stroke-width="1.5" stroke-dasharray="3,3" fill="none" opacity="0.4">
+    <path d="M 108 180 Q 130 130 150 120"/>
+    <path d="M 392 200 Q 370 150 350 130"/>
+  </g>
+
+  <g font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#7d8590">
+    <text x="250" y="370" text-anchor="middle" font-style="italic">Trabajo en equipo: dev + DevOps + cloud</text>
+  </g>
+</svg>

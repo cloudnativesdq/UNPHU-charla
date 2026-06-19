@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" fill="none">
+  <defs>
+    <linearGradient id="server-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4a8aff"/>
+      <stop offset="1" stop-color="#326CE5"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="500" height="400" fill="#080b12"/>
+
+  <circle cx="250" cy="320" r="100" fill="#326CE5" opacity="0.08"/>
+
+  <g transform="translate(170, 80)">
+    <rect x="0" y="0" width="160" height="200" rx="10" fill="#1a2540" stroke="#326CE5" stroke-width="2.5"/>
+    <rect x="0" y="0" width="160" height="30" rx="10" fill="#326CE5"/>
+    <rect x="0" y="25" width="160" height="5" fill="#326CE5"/>
+    <circle cx="15" cy="15" r="3" fill="#3fb950"/>
+    <circle cx="28" cy="15" r="3" fill="#d29922"/>
+
+    <g transform="translate(15, 45)">
+      <rect x="0" y="0" width="130" height="35" rx="4" fill="#0a1628" stroke="#58a6ff" stroke-width="1.5"/>
+      <circle cx="10" cy="17" r="4" fill="#3fb950"/>
+      <rect x="22" y="10" width="40" height="3" rx="1.5" fill="#58a6ff"/>
+      <rect x="22" y="18" width="60" height="2" rx="1" fill="#7d8590"/>
+      <rect x="22" y="24" width="30" height="2" rx="1" fill="#7d8590"/>
+    </g>
+
+    <g transform="translate(15, 90)">
+      <rect x="0" y="0" width="130" height="35" rx="4" fill="#0a1628" stroke="#d29922" stroke-width="1.5"/>
+      <circle cx="10" cy="17" r="4" fill="#d29922"/>
+      <rect x="22" y="10" width="50" height="3" rx="1.5" fill="#d29922"/>
+      <rect x="22" y="18" width="70" height="2" rx="1" fill="#7d8590"/>
+      <rect x="22" y="24" width="40" height="2" rx="1" fill="#7d8590"/>
+    </g>
+
+    <g transform="translate(15, 135)">
+      <rect x="0" y="0" width="130" height="35" rx="4" fill="#0a1628" stroke="#3fb950" stroke-width="1.5"/>
+      <circle cx="10" cy="17" r="4" fill="#3fb950"/>
+      <rect x="22" y="10" width="45" height="3" rx="1.5" fill="#3fb950"/>
+      <rect x="22" y="18" width="65" height="2" rx="1" fill="#7d8590"/>
+      <rect x="22" y="24" width="35" height="2" rx="1" fill="#7d8590"/>
+    </g>
+
+    <g transform="translate(15, 180)">
+      <rect x="0" y="0" width="60" height="12" rx="2" fill="#0a1628" stroke="#7d8590" stroke-width="1"/>
+      <text x="30" y="9" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#7d8590">CPU 45%</text>
+      <rect x="70" y="0" width="60" height="12" rx="2" fill="#0a1628" stroke="#7d8590" stroke-width="1"/>
+      <text x="100" y="9" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="7" fill="#7d8590">RAM 2.1G</text>
+    </g>
+  </g>
+
+  <g transform="translate(370, 130)">
+    <circle cx="0" cy="0" r="35" fill="#3fb950" opacity="0.15"/>
+    <text x="0" y="8" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="28">📊</text>
+  </g>
+
+  <g transform="translate(100, 250)">
+    <circle cx="0" cy="0" r="25" fill="#58a6ff" opacity="0.15"/>
+    <text x="0" y="7" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="20">📈</text>
+  </g>
+
+  <g transform="translate(80, 80)">
+    <circle cx="0" cy="0" r="20" fill="#d29922" opacity="0.15"/>
+    <text x="0" y="6" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="16">🔔</text>
+  </g>
+
+  <g transform="translate(400, 250)">
+    <circle cx="0" cy="0" r="18" fill="#f59e0b" opacity="0.15"/>
+    <text x="0" y="6" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14">📝</text>
+  </g>
+
+  <g font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#7d8590">
+    <text x="250" y="350" text-anchor="middle" font-style="italic">Tu sistema bajo observabilidad</text>
+  </g>
+</svg>

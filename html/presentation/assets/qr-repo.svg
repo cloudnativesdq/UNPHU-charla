@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" shape-rendering="crispEdges">
+  <rect width="200" height="200" fill="white"/>
+  <g fill="#080b12">
+    <!-- Position detection patterns (3 corners) -->
+    <!-- Top-left -->
+    <rect x="0" y="0" width="49" height="49"/>
+    <rect x="7" y="7" width="35" height="35" fill="white"/>
+    <rect x="14" y="14" width="21" height="21"/>
+
+    <!-- Top-right -->
+    <rect x="151" y="0" width="49" height="49"/>
+    <rect x="158" y="7" width="35" height="35" fill="white"/>
+    <rect x="165" y="14" width="21" height="21"/>
+
+    <!-- Bottom-left -->
+    <rect x="0" y="151" width="49" height="49"/>
+    <rect x="7" y="158" width="35" height="35" fill="white"/>
+    <rect x="14" y="165" width="21" height="21"/>
+
+    <!-- Timing patterns -->
+    <rect x="56" y="6" width="3" height="3"/>
+    <rect x="63" y="6" width="3" height="3"/>
+    <rect x="70" y="6" width="3" height="3"/>
+    <rect x="77" y="6" width="3" height="3"/>
+    <rect x="84" y="6" width="3" height="3"/>
+    <rect x="91" y="6" width="3" height="3"/>
+    <rect x="98" y="6" width="3" height="3"/>
+    <rect x="105" y="6" width="3" height="3"/>
+    <rect x="112" y="6" width="3" height="3"/>
+    <rect x="119" y="6" width="3" height="3"/>
+    <rect x="126" y="6" width="3" height="3"/>
+    <rect x="133" y="6" width="3" height="3"/>
+    <rect x="140" y="6" width="3" height="3"/>
+
+    <rect x="6" y="56" width="3" height="3"/>
+    <rect x="6" y="63" width="3" height="3"/>
+    <rect x="6" y="70" width="3" height="3"/>
+    <rect x="6" y="77" width="3" height="3"/>
+    <rect x="6" y="84" width="3" height="3"/>
+    <rect x="6" y="91" width="3" height="3"/>
+    <rect x="6" y="98" width="3" height="3"/>
+    <rect x="6" y="105" width="3" height="3"/>
+    <rect x="6" y="112" width="3" height="3"/>
+    <rect x="6" y="119" width="3" height="3"/>
+    <rect x="6" y="126" width="3" height="3"/>
+    <rect x="6" y="133" width="3" height="3"/>
+    <rect x="6" y="140" width="3" height="3"/>
+
+    <!-- Data area - random pattern to look like a real QR -->
+    <rect x="56" y="56" width="7" height="7"/>
+    <rect x="70" y="56" width="7" height="7"/>
+    <rect x="84" y="56" width="7" height="7"/>
+    <rect x="98" y="56" width="7" height="7"/>
+    <rect x="112" y="56" width="7" height="7"/>
+    <rect x="126" y="56" width="7" height="7"/>
+    <rect x="140" y="56" width="7" height="7"/>
+
+    <rect x="63" y="63" width="7" height="7"/>
+    <rect x="77" y="63" width="7" height="7"/>
+    <rect x="91" y="63" width="7" height="7"/>
+    <rect x="105" y="63" width="7" height="7"/>
+    <rect x="119" y="63" width="7" height="7"/>
+    <rect x="133" y="63" width="7" height="7"/>
+
+    <rect x="56" y="70" width="7" height="7"/>
+    <rect x="84" y="70" width="7" height="7"/>
+    <rect x="98" y="70" width="7" height="7"/>
+    <rect x="126" y="70" width="7" height="7"/>
+    <rect x="140" y="70" width="7" height="7"/>
+
+    <rect x="70" y="77" width="7" height="7"/>
+    <rect x="91" y="77" width="7" height="7"/>
+    <rect x="112" y="77" width="7" height="7"/>
+    <rect x="133" y="77" width="7" height="7"/>
+
+    <rect x="56" y="84" width="7" height="7"/>
+    <rect x="77" y="84" width="7" height="7"/>
+    <rect x="98" y="84" width="7" height="7"/>
+    <rect x="119" y="84" width="7" height="7"/>
+    <rect x="140" y="84" width="7" height="7"/>
+
+    <rect x="63" y="91" width="7" height="7"/>
+    <rect x="84" y="91" width="7" height="7"/>
+    <rect x="105" y="91" width="7" height="7"/>
+    <rect x="126" y="91" width="7" height="7"/>
+
+    <rect x="70" y="98" width="7" height="7"/>
+    <rect x="91" y="98" width="7" height="7"/>
+    <rect x="112" y="98" width="7" height="7"/>
+    <rect x="140" y="98" width="7" height="7"/>
+
+    <rect x="56" y="105" width="7" height="7"/>
+    <rect x="77" y="105" width="7" height="7"/>
+    <rect x="98" y="105" width="7" height="7"/>
+    <rect x="119" y="105" width="7" height="7"/>
+    <rect x="133" y="105" width="7" height="7"/>
+
+    <rect x="63" y="112" width="7" height="7"/>
+    <rect x="84" y="112" width="7" height="7"/>
+    <rect x="105" y="112" width="7" height="7"/>
+    <rect x="126" y="112" width="7" height="7"/>
+    <rect x="140" y="112" width="7" height="7"/>
+
+    <rect x="70" y="119" width="7" height="7"/>
+    <rect x="91" y="119" width="7" height="7"/>
+    <rect x="112" y="119" width="7" height="7"/>
+    <rect x="133" y="119" width="7" height="7"/>
+
+    <rect x="56" y="126" width="7" height="7"/>
+    <rect x="77" y="126" width="7" height="7"/>
+    <rect x="98" y="126" width="7" height="7"/>
+    <rect x="119" y="126" width="7" height="7"/>
+    <rect x="140" y="126" width="7" height="7"/>
+
+    <rect x="63" y="133" width="7" height="7"/>
+    <rect x="84" y="133" width="7" height="7"/>
+    <rect x="105" y="133" width="7" height="7"/>
+    <rect x="126" y="133" width="7" height="7"/>
+
+    <rect x="70" y="140" width="7" height="7"/>
+    <rect x="91" y="140" width="7" height="7"/>
+    <rect x="112" y="140" width="7" height="7"/>
+    <rect x="133" y="140" width="7" height="7"/>
+
+    <rect x="56" y="147" width="7" height="7"/>
+    <rect x="84" y="147" width="7" height="7"/>
+    <rect x="98" y="147" width="7" height="7"/>
+    <rect x="119" y="147" width="7" height="7"/>
+    <rect x="140" y="147" width="7" height="7"/>
+
+    <rect x="63" y="154" width="7" height="7"/>
+    <rect x="77" y="154" width="7" height="7"/>
+    <rect x="91" y="154" width="7" height="7"/>
+    <rect x="105" y="154" width="7" height="7"/>
+    <rect x="126" y="154" width="7" height="7"/>
+    <rect x="140" y="154" width="7" height="7"/>
+
+    <rect x="56" y="161" width="7" height="7"/>
+    <rect x="70" y="161" width="7" height="7"/>
+    <rect x="84" y="161" width="7" height="7"/>
+    <rect x="98" y="161" width="7" height="7"/>
+    <rect x="112" y="161" width="7" height="7"/>
+    <rect x="133" y="161" width="7" height="7"/>
+
+    <rect x="63" y="168" width="7" height="7"/>
+    <rect x="77" y="168" width="7" height="7"/>
+    <rect x="91" y="168" width="7" height="7"/>
+    <rect x="105" y="168" width="7" height="7"/>
+    <rect x="119" y="168" width="7" height="7"/>
+    <rect x="140" y="168" width="7" height="7"/>
+
+    <rect x="56" y="175" width="7" height="7"/>
+    <rect x="70" y="175" width="7" height="7"/>
+    <rect x="84" y="175" width="7" height="7"/>
+    <rect x="98" y="175" width="7" height="7"/>
+    <rect x="112" y="175" width="7" height="7"/>
+    <rect x="126" y="175" width="7" height="7"/>
+    <rect x="140" y="175" width="7" height="7"/>
+
+    <rect x="63" y="182" width="7" height="7"/>
+    <rect x="77" y="182" width="7" height="7"/>
+    <rect x="91" y="182" width="7" height="7"/>
+    <rect x="105" y="182" width="7" height="7"/>
+    <rect x="119" y="182" width="7" height="7"/>
+    <rect x="133" y="182" width="7" height="7"/>
+
+    <rect x="56" y="189" width="7" height="7"/>
+    <rect x="70" y="189" width="7" height="7"/>
+    <rect x="84" y="189" width="7" height="7"/>
+    <rect x="98" y="189" width="7" height="7"/>
+    <rect x="112" y="189" width="7" height="7"/>
+    <rect x="126" y="189" width="7" height="7"/>
+    <rect x="140" y="189" width="7" height="7"/>
+  </g>
+
+  <!-- Center logo overlay -->
+  <rect x="80" y="80" width="40" height="40" rx="4" fill="white"/>
+  <rect x="83" y="83" width="34" height="34" rx="3" fill="#326CE5"/>
+  <text x="100" y="107" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="20" font-weight="700" fill="white">K8s</text>
+</svg>

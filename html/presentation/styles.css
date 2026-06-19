@@ -367,3 +367,16 @@
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.08); }
 }
+
+.hero-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+
+img[src*="assets/"] {
+  user-select: none;
+}
