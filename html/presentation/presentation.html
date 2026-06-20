@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>De 0 a Observabilidad - UNPHU 2026</title>
+  <title>Introducción a Contenedores - UNPHU 2026</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
@@ -26,10 +26,10 @@
           <div style="font-size:40pt; color:var(--muted-color); font-weight:300;">+</div>
           <img src="assets/captain-kube.svg" alt="Captain Kube" style="max-height:90px; background:none;">
         </div>
-        <h1 style="margin-top:20px;">De 0 a Observabilidad</h1>
-        <p>Construyendo un stack completo con Kubernetes</p>
+        <h1 style="margin-top:20px;">Introducción a Contenedores</h1>
+        <p>De Docker a Kubernetes: conceptos clave del mundo cloud native</p>
         <p class="text-muted" style="margin-top:20pt;">UNPHU &bull; 10:00 AM - 12:00 PM &bull; 2026</p>
-        <aside class="notes">Bienvenidos. En 1.5 horas construiremos un stack completo desde un contenedor suelto hasta observabilidad total.</aside>
+        <aside class="notes">Bienvenidos. En 1.5 horas cubriremos los conceptos fundamentales de Docker y Kubernetes, la base del mundo cloud native moderno.</aside>
       </section>
 
       <section id="speakers">
@@ -95,11 +95,11 @@
                   <p><span class="step-number">5</span> <strong>Escalado</strong> &mdash; HPA</p>
                 </div>
                 <div class="stack-item" style="border-left-color:var(--accent-green);">
-                  <p><span class="step-number">6</span> <strong>Observabilidad</strong> &mdash; Prometheus + Grafana</p>
+                  <p><span class="step-number">6</span> <strong>Acceso externo</strong> &mdash; Ingress</p>
                 </div>
               </div>
               <p style="margin-top:15pt;" class="text-muted">
-                <i class="fa-solid fa-clock"></i> 6 bloques &bull; demos en vivo &bull; Q&amp;A al final
+                <i class="fa-solid fa-clock"></i> 6 bloques &bull; ejemplos &bull; Q&amp;A al final
               </p>
             </div>
             <div class="illust-callout">
@@ -107,7 +107,7 @@
             </div>
           </div>
         </div>
-        <aside class="notes">Muestra la ruta. Cada bloque tiene una demo. El objetivo es que salgan sabiendo que existe cada herramienta y como encajan.</aside>
+        <aside class="notes">Muestra la ruta. Cada bloque tiene ejemplos concretos. El objetivo es que salgan sabiendo que existe cada herramienta y como encajan.</aside>
       </section>
 
       <!-- ============================================================
@@ -347,21 +347,28 @@ services:
         <aside class="notes">Compose nos permite levantar un stack completo con un solo comando. Los healthchecks garantizan que la app no arranque antes que la DB este lista.</aside>
       </section>
 
-      <section id="demo-docker" class="demo-slide">
-        <h2><i class="fa-solid fa-play-circle"></i> DEMO: Docker en vivo</h2>
-        <div class="content">
-          <div class="demo-checklist">
-            <div><i class="fa-solid fa-square-check"></i> <code>docker build</code> &mdash; construir la imagen</div>
-            <div><i class="fa-solid fa-square-check"></i> <code>docker run</code> &mdash; levantar el contenedor</div>
-            <div><i class="fa-solid fa-square-check"></i> Abrir <code>localhost:8000</code> en el navegador</div>
-            <div><i class="fa-solid fa-square-check"></i> <code>docker ps</code> &mdash; ver el contenedor corriendo</div>
-            <div><i class="fa-solid fa-square-check"></i> <code>docker logs</code> &mdash; ver los logs</div>
+      <section id="docker-industry" class="demo-slide">
+        <h2><i class="fa-solid fa-building"></i> Docker en la industria</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1.2fr 1fr; gap:25px; align-items:center;">
+          <div>
+            <div class="stack-item">
+              <p><i class="fa-brands fa-spotify" style="color:#1DB954;"></i> <strong>Spotify</strong> &mdash; migr&oacute; 300+ servicios a Docker, reduciendo onboarding de semanas a horas</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-brands fa-netflix" style="color:#E50914;"></i> <strong>Netflix</strong> &mdash; usa containers en CI/CD para 1.000+ microservicios</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-brands fa-shopify" style="color:#7AB55C;"></i> <strong>Shopify</strong> &mdash; corre 100k+ containers en producci&oacute;n</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-boxes-stacked" style="color:var(--primary-color);"></i> <strong>Global</strong> &mdash; el 65% de organizaciones ya usa containers en producci&oacute;n (CNCF Survey 2024)</p>
+            </div>
           </div>
-          <p style="margin-top:20pt;" class="text-center text-muted">
-            <i class="fa-solid fa-lightbulb"></i> Vemos como una app completa arranca en segundos
-          </p>
+          <div class="illust-callout" style="padding:0;">
+            <img src="assets/container-ship.svg" alt="Container ship" style="max-width:100%; max-height:220px; width:auto;">
+          </div>
         </div>
-        <aside class="notes">DEMO EN VIVO. Construir la imagen, correrla, abrir el navegador. Mostrar docker ps y docker logs. Narrar todo lo que haces.</aside>
+        <aside class="notes">Spotify migro 300+ servicios a Docker acelerando el onboarding. Netflix lo usa en su CI/CD. Todas las empresas grandes de tecnologia usan containers en produccion.</aside>
       </section>
 
       <!-- ============================================================
@@ -734,21 +741,28 @@ kubectl exec -it mi-app-abc123 -- bash
 INTERVIEW TIP (Q10): "Si un Pod no schedula, como lo debugueas?". Step 1: `kubectl describe pod <name>` - lee la seccion Events al final, te dira exactamente por que (ImagePullBackOff? Insufficient cpu? Tainted node?). Step 2: `kubectl get events --sort-by=.metadata.creationTimestamp` para ver el timeline. Step 3: `kubectl describe node` para ver recursos. El 80% de los failures de scheduling son: missing resources, wrong nodeSelector, o unsatisfied taints. TRAMPA: hacer `kubectl logs` en un Pending pod - no hay logs porque el container nunca arranco. Follow-up: "Cual es la diferencia entre Pending y ImagePullBackOff?" (Pending = scheduler no lo ha colocado. ImagePullBackOff = ya esta scheduled pero la imagen no se descarga).</aside>
       </section>
 
-      <section id="demo-k8s" class="demo-slide">
-        <h2><i class="fa-solid fa-play-circle"></i> DEMO: Kubernetes en vivo</h2>
-        <div class="content">
-          <div class="demo-checklist">
-            <div><i class="fa-solid fa-square-check"></i> <code>kubectl apply -f deployment.yaml</code></div>
-            <div><i class="fa-solid fa-square-check"></i> <code>kubectl get pods -w</code> &mdash; ver pods arrancando</div>
-            <div><i class="fa-solid fa-square-check"></i> <code>kubectl scale --replicas=5</code> &mdash; escalar en vivo</div>
-            <div><i class="fa-solid fa-square-check"></i> <i class="fa-solid fa-bomb" style="color:var(--accent-red);"></i> <code>kubectl delete pod</code> &mdash; <strong>matar un pod</strong></div>
-            <div><i class="fa-solid fa-square-check"></i> Ver como K8s <strong>lo reemplaza automaticamente</strong></div>
+      <section id="k8s-industry" class="demo-slide">
+        <h2><i class="fa-solid fa-building"></i> Kubernetes en la industria</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1.2fr 1fr; gap:25px; align-items:center;">
+          <div>
+            <div class="stack-item">
+              <p><i class="fa-brands fa-google" style="color:#4285F4;"></i> <strong>Google</strong> &mdash; 2.000M+ containers/semana, K8s nace de Borg (su sistema interno)</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-gamepad" style="color:#FFCB05;"></i> <strong>Pokemon Go</strong> &mdash; escal&oacute; de 0 a 5M+ usuarios en 1 semana con K8s</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-atom" style="color:#00A3E0;"></i> <strong>CERN</strong> &mdash; 4.000+ nodos K8s para el Large Hadron Collider</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-chart-line" style="color:var(--accent-green);"></i> <strong>Adopci&oacute;n</strong> &mdash; 90%+ de Fortune 100 usa K8s, 5.6M+ developers</p>
+            </div>
           </div>
-          <p style="margin-top:20pt;" class="text-center text-muted">
-            <i class="fa-solid fa-fire" style="color:var(--accent-orange);"></i> El momento "wow": matar un pod y verlo revivir solo
-          </p>
+          <div class="illust-callout" style="padding:0;">
+            <img src="assets/captain-kube.svg" alt="Captain Kube" style="max-width:100%; max-height:220px; width:auto;">
+          </div>
         </div>
-        <aside class="notes">DEMO EN VIVO. El momento clave es matar un pod y ver como K8s lo reemplaza. Esto es lo que los estudiantes van a recordar. Narrar: "Acabo de matar este pod. K8s lo detecto y ya esta creando uno nuevo."</aside>
+        <aside class="notes">Google corre 2 mil millones de containers a la semana con la misma tecnologia que estamos viendo. Pokemon Go paso de caerse al lanzar a escalar millones de usuarios gracias a K8s. CERN corre fisica de particulas en K8s.</aside>
       </section>
 
       <section id="divider-scaling" class="section-divider" data-state="is-section-divider">
@@ -797,46 +811,81 @@ spec:
       </section>
 
       <!-- ============================================================
-           BLOQUE 3: OBSERVABILIDAD (15 min)
+           BLOQUE 3: ACCESO EXTERNO
            ============================================================ -->
 
-      <section id="divider-obs" class="section-divider" data-state="is-section-divider">
+      <section id="divider-ingress" class="section-divider" data-state="is-section-divider">
         <p class="text-muted"><span class="step-number">6</span></p>
-        <h1><i class="fa-solid fa-eye"></i> Observabilidad</h1>
-        <p>Ver que esta pasando en tu sistema</p>
+        <h1><i class="fa-solid fa-globe"></i> Acceso Externo</h1>
+        <p>Como el mundo llega a tu app</p>
       </section>
 
-      <section id="observability-summary">
-        <h2>Los 3 pilares (resumen)</h2>
-        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
-          <div class="card" style="text-align:center; border-color: rgba(232,145,58,0.35);">
-            <p><i class="fa-solid fa-chart-line" style="color:#e8913a; font-size:28pt;"></i></p>
-            <h3 style="color:#e8913a;">Metricas</h3>
-            <p><strong>Prometheus</strong></p>
-            <p class="text-muted">Numeros: CPU, requests, latencia</p>
+      <section id="ingress">
+        <h2>Ingress</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; align-items:start;">
+          <div>
+            <p><i class="fa-solid fa-door-open text-primary"></i> Analog&iacute;a: el <strong>portero</strong> del edificio</p>
+            <ul>
+              <li>Cada Service LoadBalancer = <strong>puerta individual</strong> (cara + no escala)</li>
+              <li>Ingress = <strong>&uacute;nica puerta</strong> que enruta seg&uacute;n la solicitud</li>
+            </ul>
+            <p style="margin-top:15pt;"><strong>Tipos de enrutamiento:</strong></p>
+            <ul>
+              <li><strong>Host:</strong> api.miapp.com &rarr; Service API, web.miapp.com &rarr; Service Web</li>
+              <li><strong>Path:</strong> miapp.com/api &rarr; Service API, miapp.com/web &rarr; Service Web</li>
+              <li><strong>TLS:</strong> HTTPS autom&aacute;tico con certificados</li>
+            </ul>
+            <p style="margin-top:15pt;"><strong>Ingress Controllers populares:</strong></p>
+            <ul>
+              <li>NGINX Ingress Controller (el m&aacute;s com&uacute;n)</li>
+              <li>Traefik (moderno, f&aacute;cil configuraci&oacute;n)</li>
+              <li>AWS ALB Ingress Controller (nativo cloud)</li>
+            </ul>
           </div>
-          <div class="card" style="text-align:center; border-color: rgba(245,158,11,0.35);">
-            <p><i class="fa-solid fa-scroll" style="color:#f59e0b; font-size:28pt;"></i></p>
-            <h3 style="color:#f59e0b;">Logs</h3>
-            <p><strong>Loki</strong></p>
-            <p class="text-muted">Errores y eventos</p>
-          </div>
-          <div class="card" style="text-align:center; border-color: rgba(88,166,255,0.35);">
-            <p><i class="fa-solid fa-route" style="color:#58a6ff; font-size:28pt;"></i></p>
-            <h3 style="color:#58a6ff;">Traces</h3>
-            <p><strong>Tempo</strong></p>
-            <p class="text-muted">Flujo de un request</p>
+          <div>
+            <pre><code class="language-yaml" data-trim data-line-numbers>
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mi-app
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: miapp.com
+    http:
+      paths:
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: api-service
+            port:
+              number: 80
+      - path: /web
+        pathType: Prefix
+        backend:
+          service:
+            name: web-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - miapp.com
+    secretName: tls-secret
+            </code></pre>
+            <p style="margin-top:10pt;" class="text-muted">
+              <i class="fa-solid fa-arrow-right"></i> Un solo Ingress = routing para muchas apps
+            </p>
           </div>
         </div>
-        <div style="display:grid; grid-template-columns: 1.4fr 1fr; gap:20px; align-items:center; margin-top:20px;">
-          <div style="padding:18px; background:rgba(50,108,229,0.06); border-left:3px solid var(--primary-color); border-radius:0 8px 8px 0;">
-            <p><i class="fa-solid fa-lightbulb text-primary"></i> <strong>Stack tipico en K8s:</strong> Prometheus + Loki + Tempo + Grafana. Todo corre en pods dentro del mismo cluster.</p>
-          </div>
-          <div class="illust-callout" style="padding:0;">
-            <img src="assets/observability-server.svg" alt="Server with observability" style="max-width:100%; max-height:180px; width:auto;">
-          </div>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Diferencia entre Ingress y LoadBalancer Service?"</p>
+          <p class="tip-trap">Watch out: confundir Ingress (L7 routing) con Service LoadBalancer (L4 TCP/UDP)</p>
         </div>
-        <aside class="notes">Solo mencionar. No profundizar. Estos 3 pilares son el estandar en K8s. Grafana los unifica. Para profundizar: docs oficiales.</aside>
+        <aside class="notes">Ingress es el portero del edificio. En vez de tener 100 puertas (LoadBalancers), tienes una puerta que sabe donde enviar a cada persona segun a quien vienen a visitar. El Ingress Controller implementa las reglas de routing.
+
+INTERVIEW TIP (Q8): "Diferencia entre Ingress y LoadBalancer?". LoadBalancer = L4, da una IP publica por Service (caro, no escala). Ingress = L7, un solo entry point con routing por host/path (nombre, TLS, eficiente). TRAMPA: decir que Ingress es un tipo de Service - NO, es un recurso separado (networking.k8s.io/v1). Follow-up: "Cuando usarias NodePort vs LoadBalancer vs Ingress?" (NodePort = dev/test, LoadBalancer = un solo servicio publico, Ingress = multi-servicio con host/path routing).</aside>
       </section>
 
       <!-- ============================================================
@@ -852,18 +901,13 @@ spec:
             <div class="stack-item"><p><span class="step-number">3</span> <strong>Kubernetes</strong> &mdash; Pods, Deployments, Services</p></div>
             <div class="stack-item"><p><span class="step-number">4</span> <strong>Config</strong> &mdash; ConfigMaps, Secrets</p></div>
             <div class="stack-item"><p><span class="step-number">5</span> <strong>Scaling</strong> &mdash; HPA auto-scaling</p></div>
-            <div class="stack-item" style="border-left-color:var(--accent-green);"><p><span class="step-number">6</span> <strong>Observabilidad</strong> &mdash; Prometheus + Loki + Grafana</p></div>
+            <div class="stack-item" style="border-left-color:var(--accent-green);"><p><span class="step-number">6</span> <strong>Acceso externo</strong> &mdash; Ingress</p></div>
           </div>
           <div>
             <pre><code class="language-bash" data-trim style="font-size:10pt;">
 kubectl get pods -A
 
 NAMESPACE    NAME              READY
-monitoring   prometheus-0       1/1
-monitoring   grafana-abc123     1/1
-monitoring   loki-0             1/1
-monitoring   tempo-0            1/1
-monitoring   promtail-xyz       1/1
 default      mi-app-x2k5        1/1
 default      mi-app-m8n3        1/1
 default      mi-app-p4q7        1/1
@@ -872,7 +916,7 @@ default      redis-master-0     1/1
             </code></pre>
           </div>
         </div>
-        <aside class="notes">De un docker run a un stack completo con observabilidad. Esto es lo que usan empresas como Mercado Libre, Uber, Netflix.</aside>
+        <aside class="notes">De un contenedor a un stack completo corriendo en producción. La misma arquitectura que usan Netflix, Mercado Libre, Uber.</aside>
       </section>
 
       <section id="careers">
