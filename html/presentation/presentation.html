@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/github.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="styles.css?v=11&t=20260620">
+  <link rel="stylesheet" href="styles.css?v=12&t=20260621">
   <style>
     /* CRITICAL: Override reveal.js white text on ALL slide elements */
     /* .reveal-viewport contains .reveal.ready (reveal.js adds 'ready' class) */
@@ -62,8 +62,8 @@
         
         <!-- Conference badge -->
         <div style="display:inline-block; margin-top:25px; padding:12px 25px; background:var(--primary-color); border-radius:8px;">
-          <p style="font-size:16pt; margin:0;"><i class="fa-solid fa-university" style="margin-right:10px;"></i>Universidad Nacional Pedro Henrí Ureña</p>
-          <p class="text-muted" style="font-size:13pt; margin:5px 0 0 0;">10:00 AM - 12:00 PM &bull; 2026</p>
+          <p style="font-size:16pt; margin:0; color:#ffffff;"><i class="fa-solid fa-university" style="margin-right:10px;"></i>Universidad Nacional Pedro Henrí Ureña</p>
+          <p style="font-size:13pt; margin:5px 0 0 0; color:rgba(255,255,255,0.85);">10:00 AM - 12:00 PM &bull; 2026</p>
         </div>
         
         <!-- Student focus badge -->
@@ -100,19 +100,6 @@
         <aside class="notes">Presentense brevemente. Cada uno dice quien es, que hace y por que le apasiona Kubernetes. Maximo 30 segundos cada uno.</aside>
       </section>
 
-      <section id="hook">
-        <h2>Levantar la mano si...</h2>
-        <div class="content">
-          <div style="font-size:22pt; line-height:2.4;">
-            <p><i class="fa-solid fa-hand text-primary"></i> ...su código funcionaba en su PC pero fallaba en otro lado</p>
-            <p><i class="fa-solid fa-hand text-primary"></i> ...han escuchado la palabra "Docker"</p>
-            <p><i class="fa-solid fa-hand text-primary"></i> ...han escuchado "Kubernetes"</p>
-            <p><i class="fa-solid fa-hand text-primary"></i> ...han usado Docker o Kubernetes</p>
-          </div>
-          <p style="margin-top:20pt;" class="text-muted">Si levantaste la mano en alguna, esta charla es para ti.</p>
-        </div>
-        <aside class="notes">Interactua con la audiencia. Esto rompe el hielo y te da idea del nivel del grupo.</aside>
-      </section>
 
       <section id="why-care" class="demo-slide">
         <h2><i class="fa-solid fa-rocket"></i> Por qué te debe importar</h2>
@@ -122,23 +109,23 @@
           </div>
           <div>
             <div class="stack-item">
-              <p><i class="fa-solid fa-briefcase" style="color:#38a169;"></i> <strong>Alta demanda laboral</strong> &mdash; #1 skill en Cloud Native. Empresas como Spotify, Netflix, Shopify buscan profesionales con estos conocimientos.</p>
+              <p><i class="fa-solid fa-briefcase" style="color:#38a169;"></i> <strong>Alta demanda laboral</strong> &mdash; K8s es la skill #1 en Cloud Native. Empresas locales e internacionales buscan talento con estos conocimientos.</p>
             </div>
             <div class="stack-item">
-              <p><i class="fa-solid fa-dollar-sign" style="color:#3182ce;"></i> <strong>Salarios competitivos</strong> &mdash; DevOps con Kubernetes promedia $80K+ en LATAM y +$120K en USA.</p>
+              <p><i class="fa-solid fa-laptop-code" style="color:#3182ce;"></i> <strong>Trabajo remoto</strong> &mdash; Cloud Native abre puertas a oportunidades globales sin salir de RD.</p>
             </div>
             <div class="stack-item">
-              <p><i class="fa-solid fa-certificate" style="color:#805ad5;"></i> <strong>Certificaciones accesibles</strong> &mdash; KCNA, CKA, CKAD. La CNCF ofrece becas para estudiantes.</p>
+              <p><i class="fa-solid fa-certificate" style="color:#805ad5;"></i> <strong>Certificaciones accesibles</strong> &mdash; KCNA, CKA, CKAD. La CNCF ofrece becas y descuentos para estudiantes.</p>
             </div>
             <div class="stack-item">
-              <p><i class="fa-solid fa-building" style="color:#c9a227;"></i> <strong>Empresas locales</strong> &mdash; En RD y el Caribe hay startups y empresas que ya usan K8s.</p>
+              <p><i class="fa-solid fa-graduation-cap" style="color:#c9a227;"></i> <strong>Carrera en crecimiento</strong> &mdash; De estudiante a DevOps/SRE/Platform Engineer es un camino real y documentado.</p>
             </div>
           </div>
         </div>
         <p style="margin-top:20pt; text-align:center; font-size:16pt; color:var(--accent-cyan);">
-          <i class="fa-solid fa-lightbulb"></i> Al final de esta charla tendrás un cluster K8s corriendo en tu navegador
+          <i class="fa-solid fa-lightbulb"></i> Al final de esta charla entenderás cómo funciona el stack que usan empresas reales
         </p>
-        <aside class="notes">La idea es motivar. Estos no son conceptos abstractos - son habilidades que Demandan. Mencionar que el repo tiene labs gratuitos para practicar después.</aside>
+        <aside class="notes">Motivar sin inflar. El valor real es: demanda de mercado, oportunidades remotas, camino de carrera claro. No prometer salarios especificos.</aside>
       </section>
 
       <section id="agenda">
@@ -184,8 +171,31 @@
 
       <section id="divider-containers" class="section-divider" data-state="is-section-divider">
         <p class="text-muted"><span class="step-number">1</span></p>
-        <h1><i class="fa-brands fa-docker"></i> Contenedores</h1>
-        <p>Empaquetando aplicaciones de forma portable</p>
+        <h1 style="margin-bottom:6px;"><i class="fa-brands fa-docker"></i> Contenedores</h1>
+        <p style="margin-bottom:28px; font-size:18pt;">Empaquetando aplicaciones de forma portable</p>
+
+        <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; max-width:1100px; width:92%; margin:0 auto;">
+          <div class="card" style="text-align:center; padding:18px 12px;">
+            <i class="fa-solid fa-circle-question" style="font-size:26pt; color:var(--primary-color); margin-bottom:6px; display:block;"></i>
+            <strong style="font-size:13pt; display:block; color:var(--text-color);">Conceptos</strong>
+            <span style="font-size:10pt; color:var(--muted-color); display:block; margin-top:4px; line-height:1.3;">Por qué, VM vs Container, arquitectura, namespaces</span>
+          </div>
+          <div class="card" style="text-align:center; padding:18px 12px;">
+            <i class="fa-solid fa-layer-group" style="font-size:26pt; color:var(--accent-cyan); margin-bottom:6px; display:block;"></i>
+            <strong style="font-size:13pt; display:block; color:var(--text-color);">Imágenes</strong>
+            <span style="font-size:10pt; color:var(--muted-color); display:block; margin-top:4px; line-height:1.3;">Dockerfile, layers, cache, multi-stage</span>
+          </div>
+          <div class="card" style="text-align:center; padding:18px 12px;">
+            <i class="fa-solid fa-terminal" style="font-size:26pt; color:var(--accent-orange); margin-bottom:6px; display:block;"></i>
+            <strong style="font-size:13pt; display:block; color:var(--text-color);">CLI &amp; Compose</strong>
+            <span style="font-size:10pt; color:var(--muted-color); display:block; margin-top:4px; line-height:1.3;">Comandos esenciales y stacks multi-container</span>
+          </div>
+          <div class="card" style="text-align:center; padding:18px 12px;">
+            <i class="fa-solid fa-industry" style="font-size:26pt; color:var(--accent-purple); margin-bottom:6px; display:block;"></i>
+            <strong style="font-size:13pt; display:block; color:var(--text-color);">Industria</strong>
+            <span style="font-size:10pt; color:var(--muted-color); display:block; margin-top:4px; line-height:1.3;">Docker en producción real</span>
+          </div>
+        </div>
       </section>
 
       <section id="why-containers">
@@ -323,9 +333,9 @@ INTERVIEW TIP (Q3): "Cual es la diferencia entre virtualizacion y containerizati
 
       <section id="image-vs-container">
         <h2>Imagen vs Contenedor</h2>
-        <div class="content" style="display:grid; grid-template-columns: 1.3fr 1fr; gap:30px; align-items:center;">
+        <div class="content" style="display:grid; grid-template-columns: 1.3fr 1fr; gap:24px; align-items:start;">
           <div>
-            <div class="card" style="margin-bottom:14px;">
+            <div class="card" style="margin-bottom:12px;">
               <p><i class="fa-solid fa-file-lines text-primary" style="font-size:20pt;"></i> <strong>Imagen</strong> = la <strong style="color:var(--accent-orange);">receta</strong></p>
               <ul>
                 <li>Inmutable, versionada con tags</li>
@@ -341,12 +351,12 @@ INTERVIEW TIP (Q3): "Cual es la diferencia entre virtualizacion y containerizati
                 <li>Puedes tener N de la misma imagen</li>
               </ul>
             </div>
-            <p style="margin-top:12pt; text-align:center;" class="text-muted">
+            <p style="margin-top:8pt; margin-bottom:0; text-align:center;" class="text-muted">
               <i class="fa-solid fa-arrow-right"></i> Imagen = clase &nbsp;&bull;&nbsp; Contenedor = instancia
             </p>
           </div>
-          <div class="illust-callout" style="text-align:center;">
-            <img src="assets/lunchbox.svg" class="lunchbox-svg" alt="Container como lunchbox">
+          <div class="illust-callout" style="text-align:center; align-self:center;">
+            <img src="assets/lunchbox.svg" class="lunchbox-svg" style="max-height:260px !important;" alt="Container como lunchbox">
           </div>
         </div>
         <div class="interview-tip">
