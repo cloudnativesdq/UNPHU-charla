@@ -574,15 +574,16 @@ html body .reveal .slides section .text-cyan {
 img[src*="assets/"] { user-select: none; }
 
 /* ===== INTERVIEW TIPS ===== */
-/* Interview Tips — pinned bottom band, never overlaps content above. */
+/* Interview Tips — floating bottom-left card, size-to-content + semi-transparent */
+/* so any content behind stays readable. */
 .interview-tip {
   position: absolute;
   bottom: 18px;
   left: 30px;
-  right: 30px;
+  max-width: 70%;
   margin: 0;
   padding: 10px 16px;
-  background: #fffbeb;
+  background: rgba(255, 251, 235, 0.85);
   border: 1px solid #fde68a;
   border-left: 4px solid var(--accent-orange);
   border-radius: 0 var(--box-radius) var(--box-radius) 0;
@@ -591,6 +592,8 @@ img[src*="assets/"] { user-select: none; }
   text-align: left;
   box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   z-index: 5;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 /* Lock the section to the configured slide height so the tip stays in view.

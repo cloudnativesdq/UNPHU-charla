@@ -1,63 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 360" width="500" height="360">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 400" width="560" height="400">
   <!-- Image Layers Stack — light theme -->
-  
+
   <!-- Title -->
-  <text x="250" y="25" font-family="Arial" font-size="16" font-weight="bold" fill="#1a202c" text-anchor="middle">Docker Image Layer Stack</text>
-  
+  <text x="280" y="25" font-family="Arial" font-size="16" font-weight="bold" fill="#1a202c" text-anchor="middle">Docker Image Layer Stack</text>
+
+  <!-- Legend (positioned above the layer stack, away from the boxes) -->
+  <rect x="30" y="38" width="10" height="10" fill="#059669" rx="2"/>
+  <text x="45" y="48" font-family="Arial" font-size="9" fill="#64748b">Cache hit</text>
+  <rect x="110" y="38" width="10" height="10" fill="#dc2626" rx="2"/>
+  <text x="125" y="48" font-family="Arial" font-size="9" fill="#64748b">Cache miss</text>
+
   <!-- Layer 1: Base OS -->
-  <rect x="80" y="40" width="340" height="55" fill="#e0f2fe" rx="6" stroke="#0891b2" stroke-width="2"/>
-  <text x="250" y="65" font-family="Arial" font-size="13" font-weight="600" fill="#075985" text-anchor="middle">FROM ubuntu:latest</text>
-  <text x="250" y="82" font-family="Arial" font-size="10" fill="#075985" text-anchor="middle">Base OS — 64.2 MB</text>
-  <line x1="430" y1="55" x2="470" y2="55" stroke="#059669" stroke-width="1.5"/>
-  <text x="478" y="59" font-family="Arial" font-size="9" fill="#059669" text-anchor="start">cached</text>
-  
+  <rect x="110" y="60" width="340" height="55" fill="#e0f2fe" rx="6" stroke="#0891b2" stroke-width="2"/>
+  <text x="280" y="85" font-family="Arial" font-size="13" font-weight="600" fill="#075985" text-anchor="middle">FROM ubuntu:latest</text>
+  <text x="280" y="102" font-family="Arial" font-size="10" fill="#075985" text-anchor="middle">Base OS — 64.2 MB</text>
+  <line x1="460" y1="75" x2="495" y2="75" stroke="#059669" stroke-width="1.5"/>
+  <text x="500" y="79" font-family="Arial" font-size="9" fill="#059669" text-anchor="start">cached</text>
+
   <!-- Arrow down -->
-  <polygon points="250,100 258,112 250,108 242,112" fill="#cbd5e1"/>
-  
+  <polygon points="280,120 288,132 280,128 272,132" fill="#cbd5e1"/>
+
   <!-- Layer 2: apt-get update -->
-  <rect x="80" y="118" width="340" height="45" fill="#f0fdf4" rx="6" stroke="#059669" stroke-width="2"/>
-  <text x="250" y="138" font-family="Arial" font-size="12" font-weight="600" fill="#166534" text-anchor="middle">RUN apt-get update</text>
-  <text x="250" y="153" font-family="Arial" font-size="10" fill="#166534" text-anchor="middle">+22 MB — dependencies</text>
-  <line x1="430" y1="133" x2="470" y2="133" stroke="#059669" stroke-width="1.5"/>
-  <text x="478" y="137" font-family="Arial" font-size="9" fill="#059669" text-anchor="start">cached</text>
-  
+  <rect x="110" y="138" width="340" height="45" fill="#f0fdf4" rx="6" stroke="#059669" stroke-width="2"/>
+  <text x="280" y="158" font-family="Arial" font-size="12" font-weight="600" fill="#166534" text-anchor="middle">RUN apt-get update</text>
+  <text x="280" y="173" font-family="Arial" font-size="10" fill="#166534" text-anchor="middle">+22 MB — dependencies</text>
+  <line x1="460" y1="153" x2="495" y2="153" stroke="#059669" stroke-width="1.5"/>
+  <text x="500" y="157" font-family="Arial" font-size="9" fill="#059669" text-anchor="start">cached</text>
+
   <!-- Arrow down -->
-  <polygon points="250,168 258,180 250,176 242,180" fill="#cbd5e1"/>
-  
+  <polygon points="280,188 288,200 280,196 272,200" fill="#cbd5e1"/>
+
   <!-- Layer 3: pip install -->
-  <rect x="80" y="186" width="340" height="45" fill="#fef9c3" rx="6" stroke="#d97706" stroke-width="2"/>
-  <text x="250" y="206" font-family="Arial" font-size="12" font-weight="600" fill="#92400e" text-anchor="middle">RUN pip install flask</text>
-  <text x="250" y="221" font-family="Arial" font-size="10" fill="#92400e" text-anchor="middle">+4.3 MB — Python packages</text>
-  <line x1="430" y1="201" x2="470" y2="201" stroke="#059669" stroke-width="1.5"/>
-  <text x="478" y="205" font-family="Arial" font-size="9" fill="#059669" text-anchor="start">cached</text>
-  
+  <rect x="110" y="206" width="340" height="45" fill="#fef9c3" rx="6" stroke="#d97706" stroke-width="2"/>
+  <text x="280" y="226" font-family="Arial" font-size="12" font-weight="600" fill="#92400e" text-anchor="middle">RUN pip install flask</text>
+  <text x="280" y="241" font-family="Arial" font-size="10" fill="#92400e" text-anchor="middle">+4.3 MB — Python packages</text>
+  <line x1="460" y1="221" x2="495" y2="221" stroke="#059669" stroke-width="1.5"/>
+  <text x="500" y="225" font-family="Arial" font-size="9" fill="#059669" text-anchor="start">cached</text>
+
   <!-- Arrow down -->
-  <polygon points="250,236 258,248 250,244 242,248" fill="#cbd5e1"/>
-  
+  <polygon points="280,256 288,268 280,264 272,268" fill="#cbd5e1"/>
+
   <!-- Layer 4: COPY app.py -->
-  <rect x="80" y="254" width="340" height="40" fill="#fee2e2" rx="6" stroke="#dc2626" stroke-width="2"/>
-  <text x="250" y="274" font-family="Arial" font-size="12" font-weight="600" fill="#991b1b" text-anchor="middle">COPY app.py /app/</text>
-  <text x="250" y="287" font-family="Arial" font-size="10" fill="#991b1b" text-anchor="middle">+229 B — source code</text>
-  <line x1="430" y1="267" x2="470" y2="267" stroke="#dc2626" stroke-width="1.5"/>
-  <text x="478" y="271" font-family="Arial" font-size="9" fill="#dc2626" text-anchor="start">REBUILD</text>
-  
+  <rect x="110" y="274" width="340" height="40" fill="#fee2e2" rx="6" stroke="#dc2626" stroke-width="2"/>
+  <text x="280" y="294" font-family="Arial" font-size="12" font-weight="600" fill="#991b1b" text-anchor="middle">COPY app.py /app/</text>
+  <text x="280" y="307" font-family="Arial" font-size="10" fill="#991b1b" text-anchor="middle">+229 B — source code</text>
+  <line x1="460" y1="287" x2="495" y2="287" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="500" y="291" font-family="Arial" font-size="9" fill="#dc2626" text-anchor="start">REBUILD</text>
+
   <!-- Arrow down -->
-  <polygon points="250,299 258,311 250,307 242,311" fill="#cbd5e1"/>
-  
+  <polygon points="280,319 288,331 280,327 272,331" fill="#cbd5e1"/>
+
   <!-- Layer 5: CMD -->
-  <rect x="80" y="317" width="340" height="35" fill="#f3e8ff" rx="6" stroke="#7c3aed" stroke-width="2"/>
-  <text x="250" y="338" font-family="Arial" font-size="12" font-weight="600" fill="#5b21b6" text-anchor="middle">CMD ["python", "app.py"]</text>
-  <line x1="430" y1="327" x2="470" y2="327" stroke="#dc2626" stroke-width="1.5"/>
-  <text x="478" y="331" font-family="Arial" font-size="9" fill="#dc2626" text-anchor="start">REBUILD</text>
-  
-  <!-- Legend -->
-  <rect x="30" y="45" width="10" height="10" fill="#059669" rx="2"/>
-  <text x="45" y="55" font-family="Arial" font-size="9" fill="#64748b">Cache hit</text>
-  <rect x="30" y="62" width="10" height="10" fill="#dc2626" rx="2"/>
-  <text x="45" y="72" font-family="Arial" font-size="9" fill="#64748b">Cache miss</text>
-  
+  <rect x="110" y="337" width="340" height="35" fill="#f3e8ff" rx="6" stroke="#7c3aed" stroke-width="2"/>
+  <text x="280" y="358" font-family="Arial" font-size="12" font-weight="600" fill="#5b21b6" text-anchor="middle">CMD ["python", "app.py"]</text>
+  <line x1="460" y1="347" x2="495" y2="347" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="500" y="351" font-family="Arial" font-size="9" fill="#dc2626" text-anchor="start">REBUILD</text>
+
   <!-- Total size indicator -->
-  <text x="250" y="355" font-family="Arial" font-size="11" fill="#64748b" text-anchor="middle">
+  <text x="280" y="392" font-family="Arial" font-size="11" fill="#64748b" text-anchor="middle">
     Tamaño total: ~90 MB (vs ~800 MB sin layers compartidos)
   </text>
 </svg>

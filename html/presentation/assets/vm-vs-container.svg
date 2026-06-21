@@ -35,11 +35,6 @@
     <!-- Size indicator -->
     <text x="110" y="225" font-family="Arial" font-size="14" fill="#dc2626" text-anchor="middle">~GB RAM</text>
     <text x="110" y="245" font-family="Arial" font-size="10" fill="#64748b" text-anchor="middle">Minutes to boot</text>
-    
-    <!-- Big boxes for scale -->
-    <rect x="45" y="255" width="55" height="25" fill="#fce7f3" rx="3" stroke="#f472b6"/>
-    <rect x="105" y="255" width="55" height="25" fill="#fce7f3" rx="3" stroke="#f472b6"/>
-    <rect x="75" y="283" width="55" height="12" fill="#fce7f3" rx="3" stroke="#f472b6"/>
   </g>
   
   <!-- VS -->
