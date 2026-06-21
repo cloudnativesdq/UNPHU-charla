@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 250" width="500" height="250">
+  <!-- Hands-on Lab Preview -->
+  
+  <!-- Background -->
+  <rect x="0" y="0" width="500" height="250" fill="#1a202c" rx="8"/>
+  
+  <!-- Terminal window -->
+  <g transform="translate(20, 20)">
+    <!-- Window header -->
+    <rect x="0" y="0" width="460" height="25" fill="#2d3748" rx="4"/>
+    <circle cx="15" cy="12" r="5" fill="#fc8181"/>
+    <circle cx="35" cy="12" r="5" fill="#f6e05e"/>
+    <circle cx="55" cy="12" r="5" fill="#68d391"/>
+    <text x="80" y="17" font-family="monospace" font-size="11" fill="#a0aec0">terminal - kubectl</text>
+    
+    <!-- Terminal content -->
+    <rect x="0" y="25" width="460" height="180" fill="#1a202c"/>
+    
+    <!-- Command line 1 -->
+    <text x="10" y="50" font-family="monospace" font-size="12" fill="#68d391">$ kubectl get pods</text>
+    <text x="10" y="70" font-family="monospace" font-size="11" fill="#a0aec0">NAME                        READY   STATUS    RESTARTS   AGE</text>
+    <text x="10" y="85" font-family="monospace" font-size="11" fill="#68d391">mi-app-7f9b8c-x2k5         1/1     Running   0          5d</text>
+    <text x="10" y="100" font-family="monospace" font-size="11" fill="#68d391">postgres-0                  1/1     Running   0          5d</text>
+    
+    <!-- Command line 2 -->
+    <text x="10" y="130" font-family="monospace" font-size="12" fill="#68d391">$ kubectl scale deployment mi-app --replicas=5</text>
+    <text x="10" y="150" font-family="monospace" font-size="11" fill="#4fd1c5">deployment.apps/mi-app scaled</text>
+    
+    <!-- Cursor -->
+    <rect x="10" y="170" width="8" height="15" fill="#68d391">
+      <animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  
+  <!-- Side panel: Lab steps -->
+  <g transform="translate(20, 220)">
+    <!-- Step 1 -->
+    <circle cx="10" cy="0" r="12" fill="#326CE5"/>
+    <text x="10" y="4" font-family="Arial" font-size="10" fill="white" text-anchor="middle">1</text>
+    <text x="30" y="4" font-family="Arial" font-size="10" fill="#a0aec0">Create</text>
+    
+    <!-- Step 2 -->
+    <circle cx="110" cy="0" r="12" fill="#38a169"/>
+    <text x="110" y="4" font-family="Arial" font-size="10" fill="white" text-anchor="middle">2</text>
+    <text x="130" y="4" font-family="Arial" font-size="10" fill="#a0aec0">Deploy</text>
+    
+    <!-- Step 3 -->
+    <circle cx="210" cy="0" r="12" fill="#805ad5"/>
+    <text x="210" y="4" font-family="Arial" font-size="10" fill="white" text-anchor="middle">3</text>
+    <text x="230" y="4" font-family="Arial" font-size="10" fill="#a0aec0">Scale</text>
+    
+    <!-- Step 4 -->
+    <circle cx="310" cy="0" r="12" fill="#c9a227"/>
+    <text x="310" y="4" font-family="Arial" font-size="10" fill="white" text-anchor="middle">4</text>
+    <text x="330" y="4" font-family="Arial" font-size="10" fill="#a0aec0">Monitor</text>
+  </g>
+  
+  <!-- Badge: Free -->
+  <g transform="translate(400, 10)">
+    <rect x="0" y="0" width="70" height="25" fill="#38a169" rx="4"/>
+    <text x="35" y="17" font-family="Arial" font-size="12" font-weight="bold" fill="white" text-anchor="middle">FREE</text>
+  </g>
+</svg>

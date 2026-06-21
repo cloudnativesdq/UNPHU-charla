@@ -6,9 +6,37 @@
   <title>Introducción a Contenedores - UNPHU 2026</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/github.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=11&t=20260620">
+  <style>
+    /* CRITICAL: Override reveal.js white text on ALL slide elements */
+    /* .reveal-viewport contains .reveal.ready (reveal.js adds 'ready' class) */
+    html body .reveal-viewport .reveal.ready * {
+      color: #000000 !important;
+    }
+    html body .reveal-viewport {
+      background-color: #ffffff !important;
+    }
+    html body .reveal-viewport .reveal.ready .slides section {
+      background-color: #ffffff !important;
+    }
+    html body .reveal-viewport .reveal.ready pre code {
+      color: #1e293b !important;
+      background-color: #f8fafc !important;
+    }
+    /* Section dividers keep their gradient bg but need dark text */
+    html body .reveal-viewport.is-section-divider .reveal h1,
+    html body .reveal-viewport.is-section-divider .reveal h2,
+    html body .reveal-viewport.is-section-divider .reveal p {
+      color: #1a202c !important;
+    }
+    /* Override FontAwesome icons to be dark */
+    html body .reveal-viewport .reveal.ready i[class*="fa-"] {
+      color: #2563eb !important;
+    }
+  </style>
 </head>
 <body>
   <div class="reveal">
@@ -19,17 +47,30 @@
            ============================================================ -->
 
       <section id="title" class="section-divider" data-state="is-section-divider">
-        <div style="display:flex; align-items:center; justify-content:center; gap:20px;">
-          <img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="K8s" style="max-height:90px; border:none; box-shadow:none; background:none;">
-          <div style="font-size:40pt; color:var(--muted-color); font-weight:300;">+</div>
-          <i class="fa-brands fa-docker" style="font-size:70pt; color:#2496ED;"></i>
-          <div style="font-size:40pt; color:var(--muted-color); font-weight:300;">+</div>
-          <img src="assets/captain-kube.svg" alt="Captain Kube" style="max-height:90px; background:none;">
+        <!-- UNPHU Branding Header -->
+        <div style="margin-bottom:30px;">
+          <img src="assets/unphu-logo.svg" alt="UNPHU" style="max-height:80px; border:none; box-shadow:none; background:none;">
         </div>
-        <h1 style="margin-top:20px;">Introducción a Contenedores</h1>
-        <p>De Docker a Kubernetes: conceptos clave del mundo cloud native</p>
-        <p class="text-muted" style="margin-top:20pt;">UNPHU &bull; 10:00 AM - 12:00 PM &bull; 2026</p>
-        <aside class="notes">Bienvenidos. En 1.5 horas cubriremos los conceptos fundamentales de Docker y Kubernetes, la base del mundo cloud native moderno.</aside>
+        
+        <div style="display:flex; align-items:center; justify-content:center; gap:24px;">
+          <img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="Kubernetes" style="max-height:140px; border:none; box-shadow:none; background:none;">
+          <div style="font-size:40pt; color:var(--muted-color); font-weight:300;">+</div>
+          <i class="fa-brands fa-docker" style="font-size:80pt; color:#2496ED;"></i>
+        </div>
+        <h1 style="margin-top:25px;">Introducción a Contenedores</h1>
+        <p style="font-size:22pt;">De Docker a Kubernetes: conceptos clave del mundo cloud native</p>
+        
+        <!-- Conference badge -->
+        <div style="display:inline-block; margin-top:25px; padding:12px 25px; background:var(--primary-color); border-radius:8px;">
+          <p style="font-size:16pt; margin:0;"><i class="fa-solid fa-university" style="margin-right:10px;"></i>Universidad Nacional Pedro Henrí Ureña</p>
+          <p class="text-muted" style="font-size:13pt; margin:5px 0 0 0;">10:00 AM - 12:00 PM &bull; 2026</p>
+        </div>
+        
+        <!-- Student focus badge -->
+        <p style="margin-top:20px; font-size:14pt; color:var(--accent-cyan);">
+          <i class="fa-solid fa-graduation-cap"></i> Enfocado para estudiantes y profesionales IT
+        </p>
+        <aside class="notes">Bienvenidos. En 1.5 horas cubriremos los conceptos fundamentales de Docker y Kubernetes, la base del mundo cloud native moderno. Esta charla es práctica - al final podrán crear sus propios contenedores.</aside>
       </section>
 
       <section id="speakers">
@@ -63,7 +104,7 @@
         <h2>Levantar la mano si...</h2>
         <div class="content">
           <div style="font-size:22pt; line-height:2.4;">
-            <p><i class="fa-solid fa-hand text-primary"></i> ...su codigo funcionaba en su PC pero fallaba en otro lado</p>
+            <p><i class="fa-solid fa-hand text-primary"></i> ...su código funcionaba en su PC pero fallaba en otro lado</p>
             <p><i class="fa-solid fa-hand text-primary"></i> ...han escuchado la palabra "Docker"</p>
             <p><i class="fa-solid fa-hand text-primary"></i> ...han escuchado "Kubernetes"</p>
             <p><i class="fa-solid fa-hand text-primary"></i> ...han usado Docker o Kubernetes</p>
@@ -71,6 +112,33 @@
           <p style="margin-top:20pt;" class="text-muted">Si levantaste la mano en alguna, esta charla es para ti.</p>
         </div>
         <aside class="notes">Interactua con la audiencia. Esto rompe el hielo y te da idea del nivel del grupo.</aside>
+      </section>
+
+      <section id="why-care" class="demo-slide">
+        <h2><i class="fa-solid fa-rocket"></i> Por qué te debe importar</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; align-items:center;">
+          <div class="illust-callout">
+            <img src="assets/student-career.svg" class="student-career-svg" alt="Student Career">
+          </div>
+          <div>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-briefcase" style="color:#38a169;"></i> <strong>Alta demanda laboral</strong> &mdash; #1 skill en Cloud Native. Empresas como Spotify, Netflix, Shopify buscan profesionales con estos conocimientos.</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-dollar-sign" style="color:#3182ce;"></i> <strong>Salarios competitivos</strong> &mdash; DevOps con Kubernetes promedia $80K+ en LATAM y +$120K en USA.</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-certificate" style="color:#805ad5;"></i> <strong>Certificaciones accesibles</strong> &mdash; KCNA, CKA, CKAD. La CNCF ofrece becas para estudiantes.</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-building" style="color:#c9a227;"></i> <strong>Empresas locales</strong> &mdash; En RD y el Caribe hay startups y empresas que ya usan K8s.</p>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:20pt; text-align:center; font-size:16pt; color:var(--accent-cyan);">
+          <i class="fa-solid fa-lightbulb"></i> Al final de esta charla tendrás un cluster K8s corriendo en tu navegador
+        </p>
+        <aside class="notes">La idea es motivar. Estos no son conceptos abstractos - son habilidades que Demandan. Mencionar que el repo tiene labs gratuitos para practicar después.</aside>
       </section>
 
       <section id="agenda">
@@ -103,7 +171,7 @@
               </p>
             </div>
             <div class="illust-callout">
-              <img src="assets/container-ship.svg" alt="Container ship" style="max-width:100%; max-height:280px; width:auto;">
+              <img src="assets/container-ship.svg" class="container-ship-svg" alt="Container ship">
             </div>
           </div>
         </div>
@@ -145,7 +213,6 @@
         <div class="interview-tip">
           <p class="tip-label">Interview Tip</p>
           <p class="tip-q">"Cual es la diferencia entre VM y container?"</p>
-          <p class="tip-trap">Watch out: "Docker es un VM ligero" - NO, no hay hipervisor ni guest OS</p>
         </div>
         <aside class="notes">Pregunta: cuantos han tenido el problema de instalar algo y que no funcione? Ese es el problema que Docker resuelve.
 
@@ -155,41 +222,111 @@ INTERVIEW TIP (Q3): "Cual es la diferencia entre virtualizacion y containerizati
       <section id="vm-vs-container">
         <h2>VMs vs Contenedores</h2>
         <div class="content">
-          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
-            <div class="card" style="border-color: rgba(248,81,73,0.25);">
-              <h3 style="color:var(--accent-red); font-size:18pt; text-align:center;"><i class="fa-solid fa-computer"></i> Virtual Machines</h3>
-              <p style="font-size:13pt; text-align:center; margin-top:6px;" class="text-muted">Pesado. GB. Lento.</p>
-              <div class="stack-diagram vm">
-                <div class="sd-layer sd-app"><span>App</span><span>App</span><span>App</span></div>
-                <div class="sd-layer sd-libs"><span>Libs</span><span>Libs</span><span>Libs</span></div>
-                <div class="sd-layer sd-guest"><span>Guest OS</span><span>Guest OS</span><span>Guest OS</span></div>
-                <div class="sd-layer sd-hypervisor">Hypervisor</div>
-                <div class="sd-layer sd-host">Host OS</div>
-                <div class="sd-layer sd-hardware">Hardware</div>
-              </div>
+          <div style="text-align:center;">
+            <img src="assets/vm-vs-container.svg" class="vm-vs-container-svg" alt="VM vs Container comparison">
+          </div>
+          <p style="margin-top:15pt; text-align:center;" class="text-muted">
+            <i class="fa-solid fa-lightbulb"></i> La diferencia clave: VMs virtualizan HARDWARE (GB), Contenedores virtualizan el OS (MB)
+          </p>
+        </div>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Cuál es la diferencia entre VMs y contenedores?"</p>
+        </div>
+        <aside class="notes">La diferencia clave: VMs incluyen un SO completo por instancia (GBs). Contenedores comparten el kernel del host (MBs). Un contenedor arranca en milisegundos vs minutos para una VM. TRAMPA: decir "Docker es una VM ligera". No lo es - comparten el kernel del host, no hay hipervisor.</aside>
+      </section>
+
+      <!-- ============================================================
+           DOCKER FUNDAMENTALS: Architecture
+           ============================================================ -->
+
+      <section id="docker-arch">
+        <h2>Arquitectura del Docker Engine</h2>
+        <div class="content">
+          <div style="display:grid; grid-template-columns: 1.5fr 1fr; gap:20px; align-items:center;">
+            <div style="text-align:center;">
+              <img src="assets/docker-architecture-official.webp" alt="Docker Engine architecture (Docker Docs)" style="width:100%; max-height:420px !important; max-width:100% !important; object-fit:contain; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+              <p style="font-size:9pt; color:var(--muted-color); margin-top:6px; font-style:italic;">
+                Fuente: <a href="https://docs.docker.com/get-started/docker-overview/" target="_blank">docs.docker.com</a> (Apache 2.0)
+              </p>
             </div>
-            <div class="card" style="border-color: rgba(63,185,80,0.25);">
-              <h3 style="color:var(--accent-green); font-size:18pt; text-align:center;"><i class="fa-brands fa-docker"></i> Contenedores</h3>
-              <p style="font-size:13pt; text-align:center; margin-top:6px;" class="text-muted">Ligero. MB. Rapido.</p>
-              <div class="stack-diagram container">
-                <div class="sd-layer sd-app"><span>App</span><span>App</span><span>App</span></div>
-                <div class="sd-layer sd-libs"><span>Libs</span><span>Libs</span><span>Libs</span></div>
-                <div class="sd-layer sd-engine">Container Engine</div>
-                <div class="sd-layer sd-host">Host OS</div>
-                <div class="sd-layer sd-hardware">Hardware</div>
+            <div style="font-size:10pt;">
+              <div class="stack-item" style="margin-bottom:6px; padding:6px 12px;">
+                <p style="margin:0;"><i class="fa-solid fa-terminal text-primary"></i> <strong>Docker CLI</strong> — <code>build</code>, <code>run</code>, <code>ps</code></p>
               </div>
+              <div class="stack-item" style="margin-bottom:6px; padding:6px 12px;">
+                <p style="margin:0;"><i class="fa-solid fa-server text-primary"></i> <strong>Daemon (dockerd)</strong> — REST API + gestión</p>
+              </div>
+              <div class="stack-item" style="margin-bottom:6px; padding:6px 12px;">
+                <p style="margin:0;"><i class="fa-solid fa-cube text-primary"></i> <strong>containerd</strong> — ciclo de vida (CNCF, 2016)</p>
+              </div>
+              <div class="stack-item" style="margin-bottom:6px; padding:6px 12px;">
+                <p style="margin:0;"><i class="fa-brands fa-docker" style="color:var(--accent-orange);"></i> <strong>shim + runC</strong> — OCI Runtime Spec</p>
+              </div>
+              <p style="margin-top:8px; font-size:9pt;" class="text-muted">
+                <i class="fa-solid fa-history"></i> 2013: LXC → 2014: libcontainer → 2016: containerd
+              </p>
             </div>
           </div>
         </div>
-        <aside class="notes">La diferencia clave: VMs incluyen un SO completo por instancia (GBs). Contenedores comparten el kernel del host (MBs). Un contenedor arranca en milisegundos vs minutos para una VM.</aside>
+        <aside class="notes">Explica el flujo: tu comando pasa por CLI -> API REST -> Daemon -> containerd -> runC. Cada componente tiene una responsabilidad. containerd fue extraido del daemon original y donado a la CNCF en 2016 para acelerar la innovación fuera del core de Docker. Fuente oficial: docs.docker.com/get-started/docker-overview</aside>
+      </section>
+
+      <section id="namespaces-cgroups">
+        <h2>Namespaces y Cgroups: la magia por debajo</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+          <div class="card">
+            <h3 style="color:var(--primary-color); font-size:18pt;"><i class="fa-solid fa-lock"></i> Namespaces — Aislamiento</h3>
+            <p class="text-muted" style="margin-bottom:12px;">Cada container ve su propio "mundo"</p>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
+              <div class="stack-item" style="margin:0; border-left-color:var(--accent-green);">
+                <p><code style="font-size:10pt;">PID</code> — Procesos propios</p>
+              </div>
+              <div class="stack-item" style="margin:0; border-left-color:var(--accent-cyan);">
+                <p><code style="font-size:10pt;">Network</code> — Red propia</p>
+              </div>
+              <div class="stack-item" style="margin:0; border-left-color:var(--accent-orange);">
+                <p><code style="font-size:10pt;">Mount</code> — Filesystem propio</p>
+              </div>
+              <div class="stack-item" style="margin:0; border-left-color:var(--accent-purple);">
+                <p><code style="font-size:10pt;">UTS</code> — Hostname propio</p>
+              </div>
+              <div class="stack-item" style="margin:0; border-left-color:var(--accent-red);">
+                <p><code style="font-size:10pt;">IPC</code> — Memoria compartida</p>
+              </div>
+              <div class="stack-item" style="margin:0; border-left-color:var(--unphu-gold);">
+                <p><code style="font-size:10pt;">User</code> — Usuarios propios</p>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h3 style="color:var(--accent-green); font-size:18pt;"><i class="fa-solid fa-gauge-high"></i> Cgroups — Recursos</h3>
+            <p class="text-muted" style="margin-bottom:12px;">Limitamos cuánto puede usar cada container</p>
+            <ul style="font-size:14pt;">
+              <li><strong>CPU</strong> — Límite de uso de procesador</li>
+              <li><strong>Memoria</strong> — RAM máxima que puede consumir</li>
+              <li><strong>I/O</strong> — Ancho de banda de disco</li>
+              <li><strong>Network</strong> — Ancho de banda de red</li>
+              <li><strong>PIDs</strong> — Máximo de procesos</li>
+            </ul>
+            <p style="margin-top:12px;" class="text-muted">
+              <i class="fa-solid fa-lightbulb"></i> Sin cgroups, un container podría devorar todos los recursos del host
+            </p>
+          </div>
+        </div>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Qué feature del kernel Linux aísla y limita los containers?"</p>
+        </div>
+        <aside class="notes">Namespaces crean vistas aisladas del sistema. PID namespace = el container cree que su proceso init tiene PID 1. Network namespace = el container tiene su propia IP. Cgroups limita: si pones memory=256m, el container solo usa 256MB de RAM aunque intente usar más.</aside>
       </section>
 
       <section id="image-vs-container">
         <h2>Imagen vs Contenedor</h2>
-        <div class="content split-with-illust">
+        <div class="content" style="display:grid; grid-template-columns: 1.3fr 1fr; gap:30px; align-items:center;">
           <div>
             <div class="card" style="margin-bottom:14px;">
-              <p><i class="fa-solid fa-file-lines text-primary" style="font-size:24pt;"></i> <strong>Imagen</strong> = la <strong style="color:var(--accent-orange);">receta</strong></p>
+              <p><i class="fa-solid fa-file-lines text-primary" style="font-size:20pt;"></i> <strong>Imagen</strong> = la <strong style="color:var(--accent-orange);">receta</strong></p>
               <ul>
                 <li>Inmutable, versionada con tags</li>
                 <li>Plantilla de solo lectura</li>
@@ -197,7 +334,7 @@ INTERVIEW TIP (Q3): "Cual es la diferencia entre virtualizacion y containerizati
               </ul>
             </div>
             <div class="card">
-              <p><i class="fa-solid fa-box text-primary" style="font-size:24pt;"></i> <strong>Contenedor</strong> = el <strong style="color:var(--accent-green);">lunchbox</strong></p>
+              <p><i class="fa-solid fa-box text-primary" style="font-size:20pt;"></i> <strong>Contenedor</strong> = el <strong style="color:var(--accent-green);">lunchbox</strong></p>
               <ul>
                 <li>Instancia viva de una imagen</li>
                 <li>Proceso, red y storage propios</li>
@@ -208,14 +345,13 @@ INTERVIEW TIP (Q3): "Cual es la diferencia entre virtualizacion y containerizati
               <i class="fa-solid fa-arrow-right"></i> Imagen = clase &nbsp;&bull;&nbsp; Contenedor = instancia
             </p>
           </div>
-          <div class="illust-callout">
+          <div class="illust-callout" style="text-align:center;">
             <img src="assets/lunchbox.svg" class="lunchbox-svg" alt="Container como lunchbox">
           </div>
         </div>
         <div class="interview-tip">
           <p class="tip-label">Interview Tip</p>
           <p class="tip-q">"Cual es la diferencia entre imagen y contenedor?"</p>
-          <p class="tip-trap">Watch out: "El contenedor ES la imagen" - NO. Imagen = clase (read-only), contenedor = instancia viva</p>
         </div>
         <aside class="notes">La analogia de programacion orientada a objetos: la imagen es la clase, el contenedor es la instancia. O la receta (imagen) vs el pastel ya horneado (contenedor).
 
@@ -275,11 +411,134 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
         <div class="interview-tip">
           <p class="tip-label">Interview Tip</p>
           <p class="tip-q">"Cual es la diferencia entre CMD y ENTRYPOINT?"</p>
-          <p class="tip-trap">Watch out: "Son lo mismo" - CMD se override, ENTRYPOINT se mantiene</p>
         </div>
         <aside class="notes">Explica cada instruccion: FROM=base, WORKDIR=donde trabajamos, COPY=traer archivos, RUN=ejecutar al construir, EXPOSE=documentar puerto, CMD=que corre el contenedor. HEALTHCHECK es crucial para K8s despues.
 
 INTERVIEW TIP (Q2): "Cual es la diferencia entre CMD y ENTRYPOINT en un Dockerfile?". CMD = default command, facil de override. ENTRYPOINT = fixed command que siempre corre. Best practice: ENTRYPOINT para el main executable, CMD para default flags. TRAMPA comun: decir "son lo mismo". No lo son - `docker run image ls` reemplaza CMD pero se agrega a ENTRYPOINT. Follow-up: "Que pasa si tienes multiples CMD?" (Solo gana el ultimo).</aside>
+      </section>
+
+      <!-- ============================================================
+           DOCKER FUNDAMENTALS: Image Layers & Build Cache
+           ============================================================ -->
+
+      <section id="image-layers">
+        <h2>Image Layers: cómo se construye una imagen</h2>
+        <div class="content">
+          <div style="display:grid; grid-template-columns: 1fr 1.4fr; gap:30px; align-items:center;">
+            <div>
+              <p><i class="fa-solid fa-layer-group text-primary" style="font-size:22pt;"></i> Cada instrucción del Dockerfile = <strong>1 layer</strong></p>
+              <ul style="margin-top:10px;">
+                <li>Los layers son <strong>inmutables</strong> y <strong>compartidos</strong></li>
+                <li>Se apilan uno encima del otro (Union Filesystem)</li>
+                <li>Docker solo guarda los layers que <strong>cambian</strong></li>
+                <li>Varios contenedores <strong>comparten</strong> los mismos layers</li>
+              </ul>
+              <pre style="margin-top:12px;"><code class="language-bash" data-trim>
+# Ver los layers de una imagen
+docker image history ubuntu
+              </code></pre>
+            </div>
+            <div class="illust-callout" style="text-align:center;">
+              <img src="assets/image-layers.svg" class="image-layers-svg" alt="Image layers stack">
+            </div>
+          </div>
+        </div>
+        <aside class="notes">Cada capa es read-only. Cuando construyes un contenedor, Docker agrega una capa writable encima. Si cambias el código fuente, solo esa capa se reconstruye.</aside>
+      </section>
+
+      <section id="build-cache-demo" class="demo-slide">
+        <h2><i class="fa-solid fa-bolt"></i> Build Cache en acción</h2>
+        <div class="content">
+          <pre><code class="language-bash" data-trim data-line-numbers>
+$ docker build -t mi-app:v1 .
+
+Step 1/6 : FROM ubuntu
+ ---> bb0eaf4eee00
+Step 2/6 : RUN apt-get update
+ ---> Using cache          ← Cache HIT ✅
+ ---> e09e593ec730
+Step 3/6 : RUN apt-get install -y python python-pip
+ ---> Using cache          ← Cache HIT ✅
+ ---> a1b2c3d4e5f6
+Step 4/6 : COPY app.py /opt/source-code
+ ---> e9944225690a        ← Cache MISS ⚠️
+Step 5/6 : RUN pip install flask
+ ---> Running               ← Se ejecuta de nuevo
+Step 6/6 : ENTRYPOINT ["flask", "run"]
+ ---> f1a2b3c4d5e6
+Successfully built f1a2b3c4d5e6
+Successfully tagged mi-app:v1
+          </code></pre>
+          <p style="margin-top:12pt;" class="text-muted">
+            <i class="fa-solid fa-lightbulb"></i> Si solo cambias <code>app.py</code>, solo se reconstruyen los pasos 4, 5 y 6
+          </p>
+        </div>
+        <aside class="notes">Docker compara cada instrucción del Dockerfile con el cache. Si la instrucción y sus inputs son iguales, usa el cache. Si cambias algo, todos los steps posteriores se rebuild.</aside>
+      </section>
+
+      <section id="cache-busting">
+        <h2>Cache Busting: cómo forzar la reconstrucción</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+          <div class="card" style="border-color: rgba(220,38,38,0.2);">
+            <h3 style="color:var(--accent-red); font-size:18pt;"><i class="fa-solid fa-triangle-exclamation"></i> Qué invalida el cache</h3>
+            <ul>
+              <li>Cualquier instrucción que <strong>cambie</strong></li>
+              <li>Archivos copiados con <code>ADD</code> o <code>COPY</code> que <strong>cambien</strong></li>
+              <li>El orden de las instrucciones <strong>importa</strong></li>
+              <li>Variables de entorno que cambien</li>
+            </ul>
+          </div>
+          <div class="card" style="border-color: rgba(5,150,105,0.2);">
+            <h3 style="color:var(--accent-green); font-size:18pt;"><i class="fa-solid fa-check"></i> Best practices para el cache</h3>
+            <ul>
+              <li>Instrucciones que <strong>menos cambian</strong> van primero</li>
+              <li>Dependencias arriba, código abajo</li>
+              <li><code>.dockerignore</code> para excluir archivos innecesarios</li>
+              <li>Poner <code>COPY</code> de código al <strong>final</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top:15px; padding:12px 16px; background:var(--card-bg); border-radius:var(--box-radius); border-left:4px solid var(--unphu-gold);">
+          <p style="font-size:13pt;"><i class="fa-solid fa-code text-primary"></i> <strong>Orden óptimo:</strong> <code>FROM</code> → <code>RUN apt-get</code> → <code>COPY requirements.txt</code> → <code>RUN pip install</code> → <code>COPY código</code> → <code>CMD</code></p>
+        </div>
+        <div class="interview-tip">
+          <p class="tip-label">Interview Tip</p>
+          <p class="tip-q">"Por qué tu build de Docker está lento?"</p>
+        </div>
+        <aside class="notes">Si tienes `COPY . .` antes de las dependencias, cada vez que cambies código se rebuild todo. El orden correcto: primero las capas que cambian menos (sistema, dependencias), después el código.</aside>
+      </section>
+
+      <section id="multi-stage">
+        <h2>Multi-stage Builds: imágenes más pequeñas</h2>
+        <div class="content">
+          <pre><code class="language-dockerfile" data-trim data-line-numbers>
+# ===== Build stage =====
+FROM golang:1.21 AS builder
+WORKDIR /src
+COPY . .
+RUN go build -o mi-app .
+
+# ===== Production stage =====
+FROM alpine:latest
+WORKDIR /root/
+COPY --from=builder /src/mi-app .
+CMD ["./mi-app"]
+          </code></pre>
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:15px;">
+            <div style="text-align:center; padding:10px; background:#fee2e2; border-radius:8px;">
+              <p style="font-size:16pt; font-weight:700; color:var(--accent-red);">SIN multi-stage</p>
+              <p style="font-size:28pt; font-weight:700; color:var(--accent-red);">~800 MB</p>
+            </div>
+            <div style="text-align:center; padding:10px; background:#dcfce7; border-radius:8px;">
+              <p style="font-size:16pt; font-weight:700; color:var(--accent-green);">CON multi-stage</p>
+              <p style="font-size:28pt; font-weight:700; color:var(--accent-green);">~15 MB</p>
+            </div>
+          </div>
+          <p style="margin-top:10pt; text-align:center;" class="text-muted">
+            <i class="fa-solid fa-rocket"></i> Multi-stage copia SOLO el binario compilado, descartando compilador, deps de build, código fuente
+          </p>
+        </div>
+        <aside class="notes">Multi-stage es clave para producción. La imagen final solo tiene lo mínimo necesario para correr la app. Go + Alpine = imagen tiny. Este patrón aplica para Node, Rust, Python compilado, etc.</aside>
       </section>
 
       <section id="docker-commands">
@@ -365,7 +624,7 @@ services:
             </div>
           </div>
           <div class="illust-callout" style="padding:0;">
-            <img src="assets/container-ship.svg" alt="Container ship" style="max-width:100%; max-height:220px; width:auto;">
+            <img src="assets/container-ship.svg" class="container-ship-svg" alt="Container ship">
           </div>
         </div>
         <aside class="notes">Spotify migro 300+ servicios a Docker acelerando el onboarding. Netflix lo usa en su CI/CD. Todas las empresas grandes de tecnologia usan containers en produccion.</aside>
@@ -453,54 +712,21 @@ services:
       <section id="control-plane">
         <h2>Arquitectura de un Cluster</h2>
         <div class="content">
-          <div class="mermaid">
-graph TB
-    subgraph CP["🧠 CONTROL PLANE (cerebro)"]
-        API["API Server<br/>puerta de entrada"]
-        ETCD[("etcd<br/>base de datos")]
-        SCH["Scheduler<br/>asigna pods"]
-        CM["Controllers<br/>estado deseado"]
-    end
-    subgraph W1["💪 Worker Node 1"]
-        K1["kubelet"]
-        P1["Pod"]
-        P2["Pod"]
-    end
-    subgraph W2["💪 Worker Node 2"]
-        K2["kubelet"]
-        P3["Pod"]
-    end
-    API --> K1
-    API --> K2
-    API <--> ETCD
-    API --> SCH
-    API --> CM
-    SCH -.asigna.-> K1
-    SCH -.asigna.-> K2
-    style API fill:#1a3a4a,stroke:#58a6ff
-    style ETCD fill:#3a2d4a,stroke:#6e40c9
-    style SCH fill:#3a3a2a,stroke:#d29922
-    style CM fill:#2d4a3a,stroke:#3fb950
-    style K1 fill:#1a2540,stroke:#326CE5
-    style K2 fill:#1a2540,stroke:#326CE5
-    style P1 fill:#2d4a3a,stroke:#3fb950
-    style P2 fill:#2d4a3a,stroke:#3fb950
-    style P3 fill:#2d4a3a,stroke:#3fb950
+          <div style="text-align:center;">
+            <img src="assets/kubernetes-cluster-architecture-official.svg" alt="Kubernetes cluster architecture (kubernetes.io)" style="width:100%; max-height:440px !important; max-width:100% !important; object-fit:contain;">
+            <p style="font-size:9pt; color:var(--muted-color); margin-top:6px; font-style:italic;">
+              Fuente: <a href="https://kubernetes.io/docs/concepts/architecture/" target="_blank">kubernetes.io</a> (CC BY 4.0)
+            </p>
           </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:10px; font-size:11pt;">
+          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:8px; font-size:10pt;">
             <p class="text-muted"><i class="fa-solid fa-server text-primary"></i> <strong>API Server</strong> &mdash; <code>kubectl</code> habla aqui</p>
             <p class="text-muted"><i class="fa-solid fa-database text-primary"></i> <strong>etcd</strong> &mdash; estado del cluster</p>
             <p class="text-muted"><i class="fa-solid fa-cube text-primary"></i> <strong>kubelet</strong> &mdash; corre pods en su nodo</p>
           </div>
         </div>
-        <div class="interview-tip">
-          <p class="tip-label">Interview Tip</p>
-          <p class="tip-q">"Explica la arquitectura de un cluster K8s"</p>
-          <p class="tip-trap">Watch out: confundir kubelet (agente) con kubectl (CLI)</p>
-        </div>
-        <aside class="notes">El control plane es el cerebro. El API server es la puerta. etcd guarda todo. El scheduler decide donde van las cosas. Los workers ejecutan los pods reales.
+        <aside class="notes">El control plane es el cerebro. El API server es la puerta. etcd guarda todo (key-value store). El scheduler decide donde van las cosas. Los workers ejecutan los pods reales. Fuente oficial: kubernetes.io/docs/concepts/architecture/.
 
-INTERVIEW TIP (Q5): "Explica la arquitectura de un cluster K8s". Control plane: kube-apiserver, etcd (key-value store), kube-scheduler, kube-controller-manager, cloud-controller-manager. Worker nodes: kubelet, kube-proxy, container runtime. TRAMPA: confundir kubelet (agente en el nodo) con kubectl (el CLI que tu usas). Tambien: decir que el control plane corre containers (no - solo el API server interactua, los containers corren en workers). Follow-up tricky: "Que pasa si etcd se cae?" (Cluster muerto - no hay estado, no hay scheduling. Hay que restaurar del backup).</aside>
+INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-apiserver, etcd, kube-scheduler, kube-controller-manager, cloud-controller-manager. Worker nodes: kubelet, kube-proxy, container runtime. TRAMPA: confundir kubelet (agente en el nodo) con kubectl (el CLI que tu usas). Tambien: decir que el control plane corre containers (no - solo el API server interactua, los containers corren en workers). Follow-up tricky: "Que pasa si etcd se cae?" (Cluster muerto - no hay estado, no hay scheduling. Hay que restaurar del backup).</aside>
       </section>
 
       <section id="k8s-components-detail">
@@ -538,37 +764,32 @@ INTERVIEW TIP (Q5): "Explica la arquitectura de un cluster K8s". Control plane: 
 
       <section id="pods">
         <h2>Pods</h2>
-        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px; align-items:center;">
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1.2fr; gap:25px; align-items:center;">
           <div>
             <p><i class="fa-solid fa-house-user text-primary"></i> Analogia: <strong>roommates compartiendo apartamento</strong></p>
             <ul>
               <li><strong>1 o mas contenedores</strong> por pod</li>
               <li>Comparten <strong>misma IP</strong> y almacenamiento</li>
               <li><strong>Efimeros</strong>: nacen y mueren</li>
-              <li>Nunca se reubican &mdash; si mueren, se crean nuevos</li>
               <li>En produccion: usar <strong>Deployments</strong></li>
             </ul>
-            <pre style="margin-top:10px;"><code class="language-yaml" data-trim data-line-numbers>
+            <pre style="margin-top:8px; font-size:9pt !important; line-height:1.35 !important;"><code class="language-yaml" data-trim>
 apiVersion: v1
 kind: Pod
-metadata:
-  name: mi-app
+metadata: { name: mi-app }
 spec:
   containers:
-  - name: app
-    image: mi-app:v1
-  - name: logger
-    image: logger:v1
+  - { name: app, image: mi-app:v1 }
+  - { name: logger, image: logger:v1 }
             </code></pre>
           </div>
           <div class="illust-callout">
-            <img src="assets/pod-building.svg" class="building-svg" alt="Pod como edificio">
+            <img src="assets/pod-building.svg" class="pod-building-svg" alt="Pod como edificio">
           </div>
         </div>
         <div class="interview-tip">
           <p class="tip-label">Interview Tip</p>
           <p class="tip-q">"Diferencia entre Pod, Deployment y StatefulSet?"</p>
-          <p class="tip-trap">Watch out: poner databases en Deployments - pierdes data al reschedule</p>
         </div>
         <aside class="notes">Un Pod es como un apartamento donde viven 1 o mas roommates (contenedores). Comparten todo (red, storage). Son efimeros. Por eso usamos Deployments para gestionarlos.
 
@@ -636,32 +857,27 @@ spec:
               <li>Enruta trafico a pods vivos</li>
               <li>Load balancing automatico</li>
             </ul>
-            <div style="margin-top:12px;">
-              <p><strong style="color:var(--accent-orange);">ClusterIP</strong> &mdash; <span class="text-muted">interno</span></p>
-              <p><strong style="color:var(--accent-green);">NodePort</strong> &mdash; <span class="text-muted">puerto del nodo</span></p>
-              <p><strong class="text-primary">LoadBalancer</strong> &mdash; <span class="text-muted">LB del cloud</span></p>
+            <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+              <span class="tag tag-orange">ClusterIP</span>
+              <span class="tag tag-green">NodePort</span>
+              <span class="tag tag-blue">LoadBalancer</span>
             </div>
-            <pre style="margin-top:10px;"><code class="language-yaml" data-trim data-line-numbers>
+            <pre style="margin-top:8px; font-size:9pt !important; line-height:1.35 !important;"><code class="language-yaml" data-trim>
 apiVersion: v1
 kind: Service
-metadata:
-  name: mi-app
+metadata: { name: mi-app }
 spec:
-  selector:
-    app: mi-app
-  ports:
-  - port: 80
-    targetPort: 8000
+  selector: { app: mi-app }
+  ports: [{port: 80, targetPort: 8000}]
             </code></pre>
           </div>
           <div class="illust-callout">
-            <img src="assets/hotel.svg" class="hotel-svg" alt="Service como recepcionista">
+            <img src="assets/hotel-v2.svg" class="hotel-svg" alt="Service como recepcionista">
           </div>
         </div>
         <div class="interview-tip">
           <p class="tip-label">Interview Tip</p>
           <p class="tip-q">"Diferencia entre Service, Ingress y NodePort?"</p>
-          <p class="tip-trap">Watch out: "Ingress es un Service type" - NO, es un objeto separado</p>
         </div>
         <aside class="notes">El Service es el recepcionista. Los clientes piden "la app" y el recepcionista los enruta a un pod disponible. Sin importar cuantos pods hay o si cambian.
 
@@ -698,7 +914,6 @@ stringData:
         <div class="interview-tip">
           <p class="tip-label">Interview Tip</p>
           <p class="tip-q">"Cual es la diferencia entre ConfigMap y Secret?"</p>
-          <p class="tip-trap">Watch out: "Secrets son encriptados" - NO, son base64. Cualquiera con kubectl get secret -o yaml los lee</p>
         </div>
         <aside class="notes">Misma imagen de Docker, pero diferentes ConfigMaps para cada ambiente. Los secrets son base64 (no es encriptacion real). En produccion se usa encryption at rest.
 
@@ -734,7 +949,6 @@ kubectl exec -it mi-app-abc123 -- bash
         <div class="interview-tip">
           <p class="tip-label">Interview Tip</p>
           <p class="tip-q">"Si un Pod no schedula, como debugueas?"</p>
-          <p class="tip-trap">Watch out: hacer `kubectl logs` en un pod Pending - no hay logs, nunca arranco</p>
         </div>
         <aside class="notes">kubectl es como docker CLI pero para un cluster. apply despliega, get lista, describe muestra detalle, logs muestra logs, scale escala.
 
@@ -759,7 +973,11 @@ INTERVIEW TIP (Q10): "Si un Pod no schedula, como lo debugueas?". Step 1: `kubec
             </div>
           </div>
           <div class="illust-callout" style="padding:0;">
-            <img src="assets/captain-kube.svg" alt="Captain Kube" style="max-width:100%; max-height:220px; width:auto;">
+            <div style="text-align:center; padding:30px; background:linear-gradient(135deg,#dbeafe 0%,#e0e7ff 100%); border-radius:16px; box-shadow:0 4px 12px rgba(37,99,235,0.15);">
+              <i class="fa-solid fa-rocket" style="font-size:80pt; color:#2563eb;"></i>
+              <p style="margin-top:15px; font-size:18pt; font-weight:700; color:#1e293b;">Industry Standard</p>
+              <p style="font-size:12pt; color:#64748b; margin-top:5px;">CNCF 2024 Survey</p>
+            </div>
           </div>
         </div>
         <aside class="notes">Google corre 2 mil millones de containers a la semana con la misma tecnologia que estamos viendo. Pokemon Go paso de caerse al lanzar a escalar millones de usuarios gracias a K8s. CERN corre fisica de particulas en K8s.</aside>
@@ -827,53 +1045,27 @@ spec:
             <p><i class="fa-solid fa-door-open text-primary"></i> Analog&iacute;a: el <strong>portero</strong> del edificio</p>
             <ul>
               <li>Cada Service LoadBalancer = <strong>puerta individual</strong> (cara + no escala)</li>
-              <li>Ingress = <strong>&uacute;nica puerta</strong> que enruta seg&uacute;n la solicitud</li>
-            </ul>
-            <p style="margin-top:15pt;"><strong>Tipos de enrutamiento:</strong></p>
-            <ul>
-              <li><strong>Host:</strong> api.miapp.com &rarr; Service API, web.miapp.com &rarr; Service Web</li>
-              <li><strong>Path:</strong> miapp.com/api &rarr; Service API, miapp.com/web &rarr; Service Web</li>
-              <li><strong>TLS:</strong> HTTPS autom&aacute;tico con certificados</li>
-            </ul>
-            <p style="margin-top:15pt;"><strong>Ingress Controllers populares:</strong></p>
-            <ul>
-              <li>NGINX Ingress Controller (el m&aacute;s com&uacute;n)</li>
-              <li>Traefik (moderno, f&aacute;cil configuraci&oacute;n)</li>
-              <li>AWS ALB Ingress Controller (nativo cloud)</li>
+              <li>Ingress = <strong>&uacute;nica puerta</strong> con routing inteligente</li>
+              <li><strong>Tipos:</strong> Host, Path, TLS</li>
+              <li><strong>Populares:</strong> NGINX, Traefik, AWS ALB</li>
             </ul>
           </div>
           <div>
-            <pre><code class="language-yaml" data-trim data-line-numbers>
+            <pre style="font-size:9pt !important; line-height:1.35 !important;"><code class="language-yaml" data-trim>
 apiVersion: networking.k8s.io/v1
 kind: Ingress
-metadata:
-  name: mi-app
+metadata: { name: mi-app }
 spec:
   ingressClassName: nginx
   rules:
   - host: miapp.com
     http:
       paths:
-      - path: /api
-        pathType: Prefix
-        backend:
-          service:
-            name: api-service
-            port:
-              number: 80
-      - path: /web
-        pathType: Prefix
-        backend:
-          service:
-            name: web-service
-            port:
-              number: 80
-  tls:
-  - hosts:
-    - miapp.com
-    secretName: tls-secret
+      - { path: /api, pathType: Prefix, backend: ... }
+      - { path: /web, pathType: Prefix, backend: ... }
+  tls: [{ hosts: [miapp.com], secretName: tls-secret }]
             </code></pre>
-            <p style="margin-top:10pt;" class="text-muted">
+            <p style="margin-top:8pt; font-size:10pt;" class="text-muted">
               <i class="fa-solid fa-arrow-right"></i> Un solo Ingress = routing para muchas apps
             </p>
           </div>
@@ -881,7 +1073,6 @@ spec:
         <div class="interview-tip">
           <p class="tip-label">Interview Tip</p>
           <p class="tip-q">"Diferencia entre Ingress y LoadBalancer Service?"</p>
-          <p class="tip-trap">Watch out: confundir Ingress (L7 routing) con Service LoadBalancer (L4 TCP/UDP)</p>
         </div>
         <aside class="notes">Ingress es el portero del edificio. En vez de tener 100 puertas (LoadBalancers), tienes una puerta que sabe donde enviar a cada persona segun a quien vienen a visitar. El Ingress Controller implementa las reglas de routing.
 
@@ -946,7 +1137,7 @@ default      redis-master-0     1/1
             </p>
           </div>
           <div class="illust-callout" style="padding:0;">
-            <img src="assets/teamwork.svg" alt="Teamwork" style="max-width:100%; max-height:280px; width:auto;">
+            <img src="assets/teamwork.svg" class="teamwork-svg" alt="Teamwork">
           </div>
         </div>
         <aside class="notes">Estos roles estan en alta demanda. Empresas locales e internacionales buscan gente con K8s. El salario inicial en LATAM para DevOps con K8s es competitivo.</aside>
@@ -962,7 +1153,7 @@ default      redis-master-0     1/1
               <li><strong>Play with K8s</strong> &mdash; cluster gratis por 4 horas</li>
               <li><strong>Linux Foundation edX</strong> &mdash; "Intro to Kubernetes"</li>
               <li><strong>CNCF Students</strong> &mdash; Slack #students, eventos</li>
-              <li><strong>Este repo</strong> &mdash; todo el codigo de la charla</li>
+              <li><strong>Este repo</strong> &mdash; todo el código de la charla</li>
             </ul>
           </div>
           <div>
@@ -973,22 +1164,58 @@ default      redis-master-0     1/1
               <li><strong>CKAD</strong> &mdash; Certified Kubernetes App Developer</li>
             </ul>
             <p style="margin-top:15pt;" class="text-muted">
-              <i class="fa-solid fa-tip"></i> El KCNA es ideal para estudiantes. La CNCF ofrece becas.
+              <i class="fa-solid fa-lightbulb"></i> El KCNA es ideal para estudiantes. La CNCF ofrece becas.
             </p>
           </div>
         </div>
         <aside class="notes">No se necesita instalar nada. KillerCoda y Play with K8s funcionan en el navegador. Las certificaciones dan ventaja competitiva en el mercado laboral.</aside>
       </section>
 
+      <section id="hands-on" class="demo-slide">
+        <h2><i class="fa-solid fa-laptop-code"></i> Hands-On: ¡Tu Primer Cluster!</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1.3fr 1fr; gap:30px; align-items:center;">
+          <div class="illust-callout">
+            <img src="assets/hands-on-lab.svg" class="hands-on-svg" alt="Hands-on Lab">
+          </div>
+          <div>
+            <h3 style="color:var(--accent-cyan);">Lab práctico post-charla</h3>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-1" style="color:var(--primary-color);"></i> <strong>Play with K8s</strong> &mdash; Accede desde tu navegador</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-2" style="color:var(--primary-color);"></i> <strong>kubectl get pods</strong> &mdash; Verifica tu cluster</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-3" style="color:var(--primary-color);"></i> <strong>Despliega tu app</strong> &mdash; En minutos</p>
+            </div>
+            <div class="stack-item">
+              <p><i class="fa-solid fa-4" style="color:var(--primary-color);"></i> <strong>Escala a 5 réplicas</strong> &mdash; Con un comando</p>
+            </div>
+            <p style="margin-top:15pt;" class="text-muted">
+              <i class="fa-solid fa-clock"></i> 100% gratis • Sin instalar nada • Empieza ahora
+            </p>
+          </div>
+        </div>
+        <aside class="notes">Invita a los estudiantes a quedarse 30 minutos extra para el lab práctico. Play with K8s funciona en cualquier navegador moderno.</aside>
+      </section>
+
       <section id="closing" class="section-divider" data-state="is-section-divider">
-        <img src="assets/captain-kube.svg" alt="Captain Kube" style="max-height:120px; margin-bottom:15px;">
-        <h1 style="font-size:54pt;">Gracias!</h1>
-        <p style="font-size:22pt;">Preguntas?</p>
-        <div style="display:flex; align-items:center; justify-content:center; gap:30px; margin-top:25px;">
-          <div style="text-align:left; font-size:13pt;">
-            <p><i class="fa-brands fa-github"></i> <strong>github.com/cloudnativesdq/UNPHU-charla</strong></p>
-            <p><i class="fa-solid fa-globe"></i> <strong>cloudnativesdq.github.io/UNPHU-charla</strong></p>
-            <p class="text-muted" style="font-size:11pt; margin-top:10px;">
+        <!-- UNPHU branding -->
+        <div style="margin-bottom:15px;">
+          <img src="assets/unphu-logo.svg" alt="UNPHU" style="max-height:50px; border:none; box-shadow:none; background:none;">
+        </div>
+
+        <i class="fa-solid fa-graduation-cap" style="font-size:60pt; color:#c9a227; margin-bottom:8px;"></i>
+        <h1 style="font-size:42pt; margin:0;">¡Gracias!</h1>
+        <p style="font-size:18pt; margin:5px 0 15px 0;">¿Preguntas?</p>
+
+        <!-- CTAs -->
+        <div style="display:flex; align-items:center; justify-content:center; gap:30px; margin-top:15px;">
+          <div style="text-align:left; font-size:11pt;">
+            <p style="color:var(--accent-cyan); margin:3px 0;"><i class="fa-solid fa-rocket"></i> <strong>Lab práctico</strong> - ¡Quédate 30 min!</p>
+            <p style="margin:3px 0;"><i class="fa-brands fa-github"></i> <strong>github.com/cloudnativesdq/UNPHU-charla</strong></p>
+            <p style="margin:3px 0;"><i class="fa-solid fa-globe"></i> <strong>cloudnativesdq.github.io/UNPHU-charla</strong></p>
+            <p class="text-muted" style="font-size:10pt; margin-top:8px;">
               <i class="fa-solid fa-keyboard"></i> S = speaker view &bull;
               <i class="fa-solid fa-border-all"></i> O = overview &bull;
               <i class="fa-solid fa-search"></i> Ctrl+Shift+F = buscar
@@ -996,10 +1223,14 @@ default      redis-master-0     1/1
           </div>
           <img src="assets/qr-repo.svg" alt="QR repo" style="width:130px; height:130px; border-radius:8px;">
         </div>
-        <p class="text-muted" style="margin-top:12pt; font-size:11pt;">
-          <i class="fa-solid fa-qrcode"></i> Escanea el QR para acceder al repo
-        </p>
-        <aside class="notes">Gracias. El repo tiene toda la presentacion. Anima a clonar y experimentar. Abre el espacio para preguntas - minimo 10 minutos.</aside>
+        
+        <!-- University footer -->
+        <div style="margin-top:30px; padding-top:15px; border-top:1px solid rgba(255,255,255,0.1);">
+          <p style="font-size:12pt; color:var(--muted-color);">
+            <i class="fa-solid fa-building-columns"></i> Universidad Nacional Pedro Henrí Ureña &bull; Cloud Native Dominicana &bull; 2026
+          </p>
+        </div>
+        <aside class="notes">Gracias. El repo tiene toda la presentacion. Anima a clonar y experimentar. Abre el espacio para preguntas - minimo 10 minutos. Invita al lab práctico post-charla.</aside>
       </section>
 
     </div>
@@ -1011,16 +1242,21 @@ default      redis-master-0     1/1
   <script>
     mermaid.initialize({
       startOnLoad: false,
-      theme: 'dark',
+      theme: 'base',
       themeVariables: {
-        primaryColor: '#1a2540',
-        primaryTextColor: '#e6edf3',
-        primaryBorderColor: '#326CE5',
-        lineColor: '#58a6ff',
-        secondaryColor: '#0d1f3c',
-        tertiaryColor: '#0a1628',
+        primaryColor: '#dbeafe',
+        primaryTextColor: '#1e293b',
+        primaryBorderColor: '#2563eb',
+        lineColor: '#94a3b8',
+        secondaryColor: '#f0fdf4',
+        tertiaryColor: '#f8fafc',
         fontFamily: 'Plus Jakarta Sans, sans-serif',
-        fontSize: '14px'
+        fontSize: '14px',
+        nodeBorder: '#2563eb',
+        clusterBkg: '#f0fdf4',
+        clusterBorder: '#86efac',
+        titleColor: '#1a365d',
+        edgeLabelBackground: '#ffffff'
       },
       flowchart: { curve: 'basis', padding: 12 }
     });
@@ -1049,7 +1285,7 @@ default      redis-master-0     1/1
       slideNumber: 'c/t',
       hash: true,
       history: true,
-      transition: 'slide',
+      transition: 'none',
       center: false,
       plugins: [RevealHighlight]
     });

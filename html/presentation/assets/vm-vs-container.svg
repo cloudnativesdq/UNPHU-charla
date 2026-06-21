@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 300" width="540" height="300">
+  <!-- VM vs Container — Light Theme Version -->
+  
+  <!-- Background -->
+  <rect x="0" y="0" width="540" height="300" fill="white"/>
+  
+  <!-- VM Side -->
+  <g id="vm-side">
+    <!-- Title -->
+    <text x="110" y="22" font-family="Arial" font-size="15" font-weight="bold" fill="#dc2626" text-anchor="middle">Virtual Machine</text>
+    <text x="110" y="38" font-family="Arial" font-size="10" fill="#64748b" text-anchor="middle">Heavy • GB • Slow Boot</text>
+    
+    <!-- Hardware -->
+    <rect x="20" y="48" width="180" height="28" fill="#334155" rx="4"/>
+    <text x="110" y="67" font-family="Arial" font-size="11" fill="white" text-anchor="middle">Hardware</text>
+    
+    <!-- Host OS -->
+    <rect x="20" y="80" width="180" height="24" fill="#475569" rx="4"/>
+    <text x="110" y="96" font-family="Arial" font-size="10" fill="white" text-anchor="middle">Host OS</text>
+    
+    <!-- Hypervisor -->
+    <rect x="20" y="108" width="180" height="28" fill="#7c3aed" rx="4"/>
+    <text x="110" y="127" font-family="Arial" font-size="10" fill="white" text-anchor="middle">Hypervisor</text>
+    
+    <!-- VM 1 -->
+    <rect x="30" y="140" width="75" height="55" fill="#fce7f3" rx="4" stroke="#f472b6" stroke-width="1.5"/>
+    <text x="67" y="158" font-family="Arial" font-size="10" fill="#831843" text-anchor="middle">Guest OS</text>
+    <text x="67" y="175" font-family="Arial" font-size="9" fill="#831843" text-anchor="middle">App + Libs</text>
+    
+    <!-- VM 2 -->
+    <rect x="115" y="140" width="75" height="55" fill="#fce7f3" rx="4" stroke="#f472b6" stroke-width="1.5"/>
+    <text x="152" y="158" font-family="Arial" font-size="10" fill="#831843" text-anchor="middle">Guest OS</text>
+    <text x="152" y="175" font-family="Arial" font-size="9" fill="#831843" text-anchor="middle">App + Libs</text>
+    
+    <!-- Size indicator -->
+    <text x="110" y="225" font-family="Arial" font-size="14" fill="#dc2626" text-anchor="middle">~GB RAM</text>
+    <text x="110" y="245" font-family="Arial" font-size="10" fill="#64748b" text-anchor="middle">Minutes to boot</text>
+    
+    <!-- Big boxes for scale -->
+    <rect x="45" y="255" width="55" height="25" fill="#fce7f3" rx="3" stroke="#f472b6"/>
+    <rect x="105" y="255" width="55" height="25" fill="#fce7f3" rx="3" stroke="#f472b6"/>
+    <rect x="75" y="283" width="55" height="12" fill="#fce7f3" rx="3" stroke="#f472b6"/>
+  </g>
+  
+  <!-- VS -->
+  <text x="270" y="170" font-family="Arial" font-size="22" font-weight="bold" fill="#94a3b8" text-anchor="middle">VS</text>
+  
+  <!-- Container Side -->
+  <g id="container-side">
+    <!-- Title -->
+    <text x="430" y="22" font-family="Arial" font-size="15" font-weight="bold" fill="#059669" text-anchor="middle">Contenedor</text>
+    <text x="430" y="38" font-family="Arial" font-size="10" fill="#64748b" text-anchor="middle">Light • MB • Fast Boot</text>
+    
+    <!-- Hardware -->
+    <rect x="340" y="48" width="180" height="28" fill="#334155" rx="4"/>
+    <text x="430" y="67" font-family="Arial" font-size="11" fill="white" text-anchor="middle">Hardware</text>
+    
+    <!-- Host OS -->
+    <rect x="340" y="80" width="180" height="24" fill="#475569" rx="4"/>
+    <text x="430" y="96" font-family="Arial" font-size="10" fill="white" text-anchor="middle">Host OS (shared)</text>
+    
+    <!-- Container Engine -->
+    <rect x="340" y="108" width="180" height="28" fill="#0891b2" rx="4"/>
+    <text x="430" y="127" font-family="Arial" font-size="10" fill="white" text-anchor="middle">Container Engine</text>
+    
+    <!-- Container 1 -->
+    <rect x="350" y="142" width="48" height="50" fill="#dcfce7" rx="4" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="374" y="160" font-family="Arial" font-size="9" fill="#166534" text-anchor="middle">App</text>
+    <text x="374" y="176" font-family="Arial" font-size="8" fill="#166534" text-anchor="middle">Libs</text>
+    
+    <!-- Container 2 -->
+    <rect x="405" y="142" width="48" height="50" fill="#dcfce7" rx="4" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="429" y="160" font-family="Arial" font-size="9" fill="#166534" text-anchor="middle">App</text>
+    <text x="429" y="176" font-family="Arial" font-size="8" fill="#166534" text-anchor="middle">Libs</text>
+    
+    <!-- Container 3 -->
+    <rect x="460" y="142" width="48" height="50" fill="#dcfce7" rx="4" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="484" y="160" font-family="Arial" font-size="9" fill="#166534" text-anchor="middle">App</text>
+    <text x="484" y="176" font-family="Arial" font-size="8" fill="#166534" text-anchor="middle">Libs</text>
+    
+    <!-- Container 4 -->
+    <rect x="350" y="200" width="48" height="40" fill="#dcfce7" rx="4" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="374" y="225" font-family="Arial" font-size="9" fill="#166534" text-anchor="middle">App</text>
+    
+    <!-- Container 5 -->
+    <rect x="405" y="200" width="48" height="40" fill="#dcfce7" rx="4" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="429" y="225" font-family="Arial" font-size="9" fill="#166534" text-anchor="middle">App</text>
+    
+    <!-- Container 6 -->
+    <rect x="460" y="200" width="48" height="40" fill="#dcfce7" rx="4" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="484" y="225" font-family="Arial" font-size="9" fill="#166534" text-anchor="middle">App</text>
+    
+    <!-- Size indicator -->
+    <text x="430" y="260" font-family="Arial" font-size="14" fill="#059669" text-anchor="middle">~MB RAM</text>
+    <text x="430" y="278" font-family="Arial" font-size="10" fill="#64748b" text-anchor="middle">Milliseconds to boot</text>
+  </g>
+  
+  <!-- Arrow from VM side (big) to Container side (many small) -->
+  <path d="M230 100 Q250 80 270 100 Q290 120 310 100" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,2"/>
+</svg>

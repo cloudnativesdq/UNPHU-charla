@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 120" width="400" height="120">
+  <!-- UNPHU University Logo — Light Theme Version -->
+  
+  <!-- University crest -->
+  <circle cx="55" cy="60" r="38" fill="#1a365d" stroke="#c9a227" stroke-width="3"/>
+  
+  <!-- Book/Graduation symbol inside crest -->
+  <path d="M42 48 L55 40 L68 48 L68 78 L55 86 L42 78 Z" fill="#c9a227"/>
+  <line x1="55" y1="40" x2="55" y2="86" stroke="#1a365d" stroke-width="2"/>
+  <text x="55" y="68" font-family="Arial" font-size="8" fill="#1a365d" text-anchor="middle" font-weight="bold">UNPHU</text>
+  
+  <!-- Text: UNPHU -->
+  <text x="110" y="55" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="32" font-weight="700" fill="#1a365d">UNPHU</text>
+  
+  <!-- Subtitle -->
+  <text x="110" y="75" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="12" fill="#64748b">Universidad Nacional Pedro Henrí Ureña</text>
+  
+  <!-- Conference badge -->
+  <rect x="110" y="82" width="165" height="24" fill="#1a365d" rx="4"/>
+  <text x="192" y="98" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="11" font-weight="600" fill="white" text-anchor="middle">TECH CONFERENCE 2026</text>
+  
+  <!-- Gold accent dots -->
+  <circle cx="295" cy="40" r="4" fill="#c9a227"/>
+  <circle cx="310" cy="40" r="4" fill="#c9a227"/>
+  <circle cx="325" cy="40" r="4" fill="#c9a227"/>
+  
+  <!-- Decorative lines -->
+  <line x1="285" y1="55" x2="380" y2="55" stroke="#1a365d" stroke-width="1.5"/>
+  <line x1="285" y1="65" x2="350" y2="65" stroke="#c9a227" stroke-width="1.5"/>
+</svg>

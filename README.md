@@ -1,170 +1,234 @@
-# UNPHU - De 0 a Observabilidad
+# Introducción a Contenedores — De Docker a Kubernetes
 
-Charla de introduccion a contenedores y Kubernetes. UNPHU 2026.
+Charla de 90 minutos para la **Universidad Nacional Pedro Henrí Ureña (UNPHU)**
+en el contexto del evento **Cloud Native Dominicana 2026**, dirigida a estudiantes
+de ingeniería y profesionales IT que se acercan por primera vez al mundo cloud native.
 
-Presentacion hecha con [Reveal.js](https://revealjs.com), servida con Docker + Nginx y expuesta a internet via Cloudflare Tunnel (sin login).
+> **Audiencia**: estudiantes y profesionales con conocimientos básicos de Linux,
+> sin experiencia previa con contenedores ni orquestadores.
+>
+> **Formato**: 90 min de charla + 30 min de **lab práctico** post-charla con
+> [Play with Kubernetes](https://labs.play-with-k8s.com/).
 
-## Estructura del proyecto
+---
+
+## Temas cubiertos
+
+La charla sigue una progresión deliberada: de la motivación a la práctica,
+de lo local a lo distribuido, de "funciona en mi máquina" a "escala en producción".
+
+### 1. Acto 1 — Hook + Introducción (5 min)
+
+Por qué los contenedores importan ahora, no en 5 años. El problema real de
+"funciona en mi máquina" que cada estudiante ha vivido. Qué veremos hoy.
+
+### 2. Bloque 1 — Docker: la unidad mínima (20 min)
+
+| Tema | Pregunta que responde |
+|------|----------------------|
+| **¿Por qué contenedores?** | Ventajas sobre VMs: tamaño, velocidad, portabilidad |
+| **VMs vs Contenedores** | Qué capa se virtualiza en cada caso (hardware vs OS) |
+| **Arquitectura del Docker Engine** | dockerd, containerd, runC, shim — cómo encaja el stack |
+| **Namespaces y Cgroups** | La magia del kernel Linux que hace posible el aislamiento |
+| **Imagen vs Contenedor** | Diferencia entre clase y objeto |
+| **Docker Hub y registries** | Dónde viven las imágenes |
+| **Dockerfile** | Cómo escribir una receta reproducible |
+| **Image layers y build cache** | Por qué el orden de las instrucciones importa |
+| **Cache busting y multi-stage** | Optimizar tamaño y velocidad de build |
+| **Comandos esenciales** | Los 5 que usarás el 80% del tiempo |
+| **Docker Compose** | Multi-container local para desarrollo |
+| **Docker en la industria** | Spotify, Netflix, Shopify: casos reales |
+
+### 3. Break interactivo (5 min)
+
+Pregunta abierta para activar a la audiencia: *"¿Cómo escalarías tu app
+de 10 a 10.000 usuarios?"*
+
+### 4. Bloque 2 — Kubernetes: orquestación a escala (25 min)
+
+| Tema | Pregunta que responde |
+|------|----------------------|
+| **¿Por qué Kubernetes?** | Lo que Docker solo no resuelve (auto-healing, scaling, service discovery) |
+| **Historia** | De Borg (Google, 2003) a K8s (CNCF, 2015) |
+| **Arquitectura del cluster** | Control plane vs worker nodes |
+| **Componentes clave** | API Server, etcd, scheduler, controllers, kubelet, kube-proxy |
+| **Pods** | La unidad mínima desplegable (analogía: apartamento compartido) |
+| **Deployments** | El "gerente" que mantiene N réplicas vivas |
+| **Services** | IP estable + DNS para pods efímeros (analogía: recepcionista de hotel) |
+| **ConfigMaps y Secrets** | Config fuera del código, datos sensibles fuera del repo |
+| **kubectl básico** | Los 5 comandos del día a día |
+| **K8s en la industria** | Google (2B containers/semana), Pokemon Go, CERN, 90% de Fortune 100 |
+| **HPA (Horizontal Pod Autoscaler)** | Escalar según CPU, memoria o métricas custom |
+
+### 5. Bloque 3 — Acceso externo y el stack completo (10 min)
+
+| Tema | Pregunta que responde |
+|------|----------------------|
+| **Ingress** | Una sola puerta con routing inteligente (vs un LoadBalancer por servicio) |
+| **El stack completo** | De `docker build` a `kubectl scale` — el viaje de punta a punta |
+
+### 6. Acto 3 — Recursos + Carreras + Cierre (10 min)
+
+| Tema | Para qué |
+|------|----------|
+| **¿Dónde puedes trabajar?** | DevOps, SRE, Platform Engineering — roles reales |
+| **Recursos para seguir** | KillerCoda, Play with K8s, KCNA/CKA/CKAD, CNCF Students |
+| **Lab práctico** | Invitación a los 30 min hands-on post-charla |
+| **Cierre** | Repo público, contacto, Q&A |
+
+---
+
+## Características de la presentación
+
+- **43 slides** en español, optimizadas para proyección en sala (legible a 5-10m)
+- **8 "Interview Tips"** distribuidos en slides técnicas: preguntas típicas de
+  entrevistas (Docker, K8s, networking, debugging). Las respuestas están en las
+  *speaker notes* — el presentador las ve, la audiencia no.
+- **Notas del presentador** (`<aside class="notes">`) en cada slide con guion,
+  analogías verbales y contexto para el presentador
+- **Imágenes oficiales** de arquitectura Docker y Kubernetes (atribución incluida)
+- **Ilustraciones SVG propias** para analogías (lunchbox, hotel, apartamento, barco)
+- **Diagrama Mermaid** del stack completo de containers
+- **Tema visual**: blanco con acentos azul UNPHU, transiciones suaves
+- **Atajos de teclado**: `S` (speaker view), `O` (overview), `F` (fullscreen),
+  `Ctrl+Shift+F` (buscar)
+
+---
+
+## Estructura del repositorio
 
 ```
 .
-├── docker-compose.yml          # Nginx + Cloudflare tunnel
+├── README.md                          # Este archivo
+├── docker-compose.yml                 # Nginx + Cloudflare Tunnel
 ├── html/
-│   ├── index.html              # Presentacion principal (Reveal.js)
-│   ├── nginx.conf              # Configuracion Nginx
-│   └── slides/                 # Markdown adicional (respaldo)
-│       └── presentacion.md
-├── .opencode/
-│   └── skills/revealjs/        # Skill para editar presentaciones con IA
-│       ├── SKILL.md
-│       ├── references/         # CSS base, features avanzadas, charts
-│       └── scripts/            # Scaffold, overflow check, browser editor
-└── README.md
+│   ├── nginx.conf                     # Sirve /presentation/presentation.html
+│   └── presentation/
+│       ├── presentation.html          # ⭐ Presentación principal (43 slides)
+│       ├── styles.css                 # Tema visual custom
+│       ├── index.html                 # Redirect compat (legacy)
+│       └── assets/                    # SVGs + imágenes oficiales
+│           ├── docker-architecture-official.webp
+│           ├── kubernetes-cluster-architecture-official.svg
+│           ├── lunchbox.svg           # Analogía containers = lunchbox
+│           ├── hotel.svg              # Analogía Service = recepcionista
+│           ├── vm-vs-container.svg    # Comparación visual
+│           ├── container-ship.svg     # Docker en industria
+│           ├── pod-building.svg       # K8s pods
+│           ├── student-career.svg     # Roles profesionales
+│           ├── hands-on-lab.svg       # Lab práctico
+│           ├── image-layers.svg       # Capas de imagen Docker
+│           ├── teamwork.svg           # Dev + DevOps + cloud
+│           ├── captain-kube.svg       # (legacy, ya no se usa)
+│           ├── unphu-logo.svg         # Branding UNPHU
+│           └── qr-repo.svg            # QR al repo público
 ```
 
-## Requisitos
+---
+
+## Inicio rápido
+
+### Requisitos
 
 - [Docker](https://docs.docker.com/get-docker/) (Docker Desktop o Docker Engine)
-- [Git](https://git-scm.com/)
-- Navegador web moderno (Chrome, Firefox, Safari)
-- (Opcional) [Node.js 18+](https://nodejs.org/) para la skill de edicion con IA
+- Navegador moderno (Chrome, Firefox, Safari)
 
-## Inicio rapido
+### Levantar la presentación
 
 ```bash
-# 1. Clonar el repo
+# Clonar
 git clone https://github.com/cloudnativesdq/UNPHU-charla.git
 cd UNPHU-charla
 
-# 2. Levantar presentacion + tunel publico
+# Levantar nginx local
 docker compose up -d
 
-# 3. Ver localmente
-#    http://localhost:8000
+# Ver localmente
+# http://localhost:8000
 
-# 4. Obtener URL publica (compartir con audiencia)
+# (Opcional) Exponer a internet con URL pública temporal
 docker compose logs tunnel | grep trycloudflare.com
 ```
 
-La URL publica es temporal y cambia cada vez que se reinicia el tunel.
+### Atajos de teclado
 
-## Como ver la presentacion
-
-| Accion | Como |
-|--------|------|
-| Ver slides | Navegar con flechas del teclado o swipe |
-| Vista de presentador | Presionar `S` |
-| Vista overview | Presionar `O` |
+| Acción | Tecla |
+|--------|-------|
+| Avanzar / retroceder | `←` / `→` / `Espacio` |
+| Vista de presentador | `S` |
+| Vista overview (todas las slides) | `O` |
+| Pantalla completa | `F` |
 | Buscar en slides | `Ctrl+Shift+F` |
 | Zoom en elemento | `Alt+Click` (Linux: `Ctrl+Click`) |
-| Pantalla completa | Presionar `F` |
 
-## Contenido de la charla (10:00 AM - 12:00 PM)
+---
 
-| Paso | Tema | Duracion aprox. |
-|------|------|-----------------|
-| 1 | **Contenedores** - Docker, imagenes, Dockerfile | 20 min |
-| 2 | **Docker Compose** - Multi-container local | 15 min |
-| 3 | **Kubernetes** - Arquitectura, Pods, Deployments, Services | 30 min |
-| 4 | **Configuracion** - ConfigMaps, Secrets, Namespaces | 15 min |
-| 5 | **Escalado** - HPA, auto-scaling | 15 min |
-| 6 | **Observabilidad** - Prometheus, Loki, Tempo, Grafana | 25 min |
+## Personalizar la presentación
 
-## Editar la presentacion
+### Editar el contenido
 
-### Opcion 1: Editar HTML directamente
-
-El archivo principal es `html/index.html`. Es HTML puro con Reveal.js cargado desde CDN. Editar y recargar el navegador.
+El archivo principal es `html/presentation/presentation.html`. Es HTML directo
+con Reveal.js cargado desde CDN. Después de editar:
 
 ```bash
-# Tu editor favorito
-code html/index.html
-
-# O vim
-vim html/index.html
-
-# Reiniciar nginx para ver cambios
-docker compose restart revealjs
+# Los assets se sirven directamente desde ./html/presentation/
+# Solo refrescar el navegador (Ctrl+R)
+docker compose restart revealjs   # Solo si tocás nginx.conf
 ```
 
-### Opcion 2: Usar la skill de Reveal.js con IA
+### Cambiar el tema visual
 
-La skill permite generar y editar presentaciones con comandos de lenguaje natural. Funciona con [Claude Code](https://docs.anthropic.com/en/docs/claude-code) y [opencode](https://opencode.ai).
+`html/presentation/styles.css` controla colores, tamaños, espaciado.
+Las variables CSS principales están al inicio del archivo:
 
-#### Con Claude Code
-
-```bash
-# Instalar la skill como plugin de Claude
-claude plugin marketplace add ryanbbrown/revealjs-skill
-claude plugin install revealjs@revealjs-skill
-
-# Instalar dependencias
-npm install --prefix ~/.claude/plugins/cache/revealjs
-
-# O instalar manualmente copiando al directorio de skills
-cp -r .opencode/skills/revealjs ~/.claude/skills/
-
-# Usar desde el directorio del proyecto
-claude
+```css
+:root {
+  --primary-color: #2563eb;    /* Azul UNPHU */
+  --accent-orange: #f59e0b;    /* Docker */
+  --accent-cyan: #06b6d4;
+  --muted-color: #64748b;
+}
 ```
 
-#### Con opencode
+### Atribución de imágenes oficiales
 
-```bash
-# Instalar dependencias de la skill (ya incluida en el repo)
-npm install --prefix .opencode/skills/revealjs
+Las dos imágenes de arquitectura tienen atribución explícita en sus slides
+correspondientes (Docker engine → docs.docker.com CC BY-SA; Kubernetes cluster
+→ kubernetes.io CC BY 4.0).
 
-# Iniciar opencode en el directorio del proyecto
-opencode
-```
+---
 
-#### Ejemplos de prompts
+## Despliegue a GitHub Pages
 
-```
-> Agrega un slide sobre Ingress Controllers despues del slide de Services
-> Cambia el tema a blanco con acentos verdes
-> Agrega un diagrama de la arquitectura de observabilidad
-> Crea una nueva presentacion sobre Helm
-```
+El repo incluye un redirect legacy en `html/presentation/index.html` por
+compatibilidad con despliegues anteriores en GitHub Pages. Para activar:
 
-### Opcion 3: Browser editor (edicion visual)
+1. Settings → Pages → Branch: `main`, folder: `/html/presentation`
+2. La presentación queda disponible en
+   `https://cloudnativesdq.github.io/UNPHU-charla/presentation.html`
 
-```bash
-node .opencode/skills/revealjs/scripts/edit-html.js html/index.html
-```
+---
 
-Abre un servidor local donde puedes hacer click en cualquier texto para editarlo directamente.
+## Recursos mencionados en la charla
 
-## Comandos utiles
+- [Play with Kubernetes](https://labs.play-with-k8s.com/) — Cluster gratis por 4h en el navegador
+- [KillerCoda](https://killercoda.com/) — Labs interactivos de Kubernetes y Docker
+- [Kubernetes Docs](https://kubernetes.io/docs/) — Documentación oficial
+- [Docker Docs](https://docs.docker.com/) — Documentación oficial
+- [container.training](https://container.training/) — Workshops interactivos
+- [CNCF Landscape](https://landscape.cncf.io/) — Ecosistema completo
+- [CNCF Students](https://www.cncf.io/) — Becas y comunidad para estudiantes
+- Certificaciones Linux Foundation: **KCNA** (entrada), **CKA** (admin), **CKAD** (developer)
 
-```bash
-# Levantar todo
-docker compose up -d
+---
 
-# Ver estado de los contenedores
-docker compose ps
+## Créditos
 
-# Ver URL del tunel publico
-docker compose logs tunnel | grep trycloudflare.com
+Charla preparada para **UNPHU 2026** por la comunidad **Cloud Native Dominicana**.
+Speaker: Lester Diaz Perez, Kubestronaut.
 
-# Reiniciar despues de editar
-docker compose restart revealjs
-
-# Detener todo
-docker compose down
-
-# Detener y limpiar todo (incluyendo tuneles huerfanos)
-docker compose down --remove-orphans
-```
-
-## Recursos
-
-- [Reveal.js - Documentacion](https://revealjs.com/)
-- [Kubernetes - Docs](https://kubernetes.io/docs/)
-- [container.training](https://container.training/) - Workshops interactivos
-- [CNCF Landscape](https://landscape.cncf.io/) - Ecosistema completo
-- [Grafana Tutorials](https://grafana.com/tutorials/) - Prometheus, Loki, Tempo
-- [OpenTelemetry Docs](https://opentelemetry.io/docs/)
+Ilustraciones SVG: originales del proyecto.
+Diagramas de arquitectura: Docker Inc. (Apache 2.0) y Kubernetes Project (CC BY 4.0).
 
 ## Licencia
 

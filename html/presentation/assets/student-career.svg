@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <!-- Why Students Should Care - University Edition -->
+  
+  <!-- Background circle -->
+  <circle cx="200" cy="150" r="140" fill="#1a365d" opacity="0.05"/>
+  
+  <!-- Central icon: Graduation cap + K8s -->
+  <g transform="translate(200, 80)">
+    <!-- Graduation cap -->
+    <path d="M-40 20 L0 -10 L40 20 L0 50 Z" fill="#c9a227"/>
+    <rect x="-5" y="20" width="10" height="25" fill="#1a365d"/>
+    <circle cx="5" cy="50" r="5" fill="#c9a227"/>
+    
+    <!-- K8s wheel overlay -->
+    <circle cx="0" cy="5" r="18" fill="none" stroke="#326CE5" stroke-width="3"/>
+    <circle cx="0" cy="5" r="5" fill="#326CE5"/>
+    <g stroke="#326CE5" stroke-width="2.5">
+      <line x1="0" y1="-13" x2="0" y2="-8"/>
+      <line x1="12.5" y1="-1" x2="8" y2="0"/>
+      <line x1="7.5" y1="11" x2="5" y2="7"/>
+      <line x1="-7.5" y1="11" x2="-5" y2="7"/>
+      <line x1="-12.5" y1="-1" x2="-8" y2="0"/>
+    </g>
+  </g>
+  
+  <!-- Stats cards -->
+  <!-- Card 1: Job Demand -->
+  <g transform="translate(50, 150)">
+    <rect x="0" y="0" width="100" height="70" fill="white" rx="6" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="50" y="25" font-family="Arial" font-size="24" font-weight="bold" fill="#38a169" text-anchor="middle">#1</text>
+    <text x="50" y="45" font-family="Arial" font-size="10" fill="#4a5568" text-anchor="middle">Skill in</text>
+    <text x="50" y="58" font-family="Arial" font-size="10" fill="#4a5568" text-anchor="middle">Cloud Native</text>
+  </g>
+  
+  <!-- Card 2: Salary -->
+  <g transform="translate(165, 150)">
+    <rect x="0" y="0" width="100" height="70" fill="white" rx="6" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="50" y="25" font-family="Arial" font-size="20" font-weight="bold" fill="#3182ce" text-anchor="middle">$80K+</text>
+    <text x="50" y="45" font-family="Arial" font-size="10" fill="#4a5568" text-anchor="middle">Avg Salary</text>
+    <text x="50" y="58" font-family="Arial" font-size="10" fill="#4a5568" text-anchor="middle">LATAM</text>
+  </g>
+  
+  <!-- Card 3: Industry -->
+  <g transform="translate(280, 150)">
+    <rect x="0" y="0" width="100" height="70" fill="white" rx="6" stroke="#E2E8F0" stroke-width="1"/>
+    <text x="50" y="25" font-family="Arial" font-size="20" font-weight="bold" fill="#805ad5" text-anchor="middle">90%</text>
+    <text x="50" y="45" font-family="Arial" font-size="10" fill="#4a5568" text-anchor="middle">Fortune 100</text>
+    <text x="50" y="58" font-family="Arial" font-size="10" fill="#4a5568" text-anchor="middle">Uses K8s</text>
+  </g>
+  
+  <!-- Bottom text -->
+  <text x="200" y="250" font-family="Arial" font-size="14" fill="#1a365d" text-anchor="middle" font-weight="bold">Your Career Starts Here</text>
+  <text x="200" y="270" font-family="Arial" font-size="11" fill="#718096" text-anchor="middle">Cloud Native is the future of software deployment</text>
+  
+  <!-- Decorative elements -->
+  <circle cx="30" cy="50" r="8" fill="#326CE5" opacity="0.3"/>
+  <circle cx="370" cy="80" r="6" fill="#c9a227" opacity="0.4"/>
+  <circle cx="350" cy="250" r="10" fill="#38a169" opacity="0.2"/>
+  <circle cx="50" cy="220" r="5" fill="#805ad5" opacity="0.3"/>
+</svg>
