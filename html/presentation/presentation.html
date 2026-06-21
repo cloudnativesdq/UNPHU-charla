@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/github.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="styles.css?v=15&t=20260621">
+  <link rel="stylesheet" href="styles.css?v=18&t=20260621">
   <style>
     /* CRITICAL: Override reveal.js white text on ALL slide elements */
     /* .reveal-viewport contains .reveal.ready (reveal.js adds 'ready' class) */
@@ -1298,6 +1298,83 @@ default      redis-master-0     1/1
       transition: 'none',
       center: false,
       plugins: [RevealHighlight]
+    });
+
+    // ===== Auto-position .interview-tip to the least-occupied corner =====
+    // Avoids overlap by trying bottom-left -> bottom-right -> top-left -> top-right
+    // and picking the corner with the least content overlap.
+    function positionInterviewTip(section) {
+      const tip = section.querySelector('.interview-tip');
+      if (!tip) return;
+
+      // Reset to default (bottom-left) to measure natural size
+      tip.style.top = 'auto';
+      tip.style.bottom = '18px';
+      tip.style.left = '30px';
+      tip.style.right = 'auto';
+
+      const sectionRect = section.getBoundingClientRect();
+      const tipW = tip.offsetWidth;
+      const tipH = tip.offsetHeight;
+      const margin = 18;
+      const gapBelowH2 = 60; // leave room for the h2
+
+      // Candidate corner positions (in viewport coords)
+      // Priority: bottom-right first (least expected, doesn't interrupt L→R reading flow)
+      const corners = [
+        { name: 'bottom-right', vx: sectionRect.right - tipW - 30,   vy: sectionRect.bottom - tipH - margin },
+        { name: 'bottom-left',  vx: sectionRect.left + 30,           vy: sectionRect.bottom - tipH - margin },
+        { name: 'top-right',    vx: sectionRect.right - tipW - 30,   vy: sectionRect.top + gapBelowH2 + 10 },
+        { name: 'top-left',     vx: sectionRect.left + 30,           vy: sectionRect.top + gapBelowH2 + 10 },
+      ];
+
+      // Collect content bounding rects to test overlap against (exclude the tip itself and the .content container)
+      const contentEls = section.querySelectorAll('h2, pre, .card, img, svg, .illust-callout, .content > *');
+      const contentRects = Array.from(contentEls)
+        .filter(el => el !== tip && !tip.contains(el))
+        .map(el => el.getBoundingClientRect());
+
+      function overlapArea(box) {
+        let area = 0;
+        for (const r of contentRects) {
+          const x = Math.max(0, Math.min(box.x + tipW, r.right) - Math.max(box.x, r.left));
+          const y = Math.max(0, Math.min(box.y + tipH, r.bottom) - Math.max(box.y, r.top));
+          area += x * y;
+        }
+        return area;
+      }
+
+      // Pick the corner with the least overlap
+      let best = corners[0];
+      let bestScore = Infinity;
+      for (const c of corners) {
+        const score = overlapArea(c);
+        if (score < bestScore) { bestScore = score; best = c; }
+      }
+
+      // Apply
+      if (best.name.startsWith('top')) {
+        tip.style.top = (best.vy - sectionRect.top) + 'px';
+        tip.style.bottom = 'auto';
+      } else {
+        tip.style.top = 'auto';
+        tip.style.bottom = margin + 'px';
+      }
+      if (best.name.endsWith('left')) {
+        tip.style.left = '30px';
+        tip.style.right = 'auto';
+      } else {
+        tip.style.left = 'auto';
+        tip.style.right = '30px';
+      }
+    }
+
+    Reveal.on('ready', () => {
+      document.querySelectorAll('section').forEach(s => positionInterviewTip(s));
+    });
+    Reveal.on('slidechanged', e => {
+      // Re-position after a tick so layout settles
+      requestAnimationFrame(() => positionInterviewTip(e.currentSlide));
     });
   </script>
 </body>
