@@ -32,12 +32,12 @@
     <text x="50" y="58" font-family="Arial" font-size="10" fill="#4a5568" text-anchor="middle">Cloud Native</text>
   </g>
   
-  <!-- Card 2: Salary -->
+  <!-- Card 2: Open Source -->
   <g transform="translate(165, 150)">
     <rect x="0" y="0" width="100" height="70" fill="white" rx="6" stroke="#E2E8F0" stroke-width="1"/>
-    <text x="50" y="25" font-family="Arial" font-size="20" font-weight="bold" fill="#3182ce" text-anchor="middle">$80K+</text>
-    <text x="50" y="45" font-family="Arial" font-size="10" fill="#4a5568" text-anchor="middle">Avg Salary</text>
-    <text x="50" y="58" font-family="Arial" font-size="10" fill="#4a5568" text-anchor="middle">LATAM</text>
+    <text x="50" y="25" font-family="Arial" font-size="20" font-weight="bold" fill="#3182ce" text-anchor="middle">Open</text>
+    <text x="50" y="45" font-family="Arial" font-size="10" fill="#4a5568" text-anchor="middle">Source</text>
+    <text x="50" y="58" font-family="Arial" font-size="10" fill="#4a5568" text-anchor="middle">CNCF</text>
   </g>
   
   <!-- Card 3: Industry -->
