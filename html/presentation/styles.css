@@ -176,7 +176,7 @@ html body .reveal .slides section .text-cyan {
 /* ===== SLIDES ===== */
 /* Don't touch position/transform on sections — let reveal.js control slide layout */
 .reveal .slides section {
-  padding: 20px 50px 20px 50px;
+  padding: 20px 30px 20px 30px;
   box-sizing: border-box;
   text-align: left;
 }
