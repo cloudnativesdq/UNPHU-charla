@@ -87,14 +87,14 @@
           </div>
           <div class="card" style="text-align:center; padding:30px;">
             <p><i class="fa-solid fa-user-astronaut text-primary" style="font-size:48pt;"></i></p>
-            <h3 style="margin-top:15px;">Speaker 2</h3>
-            <p class="text-primary font-bold">Software Engineer</p>
+            <h3 style="margin-top:15px;">Enmanuel Medina</h3>
+            <p class="text-primary font-bold">DevOps Engineer</p>
             <p class="text-muted">Cloud Native Dominicana</p>
             <p style="margin-top:12px;">
-              <i class="fa-brands fa-linkedin text-muted"></i> /speaker2 &nbsp;
-              <i class="fa-brands fa-github text-muted"></i> @speaker2
+              <i class="fa-brands fa-linkedin text-muted"></i> /enmedina3 &nbsp;
+              <i class="fa-brands fa-github text-muted"></i> @en-medina
             </p>
-            <p class="text-muted" style="font-size:13pt; margin-top:10px;">X anos de experiencia desarrollando aplicaciones cloud native</p>
+            <p class="text-muted" style="font-size:13pt; margin-top:10px;">7 años de experiencia desarrollando aplicaciones cloud native</p>
           </div>
         </div>
         <aside class="notes">Presentense brevemente. Cada uno dice quien es, que hace y por que le apasiona Kubernetes. Maximo 30 segundos cada uno.</aside>
@@ -1221,6 +1221,66 @@ default      redis-master-0     1/1
           </div>
         </div>
         <aside class="notes">Invita a los estudiantes a quedarse 30 minutos extra para el lab práctico. Play with K8s funciona en cualquier navegador moderno.</aside>
+      </section>
+
+      <section id="hands-on-lab" class="demo-slide">
+        <h2><i class="fa-solid fa-flask"></i> Laboratorios Prácticos</h2>
+        <div class="content">
+          <p style="text-align:center; font-size:14pt; margin-bottom:20px;" class="text-muted">
+            <i class="fa-solid fa-laptop-code"></i> Accede a los laboratorios interactivos desde tu navegador
+          </p>
+
+          <div style="display:grid; gap:12px;">
+            <!-- Lab 1 -->
+            <div class="card" style="border-left:3px solid var(--primary-color); padding:12px 14px;">
+              <div style="display:grid; grid-template-columns: 40px 1fr; gap:12px; align-items:center;">
+                <div style="background:var(--primary-color); color:white; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18pt; font-weight:700;">1</div>
+                <div>
+                  <h3 style="margin:0 0 4px 0; font-size:15pt;"><i class="fa-brands fa-docker"></i> Fundamentos de Docker</h3>
+                  <p style="margin:0 0 6px 0; font-size:11pt;" class="text-muted">Multi-stage builds y optimización de imágenes</p>
+                  <div style="background:#f0f9ff; padding:6px 10px; border-radius:4px; font-family:monospace; font-size:10.5pt; color:#0369a1;">
+                    <i class="fa-solid fa-link" style="margin-right:4px; font-size:9pt;"></i>killercoda.com/en-medina/scenario/01-container-multistage
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lab 2 -->
+            <div class="card" style="border-left:3px solid var(--accent-cyan); padding:12px 14px;">
+              <div style="display:grid; grid-template-columns: 40px 1fr; gap:12px; align-items:center;">
+                <div style="background:var(--accent-cyan); color:white; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18pt; font-weight:700;">2</div>
+                <div>
+                  <h3 style="margin:0 0 4px 0; font-size:15pt;"><i class="fa-solid fa-layer-group"></i> Docker Compose</h3>
+                  <p style="margin:0 0 6px 0; font-size:11pt;" class="text-muted">Aplicaciones multi-contenedor con Compose</p>
+                  <div style="background:#ecfdf5; padding:6px 10px; border-radius:4px; font-family:monospace; font-size:10.5pt; color:#047857;">
+                    <i class="fa-solid fa-link" style="margin-right:4px; font-size:9pt;"></i>killercoda.com/en-medina/scenario/02-docker-compose
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lab 3 -->
+            <div class="card" style="border-left:3px solid var(--accent-green); padding:12px 14px;">
+              <div style="display:grid; grid-template-columns: 40px 1fr; gap:12px; align-items:center;">
+                <div style="background:var(--accent-green); color:white; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18pt; font-weight:700;">3</div>
+                <div>
+                  <h3 style="margin:0 0 4px 0; font-size:15pt;"><img src="https://cdn.jsdelivr.net/gh/kubernetes/kubernetes@master/logo/logo.png" alt="" style="max-height:20px; border:none; box-shadow:none; background:none; vertical-align:middle; margin-right:4px;"> Kubernetes Essentials</h3>
+                  <p style="margin:0 0 6px 0; font-size:11pt;" class="text-muted">Despliega y escala aplicaciones en Kubernetes</p>
+                  <div style="background:#fef3c7; padding:6px 10px; border-radius:4px; font-family:monospace; font-size:10.5pt; color:#92400e;">
+                    <i class="fa-solid fa-link" style="margin-right:4px; font-size:9pt;"></i>killercoda.com/en-medina/scenario/03-kubernetes-essentials
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p style="margin-top:18px; text-align:center; font-size:12pt;">
+            <i class="fa-solid fa-clock"></i> <strong>~15-20 min c/u</strong> &bull;
+            <i class="fa-solid fa-check-circle" style="color:var(--accent-green);"></i> 100% gratis &bull;
+            <i class="fa-solid fa-globe"></i> Sin instalación
+          </p>
+        </div>
+        <aside class="notes">Tres laboratorios progresivos: Docker básico, multi-container con Compose, y orquestación con Kubernetes. Los URLs están visibles para que los estudiantes los anoten. Todos funcionan en el navegador con Killercoda.</aside>
       </section>
 
       <section id="closing" class="section-divider" data-state="is-section-divider">
