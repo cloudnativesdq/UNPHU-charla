@@ -1,14 +1,18 @@
 # Introducción a Contenedores — De Docker a Kubernetes
 
-Charla de 90 minutos para la **Universidad Nacional Pedro Henrí Ureña (UNPHU)**
+Charla y taller para la **Universidad Nacional Pedro Henríquez Ureña (UNPHU)**
 en el contexto del evento **Cloud Native Dominicana 2026**, dirigida a estudiantes
 de ingeniería y profesionales IT que se acercan por primera vez al mundo cloud native.
 
+> **Página Oficial del Evento**: [Registrarse en CNCF Community Groups](https://ocgroups.dev/cncf/group/cqecyjw/event/um956yb)
+>
 > **Audiencia**: estudiantes y profesionales con conocimientos básicos de Linux,
 > sin experiencia previa con contenedores ni orquestadores.
 >
-> **Formato**: 90 min de charla + 30 min de **lab práctico** post-charla con
-> [Play with Kubernetes](https://labs.play-with-k8s.com/).
+> **Agenda del Taller**:
+> * **10:00 AM &ndash; 12:00 PM**: Conceptos fundamentales de Contenedores (con Lester Diaz)
+> * **12:00 PM &ndash; 1:00 PM**: Receso para almuerzo
+> * **1:00 PM &ndash; 3:00 PM**: Sesión práctica y ejercicios técnicos (labs con [KillerCoda](https://killercoda.com/))
 
 ---
 

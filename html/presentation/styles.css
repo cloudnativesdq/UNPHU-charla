@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   /* ===== LIGHT THEME — Conference / University Presenter ===== */
   /* Background */
   --background-color: #ffffff;
-  --section-divider-bg: #f0f4f8;
+  --section-divider-bg: #f8fafc;
 
   /* Fonts */
-  --heading-font: "Plus Jakarta Sans", Helvetica, sans-serif;
-  --body-font: "Plus Jakarta Sans", Helvetica, sans-serif;
+  --heading-font: "Space Grotesk", "Plus Jakarta Sans", sans-serif;
+  --body-font: "Inter", sans-serif;
   --code-font: "JetBrains Mono", monospace;
   --base-font-size: 32px;
   --text-size: 16pt;
@@ -18,11 +18,12 @@
   --footnote-size: 11pt;
 
   /* Brand colors */
-  --primary-color: #2563eb;          /* K8s blue */
-  --primary-glow: rgba(37, 99, 235, 0.12);
-  --primary-light: rgba(37, 99, 235, 0.08);
-  --secondary-color: #f59e0b;         /* Amber / UNPHU gold accent */
+  --primary-color: #0078d4;          /* CNCF Blue */
+  --primary-glow: rgba(0, 120, 212, 0.12);
+  --primary-light: rgba(0, 120, 212, 0.08);
+  --secondary-color: #c9a227;         /* UNPHU Gold */
   --unphu-gold: #c9a227;             /* UNPHU university gold */
+  --unphu-navy: #1a365d;             /* UNPHU Navy Blue */
 
   /* Text */
   --text-color: #1a202c;             /* Near-black */
@@ -33,21 +34,21 @@
   --accent-green: #059669;
   --accent-red: #dc2626;
   --accent-orange: #d97706;
-  --accent-cyan: #0891b2;
+  --accent-cyan: #00bcf2;            /* CNCF Cyan */
   --accent-purple: #7c3aed;
 
   /* Layout */
   --slide-padding: 60px;
   --slide-padding-top: 30px;
   --content-gap: 25px;
-  --box-radius: 10px;
+  --box-radius: 12px;
 
   /* Cards */
   --card-bg: #ffffff;
   --card-border: #e2e8f0;
-  --card-hover-border: #2563eb;
-  --card-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
-  --card-shadow-hover: 0 10px 15px -3px rgba(37,99,235,0.1), 0 4px 6px -2px rgba(37,99,235,0.05);
+  --card-hover-border: #0078d4;
+  --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --card-shadow-hover: 0 12px 20px -8px rgba(0, 120, 212, 0.15), 0 4px 12px -2px rgba(0, 188, 242, 0.08);
 }
 
 /* ===== BASE ===== */
@@ -221,7 +222,8 @@ html body .reveal .slides section .text-cyan {
   flex-shrink: 0;
   margin: 0;
   padding-bottom: 8px;
-  border-bottom: 2px solid var(--line-color);
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--primary-color) 0%, var(--accent-cyan) 40%, var(--line-color) 100%) 1;
 }
 
 /* Section divider glow — soft */
@@ -366,14 +368,23 @@ html body .reveal .slides section .text-cyan {
 }
 
 /* ===== ANIMATIONS ===== */
-.reveal .present .card {
-  animation: fadeSlideUp 0.5s ease both;
+.reveal .present h2 {
+  animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-.reveal .present .card:nth-child(2) { animation-delay: 0.08s; }
-.reveal .present .card:nth-child(3) { animation-delay: 0.16s; }
-.reveal .present .card:nth-child(4) { animation-delay: 0.24s; }
+.reveal .present p, .reveal .present ul, .reveal .present pre, .reveal .present .mermaid {
+  animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.06s;
+}
+.reveal .present .card {
+  animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.reveal .present .card:nth-child(1) { animation-delay: 0.1s; }
+.reveal .present .card:nth-child(2) { animation-delay: 0.16s; }
+.reveal .present .card:nth-child(3) { animation-delay: 0.22s; }
+.reveal .present .card:nth-child(4) { animation-delay: 0.28s; }
+
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .reveal .present .content { animation: fadeIn 0.4s ease both; }
@@ -402,14 +413,15 @@ html body .reveal .slides section .text-cyan {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px; height: 30px;
+  width: 32px; height: 32px;
   border-radius: 50%;
-  background: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-cyan));
   color: white;
   font-weight: 700;
-  font-size: 14pt;
+  font-size: 13pt;
   margin-right: 10px;
   flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 120, 212, 0.2);
 }
 
 /* ===== DEMO SLIDES (special highlights) ===== */
@@ -575,25 +587,25 @@ img[src*="assets/"] { user-select: none; }
 
 /* ===== INTERVIEW TIPS ===== */
 /* Interview Tips — transparent box, content behind stays visible.
-   Readability comes from text-shadow halo + minimal backdrop blur,
-   not from a solid background. */
+   We elevate this with amber glassmorphism and clean typography. */
 .interview-tip {
   position: absolute;
-  bottom: 18px;
-  left: 30px;
-  max-width: 70%;
+  bottom: 22px;
+  left: 40px;
+  max-width: 72%;
   margin: 0;
-  padding: 10px 16px;
-  background: rgba(255, 251, 235, 0.15);
-  border: 1px solid rgba(253, 230, 138, 0.3);
-  border-left: 4px solid var(--accent-orange);
-  border-radius: 0 var(--box-radius) var(--box-radius) 0;
-  font-size: 10pt;
-  line-height: 1.35;
+  padding: 12px 18px;
+  background: rgba(254, 243, 199, 0.45); /* Warm amber semi-transparent background */
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  border-left: 5px solid var(--accent-orange);
+  border-radius: 6px 14px 14px 6px;
+  font-size: 10.5pt;
+  line-height: 1.45;
   text-align: left;
   z-index: 5;
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px -3px rgba(217, 119, 6, 0.1);
 }
 
 /* White halo on text makes it readable against any background
@@ -659,34 +671,34 @@ img[src*="assets/"] { user-select: none; }
 }
 
 /* ===== SECTION DIVIDER LIGHT THEME ===== */
-/* Override the dark gradient with a clean light gradient */
+/* Override with a gorgeous vibrant CNCF/UNPHU light brand gradient */
 .reveal-viewport.is-section-divider .slide-background.present {
-  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 40%, #f7fafc 100%) !important;
+  background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f0fdfa 100%) !important;
 }
 
 /* Section dividers: softer top accent, readable text */
 .reveal-viewport.is-section-divider .reveal h1 {
-  color: #1a365d;
+  color: var(--unphu-navy);
   text-shadow: none;
 }
 .reveal-viewport.is-section-divider .reveal h2 {
-  color: #1a365d;
+  color: var(--unphu-navy);
 }
 .reveal-viewport.is-section-divider .reveal p {
-  color: #475569;
+  color: #334155;
 }
 .reveal-viewport.is-section-divider .reveal a {
-  color: #2563eb;
+  color: var(--primary-color);
 }
 
 /* Section dividers: remove the dot-grid texture for cleaner look */
 .reveal-viewport.is-section-divider::after {
   background-image: radial-gradient(circle, #cbd5e1 0.5px, transparent 0.5px);
   background-size: 32px 32px;
-  opacity: 0.2;
+  opacity: 0.15;
 }
 
 /* Section dividers: glow becomes subtle blue-white */
 .section-divider::before {
-  background: radial-gradient(ellipse at 50% 30%, rgba(37,99,235,0.04) 0%, transparent 65%);
+  background: radial-gradient(ellipse at 50% 30%, rgba(0, 120, 212, 0.05) 0%, transparent 65%);
 }

@@ -147,17 +147,10 @@ minikube status
 
 ### Durante el Workshop
 
-**Timing sugerido:**
-- 09:00 - 09:15: Intro teórica (slides)
-- 09:15 - 10:15: Lab 1 (Docker)
-- 10:15 - 10:30: Break
-- 10:30 - 11:30: Lab 2 (Compose)
-- 11:30 - 12:00: Q&A + Troubleshooting
-- 12:00 - 13:00: Almuerzo
-- 13:00 - 14:30: Lab 3 (Kubernetes)
-- 14:30 - 14:45: Break
-- 14:45 - 16:00: Lab 4 (SRE)
-- 16:00 - 16:30: Recap + Certificados
+**Agenda Oficial:**
+- 10:00 AM &ndash; 12:00 PM: Conceptos fundamentales de Contenedores (con Lester Diaz)
+- 12:00 PM &ndash; 1:00 PM: Receso para almuerzo
+- 1:00 PM &ndash; 3:00 PM: Sesión práctica y ejercicios técnicos (labs con [KillerCoda](https://killercoda.com/))
 
 ## 📚 Recursos Adicionales
 
