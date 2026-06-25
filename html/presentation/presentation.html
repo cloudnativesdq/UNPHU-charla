@@ -718,51 +718,45 @@ services:
 
       <section id="docker-self-hosted" class="demo-slide">
         <h2><i class="fa-solid fa-server"></i> Docker sin Docker Desktop: self-hosted open source</h2>
-        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:18px; align-items:stretch;">
-          <div class="card" style="display:flex; flex-direction:column;">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-              <i class="fa-solid fa-window-maximize" style="font-size:22pt; color:#13bef9;"></i>
-              <strong style="font-size:15pt;">Portainer CE</strong>
-            </div>
-            <p style="font-size:10pt; color:#475569; flex:1;">
-              <strong>UI web</strong> para Docker, Swarm y Kubernetes. La m&aacute;s usada.
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:18px; align-items:stretch; max-height:580px;">
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:18px 14px;">
+            <img src="assets/portainer.svg" style="height:90px; margin-bottom:12px;" alt="Portainer CE">
+            <strong style="font-size:16pt; color:#0e7490;">Portainer CE</strong>
+            <p style="font-size:10pt; color:#475569; margin-top:6px;">
+              UI web para Docker, Swarm y K8s
             </p>
-            <ul style="font-size:10pt; margin-top:6px;">
+            <ul style="font-size:9.5pt; margin-top:8px; text-align:left; width:100%; padding-left:18px;">
               <li>Corre como contenedor</li>
               <li>Multi-host, stacks, templates</li>
               <li>Comunidad CE gratuita</li>
             </ul>
           </div>
-          <div class="card" style="display:flex; flex-direction:column;">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-              <i class="fa-solid fa-cloud-arrow-up" style="font-size:22pt; color:#3b82f6;"></i>
-              <strong style="font-size:15pt;">Coolify</strong>
-            </div>
-            <p style="font-size:10pt; color:#475569; flex:1;">
-              <strong>PaaS self-hosted</strong> &mdash; alternativa open source a Heroku/Vercel.
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:18px 14px;">
+            <img src="assets/coolify.svg" style="height:90px; margin-bottom:12px;" alt="Coolify">
+            <strong style="font-size:16pt; color:#1d4ed8;">Coolify</strong>
+            <p style="font-size:10pt; color:#475569; margin-top:6px;">
+              PaaS self-hosted &mdash; alternativa a Heroku/Vercel
             </p>
-            <ul style="font-size:10pt; margin-top:6px;">
+            <ul style="font-size:9.5pt; margin-top:8px; text-align:left; width:100%; padding-left:18px;">
               <li>Deploy apps + DBs + SSL auto</li>
               <li>Traefik integrado</li>
               <li>Git-based deploys</li>
             </ul>
           </div>
-          <div class="card" style="display:flex; flex-direction:column;">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
-              <i class="fa-solid fa-cubes" style="font-size:22pt; color:#a855f7;"></i>
-              <strong style="font-size:15pt;">Dokploy</strong>
-            </div>
-            <p style="font-size:10pt; color:#475569; flex:1;">
-              <strong>PaaS self-hosted</strong> &mdash; fork comunitario, UI m&aacute;s moderna.
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:18px 14px;">
+            <img src="assets/dokploy.svg" style="height:90px; margin-bottom:12px;" alt="Dokploy">
+            <strong style="font-size:16pt; color:#6b21a8;">Dokploy</strong>
+            <p style="font-size:10pt; color:#475569; margin-top:6px;">
+              PaaS self-hosted &mdash; fork comunitario moderno
             </p>
-            <ul style="font-size:10pt; margin-top:6px;">
+            <ul style="font-size:9.5pt; margin-top:8px; text-align:left; width:100%; padding-left:18px;">
               <li>Similar a Coolify</li>
               <li>Templates pre-hechos</li>
               <li>Multi-server</li>
             </ul>
           </div>
         </div>
-        <p style="margin-top:12pt; text-align:center; font-size:13pt; color:var(--accent-cyan);">
+        <p style="margin-top:10pt; text-align:center; font-size:13pt; color:var(--accent-cyan);">
           <i class="fa-solid fa-lightbulb"></i> Toda tu infra Docker sin pagar licencias &mdash; corre en tu propio VPS
         </p>
         <aside class="notes">Portainer CE es la mas adoptada para UI web de Docker (corre como contenedor, soporta multi-host). Coolify y Dokploy son PaaS self-hosted: deploy de apps, DBs, SSL automatico. Son alternativas open source a Heroku/Vercel/Netlify. Para el estudiante: empezar con Portainer para aprender Docker visualmente, luego Coolify para deploys reales sin aprender Kubernetes. Todo esto corre en un VPS de $5/mes en Hetzner/DigitalOcean.</aside>
@@ -1260,93 +1254,67 @@ INTERVIEW TIP (Q10): "Si un Pod no schedula, como lo debugueas?". Step 1: `kubec
 
       <section id="k8s-self-hosted" class="demo-slide">
         <h2><i class="fa-solid fa-gears"></i> Kubernetes self-hosted: management + observability</h2>
-        <div class="content" style="display:flex; flex-direction:column; gap:10px; max-height:580px;">
+        <div class="content" style="display:flex; flex-direction:column; gap:14px; max-height:560px;">
           <div>
-            <h3 style="margin:0 0 6px 0; font-size:13pt; color:#1e40af; display:flex; align-items:center; gap:6px;">
-              <i class="fa-solid fa-sitemap"></i> Management &mdash; Rancher, K3s, minikube
+            <h3 style="margin:0 0 8px 0; font-size:13pt; color:#1e40af; display:flex; align-items:center; gap:6px;">
+              <i class="fa-solid fa-sitemap"></i> Management
             </h3>
             <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px;">
-              <div class="card" style="padding:10px 14px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <i class="fa-solid fa-cow" style="font-size:18pt; color:#0075a8;"></i>
-                  <strong style="font-size:13pt;">Rancher</strong>
-                  <span style="font-size:8pt; background:#e0f2fe; color:#075985; padding:2px 6px; border-radius:8px;">CNCF Sandbox</span>
-                </div>
-                <p style="font-size:9.5pt; color:#475569; margin:0;">
-                  UI multi-cluster K8s. Orquesta clusters en cualquier distro (EKS, GKE, on-prem).
+              <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:14px 12px;">
+                <img src="assets/rancher.svg" style="height:70px; margin-bottom:8px;" alt="Rancher">
+                <strong style="font-size:14pt; color:#0075a8;">Rancher</strong>
+                <span style="font-size:8pt; background:#e0f2fe; color:#075985; padding:1px 6px; border-radius:8px; margin-top:2px;">CNCF Sandbox</span>
+                <p style="font-size:9.5pt; color:#475569; margin-top:6px;">
+                  UI multi-cluster. Orquesta EKS, GKE, on-prem.
                 </p>
               </div>
-              <div class="card" style="padding:10px 14px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <i class="fa-solid fa-feather" style="font-size:18pt; color:#ffc61c;"></i>
-                  <strong style="font-size:13pt;">K3s</strong>
-                  <span style="font-size:8pt; background:#e0f2fe; color:#075985; padding:2px 6px; border-radius:8px;">CNCF Sandbox</span>
-                </div>
-                <p style="font-size:9.5pt; color:#475569; margin:0;">
-                  K8s certificado de ~50MB. Ideal para edge, IoT, dev, CI.
+              <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:14px 12px;">
+                <img src="assets/k3s.svg" style="height:70px; margin-bottom:8px;" alt="K3s">
+                <strong style="font-size:14pt; color:#a16207;">K3s</strong>
+                <span style="font-size:8pt; background:#e0f2fe; color:#075985; padding:1px 6px; border-radius:8px; margin-top:2px;">CNCF Sandbox</span>
+                <p style="font-size:9.5pt; color:#475569; margin-top:6px;">
+                  K8s certificado de ~50MB. Edge, IoT, dev, CI.
                 </p>
               </div>
-              <div class="card" style="padding:10px 14px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-                  <i class="fa-solid fa-laptop-code" style="font-size:18pt; color:#326ce5;"></i>
-                  <strong style="font-size:13pt;">minikube</strong>
-                  <span style="font-size:8pt; background:#e0f2fe; color:#075985; padding:2px 6px; border-radius:8px;">CNCF Sandbox</span>
-                </div>
-                <p style="font-size:9.5pt; color:#475569; margin:0;">
-                  K8s local de 1 nodo en tu laptop. El est&aacute;ndar para aprender K8s.
+              <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:14px 12px;">
+                <img src="assets/minikube.svg" style="height:70px; margin-bottom:8px;" alt="minikube">
+                <strong style="font-size:14pt; color:#326ce5;">minikube</strong>
+                <span style="font-size:8pt; background:#e0f2fe; color:#075985; padding:1px 6px; border-radius:8px; margin-top:2px;">CNCF Sandbox</span>
+                <p style="font-size:9.5pt; color:#475569; margin-top:6px;">
+                  K8s local 1 nodo en tu laptop. El est&aacute;ndar para aprender.
                 </p>
               </div>
             </div>
           </div>
           <div>
-            <h3 style="margin:6px 0 6px 0; font-size:13pt; color:#15803d; display:flex; align-items:center; gap:6px;">
-              <i class="fa-solid fa-chart-line"></i> Observability &mdash; Prometheus, Fluent Bit, Loki, OpenTelemetry, Jaeger
+            <h3 style="margin:0 0 8px 0; font-size:13pt; color:#15803d; display:flex; align-items:center; gap:6px;">
+              <i class="fa-solid fa-chart-line"></i> Observability
             </h3>
-            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap:10px;">
-              <div class="card" style="padding:8px 10px;">
-                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                  <i class="fa-solid fa-fire" style="font-size:14pt; color:#e6522c;"></i>
-                  <strong style="font-size:11pt;">Prometheus</strong>
-                </div>
-                <p style="font-size:8.5pt; color:#475569; margin:0;">
-                  M&eacute;tricas. <span style="background:#dcfce7; color:#166534; padding:1px 4px; border-radius:4px;">Graduated</span>
-                </p>
+            <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px;">
+              <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:10px 6px;">
+                <img src="assets/prometheus.svg" style="height:50px; margin-bottom:6px;" alt="Prometheus">
+                <strong style="font-size:11pt; color:#e6522c;">Prometheus</strong>
+                <span style="font-size:7.5pt; background:#dcfce7; color:#166534; padding:1px 5px; border-radius:6px; margin-top:3px;">Graduated</span>
               </div>
-              <div class="card" style="padding:8px 10px;">
-                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                  <i class="fa-solid fa-water" style="font-size:14pt; color:#3b82f6;"></i>
-                  <strong style="font-size:11pt;">Fluent Bit</strong>
-                </div>
-                <p style="font-size:8.5pt; color:#475569; margin:0;">
-                  Logs de pods. <span style="background:#dcfce7; color:#166534; padding:1px 4px; border-radius:4px;">Graduated</span>
-                </p>
+              <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:10px 6px;">
+                <img src="assets/fluentbit.svg" style="height:50px; margin-bottom:6px;" alt="Fluent Bit">
+                <strong style="font-size:11pt; color:#2563eb;">Fluent Bit</strong>
+                <span style="font-size:7.5pt; background:#dcfce7; color:#166534; padding:1px 5px; border-radius:6px; margin-top:3px;">Graduated</span>
               </div>
-              <div class="card" style="padding:8px 10px;">
-                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                  <i class="fa-solid fa-magnifying-glass-chart" style="font-size:14pt; color:#f59e0b;"></i>
-                  <strong style="font-size:11pt;">Loki + Grafana</strong>
-                </div>
-                <p style="font-size:8.5pt; color:#475569; margin:0;">
-                  Logs + dashboards. Loki <span style="background:#fef9c3; color:#854d0e; padding:1px 4px; border-radius:4px;">Incubating</span>
-                </p>
+              <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:10px 6px;">
+                <img src="assets/grafana.svg" style="height:50px; margin-bottom:6px;" alt="Grafana">
+                <strong style="font-size:11pt; color:#f46800;">Grafana</strong>
+                <span style="font-size:7.5pt; background:#dcfce7; color:#166534; padding:1px 5px; border-radius:6px; margin-top:3px;">Graduated</span>
               </div>
-              <div class="card" style="padding:8px 10px;">
-                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                  <i class="fa-solid fa-tower-broadcast" style="font-size:14pt; color:#9333ea;"></i>
-                  <strong style="font-size:11pt;">OpenTelemetry</strong>
-                </div>
-                <p style="font-size:8.5pt; color:#475569; margin:0;">
-                  Est&aacute;ndar traces+metrics+logs. <span style="background:#fef9c3; color:#854d0e; padding:1px 4px; border-radius:4px;">Incubating</span>
-                </p>
+              <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:10px 6px;">
+                <img src="assets/opentelemetry.svg" style="height:50px; margin-bottom:6px;" alt="OpenTelemetry">
+                <strong style="font-size:11pt; color:#425cc7;">OpenTelemetry</strong>
+                <span style="font-size:7.5pt; background:#fef9c3; color:#854d0e; padding:1px 5px; border-radius:6px; margin-top:3px;">Incubating</span>
               </div>
-              <div class="card" style="padding:8px 10px;">
-                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
-                  <i class="fa-solid fa-route" style="font-size:14pt; color:#66c3a6;"></i>
-                  <strong style="font-size:11pt;">Jaeger</strong>
-                </div>
-                <p style="font-size:8.5pt; color:#475569; margin:0;">
-                  Distributed tracing. <span style="background:#dcfce7; color:#166534; padding:1px 4px; border-radius:4px;">Graduated</span>
-                </p>
+              <div class="card" style="display:flex; flex-direction:column; align-items:center; text-align:center; padding:10px 6px;">
+                <img src="assets/jaeger.svg" style="height:50px; margin-bottom:6px;" alt="Jaeger">
+                <strong style="font-size:11pt; color:#66c3a6;">Jaeger</strong>
+                <span style="font-size:7.5pt; background:#dcfce7; color:#166534; padding:1px 5px; border-radius:6px; margin-top:3px;">Graduated</span>
               </div>
             </div>
           </div>

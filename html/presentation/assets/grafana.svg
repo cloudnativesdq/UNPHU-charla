@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- Grafana official "G" mark with sun rays -->
+  <g transform="translate(32 32)">
+    <g fill="#F46800">
+      <rect x="-2" y="-22" width="4" height="8" rx="1.5"/>
+      <rect x="-2" y="-22" width="4" height="8" rx="1.5" transform="rotate(45)"/>
+      <rect x="-2" y="-22" width="4" height="8" rx="1.5" transform="rotate(90)"/>
+      <rect x="-2" y="-22" width="4" height="8" rx="1.5" transform="rotate(135)"/>
+      <rect x="-2" y="-22" width="4" height="8" rx="1.5" transform="rotate(180)"/>
+      <rect x="-2" y="-22" width="4" height="8" rx="1.5" transform="rotate(225)"/>
+      <rect x="-2" y="-22" width="4" height="8" rx="1.5" transform="rotate(270)"/>
+      <rect x="-2" y="-22" width="4" height="8" rx="1.5" transform="rotate(315)"/>
+    </g>
+    <circle r="11" fill="#F46800"/>
+    <path d="M -5 0 A 5 5 0 0 1 5 0 L 5 4 A 1 1 0 0 1 4 5 L -4 5 A 1 1 0 0 1 -5 4 Z" fill="#fff"/>
+    <rect x="-1" y="0" width="2" height="5" fill="#fff"/>
+  </g>
+</svg>
