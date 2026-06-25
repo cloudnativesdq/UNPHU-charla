@@ -1,7 +1,7 @@
 # Introducción a Contenedores — De Docker a Kubernetes
 
 Charla y taller para la **Universidad Nacional Pedro Henríquez Ureña (UNPHU)**
-en el contexto del evento **Cloud Native Dominicana 2026**, dirigida a estudiantes
+en el contexto del evento **Cloud Native Santo Domingo 2026**, dirigida a estudiantes
 de ingeniería y profesionales IT que se acercan por primera vez al mundo cloud native.
 
 > **Página Oficial del Evento**: [Registrarse en CNCF Community Groups](https://ocgroups.dev/cncf/group/cqecyjw/event/um956yb)
@@ -228,7 +228,7 @@ compatibilidad con despliegues anteriores en GitHub Pages. Para activar:
 
 ## Créditos
 
-Charla preparada para **UNPHU 2026** por la comunidad **Cloud Native Dominicana**.
+Charla preparada para **UNPHU 2026** por la comunidad **Cloud Native Santo Domingo**.
 Speaker: Lester Diaz Perez, Kubestronaut.
 
 Ilustraciones SVG: originales del proyecto.
