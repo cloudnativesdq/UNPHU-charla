@@ -1,4 +1,4 @@
-# Introducción a Contenedores — De Docker a Kubernetes
+# Introducción a Cloud Native — De Docker a Kubernetes
 
 Charla y taller para la **Universidad Nacional Pedro Henríquez Ureña (UNPHU)**
 en el contexto del evento **Cloud Native Santo Domingo 2026**, dirigida a estudiantes
