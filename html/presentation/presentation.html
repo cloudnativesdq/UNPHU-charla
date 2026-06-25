@@ -893,62 +893,44 @@ INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-
 
       <section id="k8s-architecture-graph">
         <h2>Arquitectura de Kubernetes</h2>
-        <div class="content" style="margin-top:20px;">
-          <div class="mermaid">
-            graph TD
-              apiserver["kube-apiserver <br> (API REST / Punto Central)"]
-              etcd["etcd <br> (Base de Datos / Estado)"]
-              scheduler["kube-scheduler <br> (Planificación de Nodos)"]
-              controller["controller-manager <br> (Bucle de Control)"]
+        <div class="content" style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 35px; align-items: center; margin-top: 10px;">
+          
+          <!-- Left Column: Explanation of the animation flow -->
+          <div style="display: flex; flex-direction: column; gap: 15px;">
+            <p style="font-size: 13pt; color: var(--muted-color); margin: 0 0 5px 0; line-height: 1.5;">
+              Flujo interactivo de comunicación entre los componentes del Control Plane y los Worker Nodes:
+            </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">1. Solicitud (kubectl)</span>
+                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">El administrador envía un manifiesto YAML al API Server.</span>
+              </div>
 
-              kubelet["kubelet <br> (Agente del Nodo)"]
-              runtime["Container Runtime <br> (Motor containerd)"]
-              kubeproxy["kube-proxy <br> (Reglas de Red)"]
+              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">2. Almacenamiento (etcd)</span>
+                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">El API Server valida la orden y persiste el estado en la base de datos etcd.</span>
+              </div>
 
-              user["Administrador <br> (kubectl apply)"]
+              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">3. Asignación (Scheduler)</span>
+                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">El Scheduler identifica nodos viables y asigna el Pod a un Worker Node.</span>
+              </div>
 
-              subgraph CP [CONTROL PLANE - CEREBRO DEL CLUSTER]
-                apiserver
-                etcd
-                scheduler
-                controller
-              end
-
-              subgraph NODE [WORKER NODE - NODO EJECUTOR]
-                kubelet
-                runtime
-                kubeproxy
-              end
-
-              %% Connections
-              user -->|1. kubectl apply| apiserver
-              apiserver <-->|2. Persiste Config| etcd
-              apiserver <-->|3. Elige Nodo| scheduler
-              apiserver <-->|4. Vigila Estado| controller
-              apiserver <-->|5. Ordena Crear Pods| kubelet
-              kubelet -->|6. Levanta Container| runtime
-              apiserver <-->|7. Configura Red| kubeproxy
-
-              %% Style classes
-              classDef cpNode fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;
-              classDef workerNode fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#064e3b;
-              classDef userNode fill:#f8fafc,stroke:#475569,stroke-width:2px,color:#0f172a;
-              
-              class apiserver,etcd,scheduler,controller cpNode;
-              class kubelet,runtime,kubeproxy workerNode;
-              class user userNode;
-
-              %% Traffic Styling (colors representing specific traffic types)
-              linkStyle 0 stroke:#475569,stroke-width:3px;
-              linkStyle 1 stroke:#2563eb,stroke-width:2.5px;
-              linkStyle 2 stroke:#2563eb,stroke-width:2.5px;
-              linkStyle 3 stroke:#2563eb,stroke-width:2.5px;
-              linkStyle 4 stroke:#059669,stroke-width:3px,stroke-dasharray: 5 5;
-              linkStyle 5 stroke:#059669,stroke-width:2.5px;
-              linkStyle 6 stroke:#06b6d4,stroke-width:2.5px,stroke-dasharray: 3 3;
+              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--accent-green); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">4. Ejecución (kubelet)</span>
+                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">El kubelet del nodo recibe la asignación y ordena levantar los contenedores.</span>
+              </div>
+            </div>
           </div>
+          
+          <!-- Right Column: Animated GIF from DevOpsCube with mix-blend-mode for perfect transparency -->
+          <div style="display: flex; justify-content: center; align-items: center; background: #ffffff; padding: 10px; border-radius: 12px; border: 1px solid var(--card-border); box-shadow: var(--card-shadow); height: 490px; box-sizing: border-box; overflow: hidden;">
+            <img src="assets/k8s-architecture.gif" alt="Kubernetes Architecture Flow" style="max-height: 100%; max-width: 100%; height: auto; width: auto; object-fit: contain; border: none; box-shadow: none; margin: 0; display: block; mix-blend-mode: multiply;">
+          </div>
+          
         </div>
-        <aside class="notes">Esta es la arquitectura global de Kubernetes. El Administrador usa kubectl para enviar órdenes al kube-apiserver, que coordina con etcd para persistir el estado, el scheduler para asignar nodos, y el controller-manager para la reconciliación. En el nodo worker, el kubelet ejecuta las órdenes en el Container Runtime, y kube-proxy genera las reglas de red.</aside>
+        <aside class="notes">Esta animación de DevOpsCube resume visualmente el ciclo. Al ejecutar kubectl apply, el API Server recibe la petición, etcd guarda la verdad absoluta del cluster, el Scheduler decide en qué nodo cabe el Pod según recursos disponibles, y el kubelet en dicho nodo es quien levanta los contenedores en containerd.</aside>
       </section>
 
       <section id="divider-objects" class="section-divider" data-state="is-section-divider">
