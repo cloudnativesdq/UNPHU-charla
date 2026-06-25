@@ -823,22 +823,30 @@ INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-
             <div style="display: flex; flex-direction: column; gap: 10px;">
               
               <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
-                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">API Server</span>
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">
+                  <i class="fa-solid fa-door-open" style="color:var(--primary-color); margin-right:4px;"></i> API Server
+                </span>
                 <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Puerta de entrada del cluster. Recibe comandos desde <code>kubectl</code>.</span>
               </div>
 
               <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
-                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">etcd</span>
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">
+                  <i class="fa-solid fa-database" style="color:var(--primary-color); margin-right:4px;"></i> etcd
+                </span>
                 <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Base de datos clave-valor. Almacena el estado y configuración de todo el cluster.</span>
               </div>
 
               <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
-                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">Scheduler</span>
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">
+                  <i class="fa-solid fa-route" style="color:var(--primary-color); margin-right:4px;"></i> Scheduler
+                </span>
                 <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Asigna nodos disponibles para ejecutar los pods recién creados.</span>
               </div>
 
               <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
-                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">Controllers</span>
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">
+                  <i class="fa-solid fa-rotate" style="color:var(--primary-color); margin-right:4px;"></i> Controllers
+                </span>
                 <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Reguladores que comparan el estado deseado contra el real y corrigen diferencias.</span>
               </div>
 
@@ -851,17 +859,23 @@ INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-
             <div style="display: flex; flex-direction: column; gap: 10px;">
 
               <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--accent-green); background: #ffffff;">
-                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">kubelet</span>
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">
+                  <i class="fa-solid fa-clipboard-check" style="color:var(--accent-green); margin-right:4px;"></i> kubelet
+                </span>
                 <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Agente en cada nodo que recibe órdenes del Control Plane y gestiona los pods locales.</span>
               </div>
 
               <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--accent-green); background: #ffffff;">
-                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">kube-proxy</span>
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">
+                  <i class="fa-solid fa-network-wired" style="color:var(--accent-green); margin-right:4px;"></i> kube-proxy
+                </span>
                 <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Administrador de red en el nodo. Mantiene reglas de red y balanceo de carga interno.</span>
               </div>
 
               <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--accent-green); background: #ffffff;">
-                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">container runtime</span>
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">
+                  <i class="fa-solid fa-cube" style="color:var(--accent-green); margin-right:4px;"></i> container runtime
+                </span>
                 <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Motor que ejecuta contenedores dentro de los pods (como <code>containerd</code> o <code>CRI-O</code>).</span>
               </div>
 
