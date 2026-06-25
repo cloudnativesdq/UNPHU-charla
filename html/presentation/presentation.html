@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/github.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="styles.css?v=19&t=20260621">
+  <link rel="stylesheet" href="styles.css?v=20&t=20260625">
   <style>
     /* CRITICAL: Override reveal.js white text on ALL slide elements */
     /* .reveal-viewport contains .reveal.ready (reveal.js adds 'ready' class) */
@@ -107,28 +107,30 @@
 
       <section id="why-care" class="demo-slide">
         <h2><img src="assets/kubernetes-logo.png" alt="Kubernetes" style="height:38px; vertical-align:middle; margin-right:12px; border:none; box-shadow:none; background:none;"> Por qué te debe importar</h2>
-        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; align-items:center;">
-          <div class="illust-callout">
-            <img src="assets/k8s-career.jpg" alt="Kubernetes Cluster" style="max-height:460px; mix-blend-mode:multiply; filter:brightness(1.02) contrast(1.02);">
+        <div class="content" style="display:flex; flex-direction:column; justify-content:space-between; max-height:597px; overflow:hidden;">
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; align-items:center; flex:1 1 auto; min-height:0;">
+            <div class="illust-callout">
+              <img src="assets/k8s-career.jpg" alt="Kubernetes Cluster" style="max-height:380px; mix-blend-mode:multiply; filter:brightness(1.02) contrast(1.02);">
+            </div>
+            <div>
+              <div class="stack-item">
+                <p><i class="fa-solid fa-briefcase" style="color:#38a169;"></i> <strong>Alta demanda laboral</strong> &mdash; K8s es la skill #1 en Cloud Native. Empresas locales e internacionales buscan talento con estos conocimientos.</p>
+              </div>
+              <div class="stack-item">
+                <p><i class="fa-solid fa-laptop-code" style="color:#3182ce;"></i> <strong>Trabajo remoto</strong> &mdash; Cloud Native abre puertas a oportunidades globales sin salir de RD.</p>
+              </div>
+              <div class="stack-item">
+                <p><i class="fa-solid fa-certificate" style="color:#805ad5;"></i> <strong>Certificaciones accesibles</strong> &mdash; KCNA, CKA, CKAD. La CNCF ofrece becas y descuentos para estudiantes.</p>
+              </div>
+              <div class="stack-item">
+                <p><i class="fa-solid fa-graduation-cap" style="color:#c9a227;"></i> <strong>Carrera en crecimiento</strong> &mdash; De estudiante a DevOps/SRE/Platform Engineer es un camino real y documentado.</p>
+              </div>
+            </div>
           </div>
-          <div>
-            <div class="stack-item">
-              <p><i class="fa-solid fa-briefcase" style="color:#38a169;"></i> <strong>Alta demanda laboral</strong> &mdash; K8s es la skill #1 en Cloud Native. Empresas locales e internacionales buscan talento con estos conocimientos.</p>
-            </div>
-            <div class="stack-item">
-              <p><i class="fa-solid fa-laptop-code" style="color:#3182ce;"></i> <strong>Trabajo remoto</strong> &mdash; Cloud Native abre puertas a oportunidades globales sin salir de RD.</p>
-            </div>
-            <div class="stack-item">
-              <p><i class="fa-solid fa-certificate" style="color:#805ad5;"></i> <strong>Certificaciones accesibles</strong> &mdash; KCNA, CKA, CKAD. La CNCF ofrece becas y descuentos para estudiantes.</p>
-            </div>
-            <div class="stack-item">
-              <p><i class="fa-solid fa-graduation-cap" style="color:#c9a227;"></i> <strong>Carrera en crecimiento</strong> &mdash; De estudiante a DevOps/SRE/Platform Engineer es un camino real y documentado.</p>
-            </div>
-          </div>
+          <p style="margin-top:12pt; text-align:center; font-size:14pt; color:var(--accent-cyan);">
+            <i class="fa-solid fa-lightbulb"></i> Al final de esta charla entenderás cómo funciona el stack que usan empresas reales
+          </p>
         </div>
-        <p style="margin-top:20pt; text-align:center; font-size:16pt; color:var(--accent-cyan);">
-          <i class="fa-solid fa-lightbulb"></i> Al final de esta charla entenderás cómo funciona el stack que usan empresas reales
-        </p>
         <aside class="notes">Motivar sin inflar. El valor real es: demanda de mercado, oportunidades remotas, camino de carrera claro. No prometer salarios especificos.</aside>
       </section>
 
