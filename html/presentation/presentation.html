@@ -1286,69 +1286,95 @@ default      redis-master-0     1/1
       <section id="hands-on-lab" class="demo-slide">
         <h2><i class="fa-solid fa-flask"></i> Laboratorios Prácticos</h2>
         <div class="content">
-          <p style="text-align:center; font-size:14pt; margin-bottom:15px;" class="text-muted">
-            <i class="fa-solid fa-laptop-code"></i> Accede a los laboratorios interactivos desde tu navegador
-          </p>
-
-          <div style="display:grid; grid-template-columns: 1.5fr 1fr; gap:30px; align-items:center; margin-top:10px;">
-            <div style="display:grid; gap:12px;">
-              <!-- Lab 1 -->
-              <div class="card" style="border-left:3px solid var(--primary-color); padding:12px 14px;">
-                <div style="display:grid; grid-template-columns: 40px 1fr; gap:12px; align-items:center;">
-                  <div style="background:var(--primary-color); color:white; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18pt; font-weight:700;">1</div>
-                  <div>
-                    <h3 style="margin:0 0 4px 0; font-size:15pt;"><i class="fa-brands fa-docker"></i> Fundamentos de Docker</h3>
-                    <p style="margin:0 0 6px 0; font-size:11pt;" class="text-muted">Multi-stage builds y optimización de imágenes</p>
-                    <div style="background:#f0f9ff; padding:6px 10px; border-radius:4px; font-family:monospace; font-size:10.5pt; color:#0369a1;">
-                      <i class="fa-solid fa-link" style="margin-right:4px; font-size:9pt;"></i>killercoda.com/en-medina/scenario/01-container-multistage
-                    </div>
+          <div class="labs-container">
+            <!-- Left Column: The Labs Stepper -->
+            <div class="labs-stepper">
+              
+              <!-- Step 1: Docker -->
+              <div class="step-card step-card-1">
+                <div class="step-badge step-badge-1">1</div>
+                <div class="card">
+                  <h3 style="margin:0 0 4px 0; font-size:13.5pt; font-weight:700; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-brands fa-docker" style="color:var(--primary-color); font-size:15pt;"></i> Docker
+                  </h3>
+                  <p style="margin:0 0 8px 0; font-size:10.5pt; color:var(--muted-color); line-height:1.4;">Multi-stage builds y optimización de imágenes.</p>
+                  <div class="step-link-box">
+                    <i class="fa-solid fa-link" style="font-size:8pt; opacity:0.7;"></i>
+                    <span>killercoda.com/en-medina/scenario/01-container-multistage</span>
                   </div>
                 </div>
               </div>
 
-              <!-- Lab 2 -->
-              <div class="card" style="border-left:3px solid var(--accent-cyan); padding:12px 14px;">
-                <div style="display:grid; grid-template-columns: 40px 1fr; gap:12px; align-items:center;">
-                  <div style="background:var(--accent-cyan); color:white; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18pt; font-weight:700;">2</div>
-                  <div>
-                    <h3 style="margin:0 0 4px 0; font-size:15pt;"><i class="fa-solid fa-layer-group"></i> Docker Compose</h3>
-                    <p style="margin:0 0 6px 0; font-size:11pt;" class="text-muted">Aplicaciones multi-contenedor con Compose</p>
-                    <div style="background:#ecfdf5; padding:6px 10px; border-radius:4px; font-family:monospace; font-size:10.5pt; color:#047857;">
-                      <i class="fa-solid fa-link" style="margin-right:4px; font-size:9pt;"></i>killercoda.com/en-medina/scenario/02-docker-compose
-                    </div>
+              <!-- Step 2: Compose -->
+              <div class="step-card step-card-2">
+                <div class="step-badge step-badge-2">2</div>
+                <div class="card">
+                  <h3 style="margin:0 0 4px 0; font-size:13.5pt; font-weight:700; display:flex; align-items:center; gap:8px;">
+                    <i class="fa-solid fa-layer-group" style="color:var(--accent-cyan); font-size:14pt;"></i> Compose
+                  </h3>
+                  <p style="margin:0 0 8px 0; font-size:10.5pt; color:var(--muted-color); line-height:1.4;">Aplicaciones de múltiples contenedores.</p>
+                  <div class="step-link-box">
+                    <i class="fa-solid fa-link" style="font-size:8pt; opacity:0.7;"></i>
+                    <span>killercoda.com/en-medina/scenario/02-docker-compose</span>
                   </div>
                 </div>
               </div>
 
-              <!-- Lab 3 -->
-              <div class="card" style="border-left:3px solid var(--accent-green); padding:12px 14px;">
-                <div style="display:grid; grid-template-columns: 40px 1fr; gap:12px; align-items:center;">
-                  <div style="background:var(--accent-green); color:white; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18pt; font-weight:700;">3</div>
-                  <div>
-                    <h3 style="margin:0 0 4px 0; font-size:15pt;"><img src="assets/kubernetes-logo.png" alt="" style="max-height:20px; border:none; box-shadow:none; background:none; vertical-align:middle; margin-right:4px;"> Kubernetes Essentials</h3>
-                    <p style="margin:0 0 6px 0; font-size:11pt;" class="text-muted">Despliega y escala aplicaciones en Kubernetes</p>
-                    <div style="background:#fef3c7; padding:6px 10px; border-radius:4px; font-family:monospace; font-size:10.5pt; color:#92400e;">
-                      <i class="fa-solid fa-link" style="margin-right:4px; font-size:9pt;"></i>killercoda.com/en-medina/scenario/03-kubernetes-essentials
-                    </div>
+              <!-- Step 3: Kubernetes -->
+              <div class="step-card step-card-3">
+                <div class="step-badge step-badge-3">3</div>
+                <div class="card">
+                  <h3 style="margin:0 0 4px 0; font-size:13.5pt; font-weight:700; display:flex; align-items:center; gap:8px;">
+                    <img src="assets/kubernetes-logo.png" alt="" style="max-height:16px; border:none; box-shadow:none; background:none; vertical-align:middle; margin-right:4px;"> Kubernetes
+                  </h3>
+                  <p style="margin:0 0 8px 0; font-size:10.5pt; color:var(--muted-color); line-height:1.4;">Despliega y escala clusters locales.</p>
+                  <div class="step-link-box">
+                    <i class="fa-solid fa-link" style="font-size:8pt; opacity:0.7;"></i>
+                    <span>killercoda.com/en-medina/scenario/03-kubernetes-essentials</span>
                   </div>
                 </div>
               </div>
+
             </div>
 
-            <!-- QR Card -->
-            <div class="card" style="text-align:center; padding:20px 0; display:flex; flex-direction:column; align-items:center; justify-content:center; border-top:4px solid var(--primary-color); justify-self:center; width:176px; box-sizing:border-box;">
-              <h3 style="margin:0 0 10px 0; font-size:14pt; line-height:1.2; padding:0 10px;"><i class="fa-solid fa-qrcode"></i> Escanea los Labs</h3>
-              <div style="background:white; padding:8px; border-radius:8px; display:inline-block; box-shadow:0 4px 12px rgba(0,120,212,0.06); margin-bottom:0; box-sizing:border-box; width:176px;">
-                <img src="assets/qr-labs.png" alt="QR Code Labs" style="width:160px; height:160px; border:none; box-shadow:none; margin:0; display:block;">
+            <!-- Right Column: QR Access & Metadata -->
+            <div class="labs-qr-container">
+              
+              <!-- Direct access description -->
+              <div class="labs-qr-text">
+                <p style="font-size:12pt; font-weight:600; color:var(--unphu-navy); margin-bottom:5px;">
+                  <i class="fa-solid fa-qrcode"></i> Escanea para empezar
+                </p>
+                <p>
+                  Acceso directo a los escenarios interactivos de <strong>KillerCoda</strong> desde tu móvil o tablet.
+                </p>
               </div>
+
+              <!-- QR Code Card - Exactly fits QR image width -->
+              <div class="labs-qr-card">
+                <img src="assets/qr-labs.png" alt="QR Code Labs">
+              </div>
+
+              <!-- Metadata Checkpoints -->
+              <div class="labs-meta-card">
+                <ul class="labs-meta-list">
+                  <li>
+                    <i class="fa-solid fa-clock" style="color:var(--primary-color);"></i>
+                    <span>~15-30 min por escenario</span>
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-circle-check" style="color:var(--accent-green);"></i>
+                    <span>Entorno 100% gratuito</span>
+                  </li>
+                  <li>
+                    <i class="fa-solid fa-globe" style="color:var(--accent-cyan);"></i>
+                    <span>Todo desde el navegador</span>
+                  </li>
+                </ul>
+              </div>
+
             </div>
           </div>
-
-          <p style="margin-top:18px; text-align:center; font-size:12pt;">
-            <i class="fa-solid fa-clock"></i> <strong>~15-30 min c/u</strong> &bull;
-            <i class="fa-solid fa-check-circle" style="color:var(--accent-green);"></i> 100% gratis &bull;
-            <i class="fa-solid fa-globe"></i> Sin instalación
-          </p>
         </div>
         <aside class="notes">Tres laboratorios progresivos: Docker básico, multi-container con Compose, y orquestación con Kubernetes. Los URLs están visibles para que los estudiantes los anoten. Todos funcionan en el navegador con Killercoda.</aside>
       </section>
