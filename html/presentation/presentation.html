@@ -1379,36 +1379,83 @@ default      redis-master-0     1/1
         <aside class="notes">Tres laboratorios progresivos: Docker básico, multi-container con Compose, y orquestación con Kubernetes. Los URLs están visibles para que los estudiantes los anoten. Todos funcionan en el navegador con Killercoda.</aside>
       </section>
 
-      <section id="closing" class="section-divider" data-state="is-section-divider">
-        <!-- UNPHU branding -->
-        <div style="margin-bottom:15px;">
-          <img src="assets/unphu-logo.svg" alt="UNPHU" style="max-height:50px; border:none; box-shadow:none; background:none;">
-        </div>
-
-        <i class="fa-solid fa-graduation-cap" style="font-size:60pt; color:#c9a227; margin-bottom:8px;"></i>
-        <h1 style="font-size:42pt; margin:0;">¡Gracias!</h1>
-        <p style="font-size:18pt; margin:5px 0 15px 0;">¿Preguntas?</p>
-
-        <!-- CTAs -->
-        <div style="display:flex; align-items:center; justify-content:center; gap:30px; margin-top:15px;">
-          <div style="text-align:left; font-size:11pt;">
-            <p style="color:var(--accent-cyan); margin:3px 0;"><i class="fa-solid fa-rocket"></i> <strong>Lab práctico</strong> - ¡Quédate 30 min!</p>
-            <p style="margin:3px 0;"><i class="fa-brands fa-github"></i> <strong>github.com/cloudnativesdq/UNPHU-charla</strong></p>
-            <p style="margin:3px 0;"><i class="fa-solid fa-globe"></i> <strong>cloudnativesdq.github.io/UNPHU-charla</strong></p>
-            <p class="text-muted" style="font-size:10pt; margin-top:8px;">
-              <i class="fa-solid fa-keyboard"></i> S = speaker view &bull;
-              <i class="fa-solid fa-border-all"></i> O = overview &bull;
-              <i class="fa-solid fa-search"></i> Ctrl+Shift+F = buscar
+      <section id="closing" class="closing-slide" data-state="is-section-divider">
+        <div class="closing-container">
+          
+          <!-- Left Column: Branding and appreciation -->
+          <div class="closing-left">
+            <div class="closing-logo-area">
+              <img src="assets/unphu-logo.svg" alt="UNPHU" style="max-height: 48px; border:none; box-shadow:none; background:none; margin:0;">
+              <span style="font-family: var(--heading-font); font-size: 15pt; font-weight: 700; color: var(--unphu-navy); letter-spacing: -0.01em;">UNPHU</span>
+            </div>
+            
+            <h1 class="closing-thanks-title">¡Gracias!</h1>
+            <p class="closing-subtitle"><i class="fa-solid fa-comments" style="color:var(--secondary-color); margin-right:8px;"></i>¿Preguntas? / Q&amp;A</p>
+            
+            <!-- Styled appreciation note matching AGENTS.md requirements -->
+            <div class="closing-appreciation">
+              <p>
+                Queremos expresar nuestro más sincero agradecimiento a la <strong>Universidad Nacional Pedro Henríquez Ureña (UNPHU)</strong> por abrir sus puertas a la comunidad, y por su valiosa labor promoviendo e impulsando las prácticas <strong>Cloud Native</strong> en Santo Domingo.
+              </p>
+            </div>
+          </div>
+          
+          <!-- Right Column: Interactive links and QRs -->
+          <div class="closing-right">
+            
+            <div class="closing-qrs">
+              <!-- QR for Slides (Newly generated assets/qr-slides.png) -->
+              <div class="closing-qr-card">
+                <img src="assets/qr-slides.png" alt="QR Slides">
+                <span class="closing-qr-label">Diapositivas</span>
+              </div>
+              
+              <!-- QR for Repo (assets/qr-repo.svg) -->
+              <div class="closing-qr-card">
+                <img src="assets/qr-repo.svg" alt="QR Repo">
+                <span class="closing-qr-label">Repositorio</span>
+              </div>
+            </div>
+            
+            <!-- Styled links list -->
+            <div class="closing-links-list">
+              <div class="closing-link-item">
+                <i class="fa-solid fa-circle-play" style="color:var(--accent-cyan); font-size: 10pt;"></i>
+                <p>
+                  <strong>Lab Práctico (30 min):</strong> <a href="https://killercoda.com/en-medina" target="_blank">killercoda.com/en-medina</a>
+                </p>
+              </div>
+              <div class="closing-link-item">
+                <i class="fa-brands fa-github" style="color:#24292e; font-size: 10.5pt;"></i>
+                <p>
+                  <strong>Repositorio:</strong> <a href="https://github.com/cloudnativesdq/UNPHU-charla" target="_blank">github.com/.../UNPHU-charla</a>
+                </p>
+              </div>
+              <div class="closing-link-item">
+                <i class="fa-solid fa-globe" style="color:var(--primary-color); font-size: 10pt;"></i>
+                <p>
+                  <strong>Diapositivas:</strong> <a href="https://cloudnativesdq.github.io/UNPHU-charla" target="_blank">cloudnativesdq.github.io/...</a>
+                </p>
+              </div>
+            </div>
+            
+            <!-- Quick Keyboard Shortcuts -->
+            <p class="text-muted" style="font-size: 8.5pt; margin: 8px 0 0 0; text-align: center; line-height: 1.4; width: 100%;">
+              <i class="fa-solid fa-keyboard" style="margin-right: 4px; font-size: 9pt;"></i> 
+              <code>S</code> = notas &bull; 
+              <code>O</code> = vista general &bull; 
+              <code>F</code> = buscar
+            </p>
+            
+          </div>
+          
+          <!-- Shared footer at the bottom spanning both columns -->
+          <div class="closing-footer-bar">
+            <p>
+              <i class="fa-solid fa-building-columns"></i> Universidad Nacional Pedro Henríquez Ureña &bull; Cloud Native Santo Domingo &bull; 2026
             </p>
           </div>
-          <img src="assets/qr-repo.svg" alt="QR repo" style="width:130px; height:130px; border-radius:8px;">
-        </div>
-        
-        <!-- University footer -->
-        <div style="margin-top:30px; padding-top:15px; border-top:1px solid rgba(255,255,255,0.1);">
-          <p style="font-size:12pt; color:var(--muted-color);">
-            <i class="fa-solid fa-building-columns"></i> Universidad Nacional Pedro Henrí Ureña &bull; Cloud Native Santo Domingo &bull; 2026
-          </p>
+          
         </div>
         <aside class="notes">Gracias. El repo tiene toda la presentacion. Anima a clonar y experimentar. Abre el espacio para preguntas - minimo 10 minutos. Invita al lab práctico post-charla.</aside>
       </section>
