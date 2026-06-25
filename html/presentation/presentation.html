@@ -891,6 +891,49 @@ INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-
         <aside class="notes">Los componentes trabajan juntos. El API server recibe tus comandos, el scheduler decide donde van los pods, el kubelet los ejecuta y los controllers vigilan que todo siga como debe.</aside>
       </section>
 
+      <section id="k8s-architecture-graph">
+        <h2>Arquitectura de Kubernetes</h2>
+        <div class="content" style="margin-top:20px;">
+          <div class="mermaid">
+            graph TB
+              subgraph CP [Control Plane - Cerebro]
+                apiserver["kube-apiserver"]
+                etcd["etcd (Estado/DB)"]
+                scheduler["kube-scheduler"]
+                controller["kube-controller-manager"]
+              end
+
+              subgraph Node1 [Worker Node - Ejecutor]
+                kubelet["kubelet"]
+                kubeproxy["kube-proxy"]
+                runtime["Container Runtime"]
+              end
+
+              user["Administrador (kubectl)"]
+
+              %% Connections
+              user -->|Envia comandos| apiserver
+              apiserver <-->|Almacena datos| etcd
+              apiserver <-->|Planifica pods| scheduler
+              apiserver <-->|Vigila el cluster| controller
+              
+              apiserver <-->|Gestiona ciclo de vida| kubelet
+              kubelet -->|Ejecuta contenedores| runtime
+              apiserver <-->|Actualiza red| kubeproxy
+
+              %% Style classes
+              classDef cpNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
+              classDef workerNode fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#047857;
+              classDef extNode fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px,color:#475569;
+              
+              class apiserver,etcd,scheduler,controller cpNode;
+              class kubelet,kubeproxy,runtime workerNode;
+              class user extNode;
+          </div>
+        </div>
+        <aside class="notes">Esta es la arquitectura global de Kubernetes. El Administrador usa kubectl para enviar órdenes al kube-apiserver, que coordina con etcd para persistir el estado, el scheduler para asignar nodos, y el controller-manager para la reconciliación. En el nodo worker, el kubelet ejecuta las órdenes en el Container Runtime, y kube-proxy gestiona las reglas de red.</aside>
+      </section>
+
       <section id="divider-objects" class="section-divider" data-state="is-section-divider">
         <p class="text-muted"><span class="step-number">3</span></p>
         <h1><i class="fa-solid fa-cubes"></i> Objetos de K8s</h1>
