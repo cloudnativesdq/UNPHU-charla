@@ -716,6 +716,58 @@ services:
         <aside class="notes">Spotify migro 300+ servicios a Docker acelerando el onboarding. Netflix lo usa en su CI/CD. Todas las empresas grandes de tecnologia usan containers en produccion.</aside>
       </section>
 
+      <section id="docker-self-hosted" class="demo-slide">
+        <h2><i class="fa-solid fa-server"></i> Docker sin Docker Desktop: self-hosted open source</h2>
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:18px; align-items:stretch;">
+          <div class="card" style="display:flex; flex-direction:column;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+              <i class="fa-solid fa-window-maximize" style="font-size:22pt; color:#13bef9;"></i>
+              <strong style="font-size:15pt;">Portainer CE</strong>
+            </div>
+            <p style="font-size:10pt; color:#475569; flex:1;">
+              <strong>UI web</strong> para Docker, Swarm y Kubernetes. La m&aacute;s usada.
+            </p>
+            <ul style="font-size:10pt; margin-top:6px;">
+              <li>Corre como contenedor</li>
+              <li>Multi-host, stacks, templates</li>
+              <li>Comunidad CE gratuita</li>
+            </ul>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+              <i class="fa-solid fa-cloud-arrow-up" style="font-size:22pt; color:#3b82f6;"></i>
+              <strong style="font-size:15pt;">Coolify</strong>
+            </div>
+            <p style="font-size:10pt; color:#475569; flex:1;">
+              <strong>PaaS self-hosted</strong> &mdash; alternativa open source a Heroku/Vercel.
+            </p>
+            <ul style="font-size:10pt; margin-top:6px;">
+              <li>Deploy apps + DBs + SSL auto</li>
+              <li>Traefik integrado</li>
+              <li>Git-based deploys</li>
+            </ul>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+              <i class="fa-solid fa-cubes" style="font-size:22pt; color:#a855f7;"></i>
+              <strong style="font-size:15pt;">Dokploy</strong>
+            </div>
+            <p style="font-size:10pt; color:#475569; flex:1;">
+              <strong>PaaS self-hosted</strong> &mdash; fork comunitario, UI m&aacute;s moderna.
+            </p>
+            <ul style="font-size:10pt; margin-top:6px;">
+              <li>Similar a Coolify</li>
+              <li>Templates pre-hechos</li>
+              <li>Multi-server</li>
+            </ul>
+          </div>
+        </div>
+        <p style="margin-top:12pt; text-align:center; font-size:13pt; color:var(--accent-cyan);">
+          <i class="fa-solid fa-lightbulb"></i> Toda tu infra Docker sin pagar licencias &mdash; corre en tu propio VPS
+        </p>
+        <aside class="notes">Portainer CE es la mas adoptada para UI web de Docker (corre como contenedor, soporta multi-host). Coolify y Dokploy son PaaS self-hosted: deploy de apps, DBs, SSL automatico. Son alternativas open source a Heroku/Vercel/Netlify. Para el estudiante: empezar con Portainer para aprender Docker visualmente, luego Coolify para deploys reales sin aprender Kubernetes. Todo esto corre en un VPS de $5/mes en Hetzner/DigitalOcean.</aside>
+      </section>
+
       <!-- ============================================================
            BREAK INTERACTIVO
            ============================================================ -->
@@ -1206,6 +1258,105 @@ INTERVIEW TIP (Q10): "Si un Pod no schedula, como lo debugueas?". Step 1: `kubec
         <aside class="notes">Google corre 2 mil millones de containers a la semana con la misma tecnologia que estamos viendo. Pokemon Go paso de caerse al lanzar a escalar millones de usuarios gracias a K8s. CERN corre fisica de particulas en K8s.</aside>
       </section>
 
+      <section id="k8s-self-hosted" class="demo-slide">
+        <h2><i class="fa-solid fa-gears"></i> Kubernetes self-hosted: management + observability</h2>
+        <div class="content" style="display:flex; flex-direction:column; gap:10px; max-height:580px;">
+          <div>
+            <h3 style="margin:0 0 6px 0; font-size:13pt; color:#1e40af; display:flex; align-items:center; gap:6px;">
+              <i class="fa-solid fa-sitemap"></i> Management &mdash; Rancher, K3s, minikube
+            </h3>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:14px;">
+              <div class="card" style="padding:10px 14px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                  <i class="fa-solid fa-cow" style="font-size:18pt; color:#0075a8;"></i>
+                  <strong style="font-size:13pt;">Rancher</strong>
+                  <span style="font-size:8pt; background:#e0f2fe; color:#075985; padding:2px 6px; border-radius:8px;">CNCF Sandbox</span>
+                </div>
+                <p style="font-size:9.5pt; color:#475569; margin:0;">
+                  UI multi-cluster K8s. Orquesta clusters en cualquier distro (EKS, GKE, on-prem).
+                </p>
+              </div>
+              <div class="card" style="padding:10px 14px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                  <i class="fa-solid fa-feather" style="font-size:18pt; color:#ffc61c;"></i>
+                  <strong style="font-size:13pt;">K3s</strong>
+                  <span style="font-size:8pt; background:#e0f2fe; color:#075985; padding:2px 6px; border-radius:8px;">CNCF Sandbox</span>
+                </div>
+                <p style="font-size:9.5pt; color:#475569; margin:0;">
+                  K8s certificado de ~50MB. Ideal para edge, IoT, dev, CI.
+                </p>
+              </div>
+              <div class="card" style="padding:10px 14px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                  <i class="fa-solid fa-laptop-code" style="font-size:18pt; color:#326ce5;"></i>
+                  <strong style="font-size:13pt;">minikube</strong>
+                  <span style="font-size:8pt; background:#e0f2fe; color:#075985; padding:2px 6px; border-radius:8px;">CNCF Sandbox</span>
+                </div>
+                <p style="font-size:9.5pt; color:#475569; margin:0;">
+                  K8s local de 1 nodo en tu laptop. El est&aacute;ndar para aprender K8s.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 style="margin:6px 0 6px 0; font-size:13pt; color:#15803d; display:flex; align-items:center; gap:6px;">
+              <i class="fa-solid fa-chart-line"></i> Observability &mdash; Prometheus, Fluent Bit, Loki, OpenTelemetry, Jaeger
+            </h3>
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap:10px;">
+              <div class="card" style="padding:8px 10px;">
+                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                  <i class="fa-solid fa-fire" style="font-size:14pt; color:#e6522c;"></i>
+                  <strong style="font-size:11pt;">Prometheus</strong>
+                </div>
+                <p style="font-size:8.5pt; color:#475569; margin:0;">
+                  M&eacute;tricas. <span style="background:#dcfce7; color:#166534; padding:1px 4px; border-radius:4px;">Graduated</span>
+                </p>
+              </div>
+              <div class="card" style="padding:8px 10px;">
+                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                  <i class="fa-solid fa-water" style="font-size:14pt; color:#3b82f6;"></i>
+                  <strong style="font-size:11pt;">Fluent Bit</strong>
+                </div>
+                <p style="font-size:8.5pt; color:#475569; margin:0;">
+                  Logs de pods. <span style="background:#dcfce7; color:#166534; padding:1px 4px; border-radius:4px;">Graduated</span>
+                </p>
+              </div>
+              <div class="card" style="padding:8px 10px;">
+                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                  <i class="fa-solid fa-magnifying-glass-chart" style="font-size:14pt; color:#f59e0b;"></i>
+                  <strong style="font-size:11pt;">Loki + Grafana</strong>
+                </div>
+                <p style="font-size:8.5pt; color:#475569; margin:0;">
+                  Logs + dashboards. Loki <span style="background:#fef9c3; color:#854d0e; padding:1px 4px; border-radius:4px;">Incubating</span>
+                </p>
+              </div>
+              <div class="card" style="padding:8px 10px;">
+                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                  <i class="fa-solid fa-tower-broadcast" style="font-size:14pt; color:#9333ea;"></i>
+                  <strong style="font-size:11pt;">OpenTelemetry</strong>
+                </div>
+                <p style="font-size:8.5pt; color:#475569; margin:0;">
+                  Est&aacute;ndar traces+metrics+logs. <span style="background:#fef9c3; color:#854d0e; padding:1px 4px; border-radius:4px;">Incubating</span>
+                </p>
+              </div>
+              <div class="card" style="padding:8px 10px;">
+                <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+                  <i class="fa-solid fa-route" style="font-size:14pt; color:#66c3a6;"></i>
+                  <strong style="font-size:11pt;">Jaeger</strong>
+                </div>
+                <p style="font-size:8.5pt; color:#475569; margin:0;">
+                  Distributed tracing. <span style="background:#dcfce7; color:#166534; padding:1px 4px; border-radius:4px;">Graduated</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:8pt; text-align:center; font-size:12pt; color:var(--accent-cyan);">
+          <i class="fa-solid fa-lightbulb"></i> Stack completo CNCF sin pagar Datadog / Splunk / New Relic
+        </p>
+        <aside class="notes">Management: Rancher para orquestar multiples clusters (cuando ya tienes 3+ clusters). K3s cuando quieres K8s real en maquinas pequenas (edge, Raspberry Pi, CI runners). minikube para aprender K8s en tu laptop - es EL standard de la comunidad para dev local. Observability: Prometheus + Grafana es el duo clasico para metricas (ya mencionado en HPA). Fluent Bit es un DaemonSet que corre en cada nodo y envia logs de pods a Loki/Elastic. Loki es "Prometheus para logs" - indexa por labels en vez de texto completo, mucho mas barato. OpenTelemetry es el estandar de la industria para instrumentar apps (sustituye a OpenTracing + OpenCensus). Jaeger visualiza traces entre microservicios. Todo esto corre en tu cluster, sin licencias.</aside>
+      </section>
+
       <section id="divider-scaling" class="section-divider" data-state="is-section-divider">
         <p class="text-muted"><span class="step-number">5</span></p>
         <h1><i class="fa-solid fa-arrows-up-down"></i> Escalado</h1>
@@ -1262,21 +1413,21 @@ spec:
       </section>
 
       <section id="ingress">
-        <h2><i class="fa-solid fa-network-wired text-primary"></i> Gateway API: el sucesor de Ingress</h2>
+        <h2><i class="fa-solid fa-network-wired text-primary"></i> Gateway API: routing moderno</h2>
         <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; align-items:start;">
           <div>
-            <p><i class="fa-solid fa-door-open text-primary"></i> Analog&iacute;a: el <strong>portero</strong> del edificio, pero con roles separados</p>
+            <p><i class="fa-solid fa-door-open text-primary"></i> El <strong>portero</strong> del cluster, con roles separados</p>
             <ul>
-              <li><strong>Ingress</strong> (2015) = un YAML monol&iacute;tico, todo en un recurso</li>
-              <li><strong>Gateway API</strong> (2023, GA) = <strong>roles separados</strong> por equipo:
+              <li><strong>3 recursos</strong> en una vista:
                 <ul style="margin-top:4px;">
-                  <li><em>GatewayClass</em>: el tipo de infra (proveedor)</li>
+                  <li><em>GatewayClass</em>: el proveedor (Cilium, Istio, NGINX)</li>
                   <li><em>Gateway</em>: la puerta f&iacute;sica (infra team)</li>
                   <li><em>HTTPRoute</em>: las reglas de routing (app team)</li>
                 </ul>
               </li>
               <li><strong>Multiprotocolo:</strong> HTTP, gRPC, TCP, TLS, UDP</li>
-              <li><strong>Implementaciones:</strong> Istio, NGINX, Cilium, Envoy Gateway, Traefik</li>
+              <li><strong>Implementaciones:</strong> Istio, Cilium, NGINX Gateway Fabric, Envoy Gateway, Traefik</li>
+              <li style="font-size:10pt; color:#64748b;"><em>Nota: Ingress queda legacy &mdash; CNCF recomienda migrar a Gateway API.</em></li>
             </ul>
           </div>
           <div>
@@ -1304,7 +1455,7 @@ spec:
     backendRefs: [{ name: web-svc, port: 80 }]
             </code></pre>
             <p style="margin-top:8pt; font-size:10pt;" class="text-muted">
-              <i class="fa-solid fa-arrow-right"></i> Mismo caso que Ingress, pero infra y apps se mueven en recursos separados
+              <i class="fa-solid fa-arrow-right"></i> App team cambia su routing sin tocar la infra
             </p>
           </div>
         </div>
@@ -1312,9 +1463,9 @@ spec:
           <p class="tip-label">Interview Tip</p>
           <p class="tip-q">"Qu&eacute; es Gateway API y por qu&eacute; reemplaza a Ingress?"</p>
         </div>
-        <aside class="notes">Gateway API es el sucesor moderno de Ingress (GA en K8s 1.24+, 2023). Ingress mezclaba todo en un solo recurso (el operador de infra Y el app team tocaban el mismo YAML). Gateway API separa responsabilidades: GatewayClass (proveedor), Gateway (infra team decide el LB, listeners, TLS), HTTPRoute (app team define su routing sin tocar infra). Esto es CRITICO en organizaciones grandes: un cambio de routing de una app NO requiere aprobacion del infra team. Soporta mas protocolos (gRPC, TCP, TLS passthrough) y tiene mejores features de cross-namespace routing, traffic splitting, header-based routing. Si la pregunta de entrevista es sobre Ingress en 2026, mencionar Gateway API como la direccion correcta muestra que sabes lo actual.
+        <aside class="notes">Gateway API es el estandar moderno de routing en K8s (SIG-Network, GA en K8s 1.24). Ingress queda legacy - CNCF ya recomienda migrar. Los 3 recursos: GatewayClass (proveedor: cilium/istio/nginx), Gateway (infra team: listeners, TLS, ports), HTTPRoute (app team: routing rules sin tocar infra). Esto es CRITICO en organizaciones grandes: un cambio de routing de una app NO requiere aprobacion del infra team. Soporta mas protocolos (gRPC, TCP, TLS passthrough) y tiene mejores features de cross-namespace routing, traffic splitting, header-based routing. Si en entrevista preguntan sobre Ingress en 2026, mencionar Gateway API muestra que sabes lo actual.
 
-INTERVIEW TIP (Q8): "Que es Gateway API y por que reemplaza a Ingress?". Gateway API = SIG-Network successor of Ingress (networking.k8s.io/v1), GA en K8s 1.24. Separa el modelo de roles: GatewayClass (proveedor, ej cilium), Gateway (infra team), HTTPRoute (app team). Beneficios: multi-protocolo (HTTP/gRPC/TCP/TLS), expresividad (header matching, traffic split, mirror), cross-namespace routing sin tocar infra. TRAMPA: decir que Gateway API YA esta GA y es el estandar. NO decir "es experimental" o "es el futuro" - ya es el presente.</aside>
+INTERVIEW TIP (Q8): "Que es Gateway API y por que reemplaza a Ingress?". Gateway API = SIG-Network standard (networking.k8s.io/v1), GA en K8s 1.24. Separa el modelo de roles: GatewayClass (proveedor), Gateway (infra team), HTTPRoute (app team). Beneficios: multi-protocolo (HTTP/gRPC/TCP/TLS), expresividad (header matching, traffic split, mirror), cross-namespace routing sin tocar infra. TRAMPA: decir que Gateway API YA esta GA y es el estandar. NO decir "es experimental" o "es el futuro" - ya es el presente.</aside>
       </section>
 
       <!-- ============================================================
