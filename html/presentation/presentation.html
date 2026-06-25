@@ -795,22 +795,46 @@ services:
 
       <section id="control-plane">
         <h2>Arquitectura de un Cluster</h2>
-        <div class="content">
-          <div style="text-align:center;">
-            <img src="assets/kubernetes-cluster-architecture-official.svg" alt="Kubernetes cluster architecture (kubernetes.io)" style="width:100%; max-height:440px !important; max-width:100% !important; object-fit:contain;">
-            <p style="font-size:9pt; color:var(--muted-color); margin-top:6px; font-style:italic;">
-              Fuente: <a href="https://kubernetes.io/docs/concepts/architecture/" target="_blank">kubernetes.io</a> (CC BY 4.0)
+        <div class="content" style="display: grid; grid-template-columns: 1fr 1.60fr; gap: 30px; align-items: center; margin-top: 10px;">
+          
+          <!-- Left Column: Explanation of the animation flow -->
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <p style="font-size: 11pt; color: var(--muted-color); margin: 0 0 5px 0; line-height: 1.45;">
+              Flujo interactivo de comunicación entre los componentes del Control Plane y los Worker Nodes:
             </p>
+            
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div class="card" style="padding: 8px 12px; border-left: 4px solid var(--primary-color); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 10.5pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">1. Solicitud (kubectl)</span>
+                <span style="font-size: 9pt; color: var(--muted-color); display: block; line-height: 1.35;">El administrador envía un manifiesto YAML al API Server.</span>
+              </div>
+
+              <div class="card" style="padding: 8px 12px; border-left: 4px solid var(--primary-color); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 10.5pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">2. Almacenamiento (etcd)</span>
+                <span style="font-size: 9pt; color: var(--muted-color); display: block; line-height: 1.35;">El API Server valida la orden y persiste el estado en la base de datos etcd.</span>
+              </div>
+
+              <div class="card" style="padding: 8px 12px; border-left: 4px solid var(--primary-color); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 10.5pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">3. Asignación (Scheduler)</span>
+                <span style="font-size: 9pt; color: var(--muted-color); display: block; line-height: 1.35;">El Scheduler identifica nodos viables y asigna el Pod a un Worker Node.</span>
+              </div>
+
+              <div class="card" style="padding: 8px 12px; border-left: 4px solid var(--accent-green); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 10.5pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">4. Ejecución (kubelet)</span>
+                <span style="font-size: 9pt; color: var(--muted-color); display: block; line-height: 1.35;">El kubelet del nodo recibe la asignación y ordena levantar los contenedores.</span>
+              </div>
+            </div>
           </div>
-          <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:10px; margin-top:8px; font-size:10pt;">
-            <p class="text-muted"><i class="fa-solid fa-server text-primary"></i> <strong>API Server</strong> &mdash; <code>kubectl</code> habla aqui</p>
-            <p class="text-muted"><i class="fa-solid fa-database text-primary"></i> <strong>etcd</strong> &mdash; estado del cluster</p>
-            <p class="text-muted"><i class="fa-solid fa-cube text-primary"></i> <strong>kubelet</strong> &mdash; corre pods en su nodo</p>
+          
+          <!-- Right Column: Animated GIF from DevOpsCube with mix-blend-mode for perfect transparency -->
+          <div style="display: flex; justify-content: center; align-items: center; background: #ffffff; padding: 12px; border-radius: 12px; border: 1px solid var(--card-border); box-shadow: var(--card-shadow); height: 535px; box-sizing: border-box; overflow: hidden;">
+            <img src="assets/k8s-architecture.gif" alt="Kubernetes Architecture Flow" style="max-height: 100%; max-width: 100%; height: auto; width: auto; object-fit: contain; border: none; box-shadow: none; margin: 0; display: block; mix-blend-mode: multiply;">
           </div>
+          
         </div>
         <aside class="notes">El control plane es el cerebro. El API server es la puerta. etcd guarda todo (key-value store). El scheduler decide donde van las cosas. Los workers ejecutan los pods reales. Fuente oficial: kubernetes.io/docs/concepts/architecture/.
-
-INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-apiserver, etcd, kube-scheduler, kube-controller-manager, cloud-controller-manager. Worker nodes: kubelet, kube-proxy, container runtime. TRAMPA: confundir kubelet (agente en el nodo) con kubectl (el CLI que tu usas). Tambien: decir que el control plane corre containers (no - solo el API server interactua, los containers corren en workers). Follow-up tricky: "Que pasa si etcd se cae?" (Cluster muerto - no hay estado, no hay scheduling. Hay que restaurar del backup).</aside>
+ 
+INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-apiserver, etcd, kube-scheduler, kube-controller-manager, cloud-controller-manager. Worker nodes: kubelet, kube-proxy, container runtime. TRAMPA: confundir kubelet (agente en el nodo) con kubectl (el CLI que tu usas). Tambien: decir que el control plane corre containers (no - solo el API server interactua, los containers corren en workers). Follow-up tricky: "Que pasa si etcd se cae?" (Cluster muerto - no hay estado, no hay scheduling. Hay que restaurar del backup). Esta animación de DevOpsCube resume visualmente el ciclo. Al ejecutar kubectl apply, el API Server recibe la petición, etcd guarda la verdad absoluta del cluster, el Scheduler decide en qué nodo cabe el Pod según recursos disponibles, y el kubelet en dicho nodo es quien levanta los contenedores en containerd.</aside>
       </section>
 
       <section id="k8s-components-detail">
@@ -889,48 +913,6 @@ INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-
 
         </div>
         <aside class="notes">Los componentes trabajan juntos. El API server recibe tus comandos, el scheduler decide donde van los pods, el kubelet los ejecuta y los controllers vigilan que todo siga como debe.</aside>
-      </section>
-
-      <section id="k8s-architecture-graph">
-        <h2>Arquitectura de Kubernetes</h2>
-        <div class="content" style="display: grid; grid-template-columns: 1fr 1.15fr; gap: 35px; align-items: center; margin-top: 10px;">
-          
-          <!-- Left Column: Explanation of the animation flow -->
-          <div style="display: flex; flex-direction: column; gap: 15px;">
-            <p style="font-size: 13pt; color: var(--muted-color); margin: 0 0 5px 0; line-height: 1.5;">
-              Flujo interactivo de comunicación entre los componentes del Control Plane y los Worker Nodes:
-            </p>
-            
-            <div style="display: flex; flex-direction: column; gap: 10px;">
-              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
-                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">1. Solicitud (kubectl)</span>
-                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">El administrador envía un manifiesto YAML al API Server.</span>
-              </div>
-
-              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
-                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">2. Almacenamiento (etcd)</span>
-                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">El API Server valida la orden y persiste el estado en la base de datos etcd.</span>
-              </div>
-
-              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
-                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">3. Asignación (Scheduler)</span>
-                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">El Scheduler identifica nodos viables y asigna el Pod a un Worker Node.</span>
-              </div>
-
-              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--accent-green); background: #ffffff;">
-                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">4. Ejecución (kubelet)</span>
-                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">El kubelet del nodo recibe la asignación y ordena levantar los contenedores.</span>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Right Column: Animated GIF from DevOpsCube with mix-blend-mode for perfect transparency -->
-          <div style="display: flex; justify-content: center; align-items: center; background: #ffffff; padding: 10px; border-radius: 12px; border: 1px solid var(--card-border); box-shadow: var(--card-shadow); height: 490px; box-sizing: border-box; overflow: hidden;">
-            <img src="assets/k8s-architecture.gif" alt="Kubernetes Architecture Flow" style="max-height: 100%; max-width: 100%; height: auto; width: auto; object-fit: contain; border: none; box-shadow: none; margin: 0; display: block; mix-blend-mode: multiply;">
-          </div>
-          
-        </div>
-        <aside class="notes">Esta animación de DevOpsCube resume visualmente el ciclo. Al ejecutar kubectl apply, el API Server recibe la petición, etcd guarda la verdad absoluta del cluster, el Scheduler decide en qué nodo cabe el Pod según recursos disponibles, y el kubelet en dicho nodo es quien levanta los contenedores en containerd.</aside>
       </section>
 
       <section id="divider-objects" class="section-divider" data-state="is-section-divider">
