@@ -1262,44 +1262,59 @@ spec:
       </section>
 
       <section id="ingress">
-        <h2>Ingress</h2>
+        <h2><i class="fa-solid fa-network-wired text-primary"></i> Gateway API: el sucesor de Ingress</h2>
         <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; align-items:start;">
           <div>
-            <p><i class="fa-solid fa-door-open text-primary"></i> Analog&iacute;a: el <strong>portero</strong> del edificio</p>
+            <p><i class="fa-solid fa-door-open text-primary"></i> Analog&iacute;a: el <strong>portero</strong> del edificio, pero con roles separados</p>
             <ul>
-              <li>Cada Service LoadBalancer = <strong>puerta individual</strong> (cara + no escala)</li>
-              <li>Ingress = <strong>&uacute;nica puerta</strong> con routing inteligente</li>
-              <li><strong>Tipos:</strong> Host, Path, TLS</li>
-              <li><strong>Populares:</strong> NGINX, Traefik, AWS ALB</li>
+              <li><strong>Ingress</strong> (2015) = un YAML monol&iacute;tico, todo en un recurso</li>
+              <li><strong>Gateway API</strong> (2023, GA) = <strong>roles separados</strong> por equipo:
+                <ul style="margin-top:4px;">
+                  <li><em>GatewayClass</em>: el tipo de infra (proveedor)</li>
+                  <li><em>Gateway</em>: la puerta f&iacute;sica (infra team)</li>
+                  <li><em>HTTPRoute</em>: las reglas de routing (app team)</li>
+                </ul>
+              </li>
+              <li><strong>Multiprotocolo:</strong> HTTP, gRPC, TCP, TLS, UDP</li>
+              <li><strong>Implementaciones:</strong> Istio, NGINX, Cilium, Envoy Gateway, Traefik</li>
             </ul>
           </div>
           <div>
-            <pre style="font-size:9pt !important; line-height:1.35 !important;"><code class="language-yaml" data-trim>
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata: { name: mi-app }
+            <pre style="font-size:9pt !important; line-height:1.3 !important;"><code class="language-yaml" data-trim>
+# 1. Infra team crea el Gateway (la puerta fisica)
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata: { name: mi-gateway }
 spec:
-  ingressClassName: nginx
+  gatewayClassName: cilium
+  listeners:
+  - { name: http, port: 80, protocol: HTTP }
+---
+# 2. App team define SU routing
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata: { name: api-route }
+spec:
+  parentRefs: [{ name: mi-gateway }]
+  hostnames: ["miapp.com"]
   rules:
-  - host: miapp.com
-    http:
-      paths:
-      - { path: /api, pathType: Prefix, backend: ... }
-      - { path: /web, pathType: Prefix, backend: ... }
-  tls: [{ hosts: [miapp.com], secretName: tls-secret }]
+  - matches: [{ path: { type: PathPrefix, value: /api }}]
+    backendRefs: [{ name: api-svc, port: 80 }]
+  - matches: [{ path: { type: PathPrefix, value: /web }}]
+    backendRefs: [{ name: web-svc, port: 80 }]
             </code></pre>
             <p style="margin-top:8pt; font-size:10pt;" class="text-muted">
-              <i class="fa-solid fa-arrow-right"></i> Un solo Ingress = routing para muchas apps
+              <i class="fa-solid fa-arrow-right"></i> Mismo caso que Ingress, pero infra y apps se mueven en recursos separados
             </p>
           </div>
         </div>
         <div class="interview-tip">
           <p class="tip-label">Interview Tip</p>
-          <p class="tip-q">"Diferencia entre Ingress y LoadBalancer Service?"</p>
+          <p class="tip-q">"Qu&eacute; es Gateway API y por qu&eacute; reemplaza a Ingress?"</p>
         </div>
-        <aside class="notes">Ingress es el portero del edificio. En vez de tener 100 puertas (LoadBalancers), tienes una puerta que sabe donde enviar a cada persona segun a quien vienen a visitar. El Ingress Controller implementa las reglas de routing.
+        <aside class="notes">Gateway API es el sucesor moderno de Ingress (GA en K8s 1.24+, 2023). Ingress mezclaba todo en un solo recurso (el operador de infra Y el app team tocaban el mismo YAML). Gateway API separa responsabilidades: GatewayClass (proveedor), Gateway (infra team decide el LB, listeners, TLS), HTTPRoute (app team define su routing sin tocar infra). Esto es CRITICO en organizaciones grandes: un cambio de routing de una app NO requiere aprobacion del infra team. Soporta mas protocolos (gRPC, TCP, TLS passthrough) y tiene mejores features de cross-namespace routing, traffic splitting, header-based routing. Si la pregunta de entrevista es sobre Ingress en 2026, mencionar Gateway API como la direccion correcta muestra que sabes lo actual.
 
-INTERVIEW TIP (Q8): "Diferencia entre Ingress y LoadBalancer?". LoadBalancer = L4, da una IP publica por Service (caro, no escala). Ingress = L7, un solo entry point con routing por host/path (nombre, TLS, eficiente). TRAMPA: decir que Ingress es un tipo de Service - NO, es un recurso separado (networking.k8s.io/v1). Follow-up: "Cuando usarias NodePort vs LoadBalancer vs Ingress?" (NodePort = dev/test, LoadBalancer = un solo servicio publico, Ingress = multi-servicio con host/path routing).</aside>
+INTERVIEW TIP (Q8): "Que es Gateway API y por que reemplaza a Ingress?". Gateway API = SIG-Network successor of Ingress (networking.k8s.io/v1), GA en K8s 1.24. Separa el modelo de roles: GatewayClass (proveedor, ej cilium), Gateway (infra team), HTTPRoute (app team). Beneficios: multi-protocolo (HTTP/gRPC/TCP/TLS), expresividad (header matching, traffic split, mirror), cross-namespace routing sin tocar infra. TRAMPA: decir que Gateway API YA esta GA y es el estandar. NO decir "es experimental" o "es el futuro" - ya es el presente.</aside>
       </section>
 
       <!-- ============================================================
