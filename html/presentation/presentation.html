@@ -895,40 +895,57 @@ INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-
         <h2>Arquitectura de Kubernetes</h2>
         <div class="content" style="margin-top:20px;">
           <div class="mermaid">
-            graph TB
-              subgraph CP [Control Plane - Cerebro]
-                apiserver["kube-apiserver"]
-                etcd["etcd (Estado/DB)"]
-                scheduler["kube-scheduler"]
-                controller["kube-controller-manager"]
+            graph TD
+              apiserver["&lt;i class='fa-solid fa-door-open'&gt;&lt;/i&gt; kube-apiserver &lt;br&gt; &lt;small&gt;Punto Central / API REST&lt;/small&gt;"]
+              etcd["&lt;i class='fa-solid fa-database'&gt;&lt;/i&gt; etcd &lt;br&gt; &lt;small&gt;Estado y Configuración&lt;/small&gt;"]
+              scheduler["&lt;i class='fa-solid fa-route'&gt;&lt;/i&gt; kube-scheduler &lt;br&gt; &lt;small&gt;Planificación de Nodos&lt;/small&gt;"]
+              controller["&lt;i class='fa-solid fa-rotate'&gt;&lt;/i&gt; controller-manager &lt;br&gt; &lt;small&gt;Reconciliación y Bucles&lt;/small&gt;"]
+
+              kubelet["&lt;i class='fa-solid fa-clipboard-check'&gt;&lt;/i&gt; kubelet &lt;br&gt; &lt;small&gt;Agente del Nodo&lt;/small&gt;"]
+              runtime["&lt;i class='fa-solid fa-cube'&gt;&lt;/i&gt; Container Runtime &lt;br&gt; &lt;small&gt;Motor de Contenedores&lt;/small&gt;"]
+              kubeproxy["&lt;i class='fa-solid fa-network-wired'&gt;&lt;/i&gt; kube-proxy &lt;br&gt; &lt;small&gt;Reglas de Red y Proxy&lt;/small&gt;"]
+
+              user["&lt;i class='fa-solid fa-terminal'&gt;&lt;/i&gt; Administrador &lt;br&gt; &lt;small&gt;Cliente (kubectl)&lt;/small&gt;"]
+
+              subgraph CP [CONTROL PLANE - CEREBRO DEL CLUSTER]
+                apiserver
+                etcd
+                scheduler
+                controller
               end
 
-              subgraph Node1 [Worker Node - Ejecutor]
-                kubelet["kubelet"]
-                kubeproxy["kube-proxy"]
-                runtime["Container Runtime"]
+              subgraph NODE [WORKER NODE - NODO EJECUTOR]
+                kubelet
+                runtime
+                kubeproxy
               end
-
-              user["Administrador (kubectl)"]
 
               %% Connections
-              user -->|Envia comandos| apiserver
-              apiserver <-->|Almacena datos| etcd
-              apiserver <-->|Planifica pods| scheduler
-              apiserver <-->|Vigila el cluster| controller
-              
-              apiserver <-->|Gestiona ciclo de vida| kubelet
-              kubelet -->|Ejecuta contenedores| runtime
-              apiserver <-->|Actualiza red| kubeproxy
+              user -->| "1. kubectl apply" | apiserver
+              apiserver <-->| "2. Persiste Config" | etcd
+              apiserver <-->| "3. Elige Nodo" | scheduler
+              apiserver <-->| "4. Vigila Estado" | controller
+              apiserver <-->| "5. Ordena Crear Pods" | kubelet
+              kubelet -->| "6. Levanta Container" | runtime
+              apiserver <-->| "7. Configura Red" | kubeproxy
 
               %% Style classes
-              classDef cpNode fill:#e0f2fe,stroke:#0284c7,stroke-width:2px,color:#0369a1;
-              classDef workerNode fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#047857;
-              classDef extNode fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px,color:#475569;
+              classDef cpNode fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;
+              classDef workerNode fill:#ecfdf5,stroke:#059669,stroke-width:2px,color:#064e3b;
+              classDef userNode fill:#f8fafc,stroke:#475569,stroke-width:2px,color:#0f172a;
               
               class apiserver,etcd,scheduler,controller cpNode;
-              class kubelet,kubeproxy,runtime workerNode;
-              class user extNode;
+              class kubelet,runtime,kubeproxy workerNode;
+              class user userNode;
+
+              %% Traffic Styling (colors representing specific traffic types)
+              linkStyle 0 stroke:#475569,stroke-width:3px;
+              linkStyle 1 stroke:#2563eb,stroke-width:2.5px;
+              linkStyle 2 stroke:#2563eb,stroke-width:2.5px;
+              linkStyle 3 stroke:#2563eb,stroke-width:2.5px;
+              linkStyle 4 stroke:#059669,stroke-width:3px,stroke-dasharray: 5 5;
+              linkStyle 5 stroke:#059669,stroke-width:2.5px;
+              linkStyle 6 stroke:#06b6d4,stroke-width:2.5px,stroke-dasharray: 3 3;
           </div>
         </div>
         <aside class="notes">Esta es la arquitectura global de Kubernetes. El Administrador usa kubectl para enviar órdenes al kube-apiserver, que coordina con etcd para persistir el estado, el scheduler para asignar nodos, y el controller-manager para la reconciliación. En el nodo worker, el kubelet ejecuta las órdenes en el Container Runtime, y kube-proxy gestiona las reglas de red.</aside>
