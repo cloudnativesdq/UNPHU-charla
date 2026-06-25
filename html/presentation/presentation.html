@@ -896,16 +896,16 @@ INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-
         <div class="content" style="margin-top:20px;">
           <div class="mermaid">
             graph TD
-              apiserver["&lt;i class='fa-solid fa-door-open'&gt;&lt;/i&gt; kube-apiserver &lt;br&gt; &lt;small&gt;Punto Central / API REST&lt;/small&gt;"]
-              etcd["&lt;i class='fa-solid fa-database'&gt;&lt;/i&gt; etcd &lt;br&gt; &lt;small&gt;Estado y Configuración&lt;/small&gt;"]
-              scheduler["&lt;i class='fa-solid fa-route'&gt;&lt;/i&gt; kube-scheduler &lt;br&gt; &lt;small&gt;Planificación de Nodos&lt;/small&gt;"]
-              controller["&lt;i class='fa-solid fa-rotate'&gt;&lt;/i&gt; controller-manager &lt;br&gt; &lt;small&gt;Reconciliación y Bucles&lt;/small&gt;"]
+              apiserver["kube-apiserver <br> (API REST / Punto Central)"]
+              etcd["etcd <br> (Base de Datos / Estado)"]
+              scheduler["kube-scheduler <br> (Planificación de Nodos)"]
+              controller["controller-manager <br> (Bucle de Control)"]
 
-              kubelet["&lt;i class='fa-solid fa-clipboard-check'&gt;&lt;/i&gt; kubelet &lt;br&gt; &lt;small&gt;Agente del Nodo&lt;/small&gt;"]
-              runtime["&lt;i class='fa-solid fa-cube'&gt;&lt;/i&gt; Container Runtime &lt;br&gt; &lt;small&gt;Motor de Contenedores&lt;/small&gt;"]
-              kubeproxy["&lt;i class='fa-solid fa-network-wired'&gt;&lt;/i&gt; kube-proxy &lt;br&gt; &lt;small&gt;Reglas de Red y Proxy&lt;/small&gt;"]
+              kubelet["kubelet <br> (Agente del Nodo)"]
+              runtime["Container Runtime <br> (Motor containerd)"]
+              kubeproxy["kube-proxy <br> (Reglas de Red)"]
 
-              user["&lt;i class='fa-solid fa-terminal'&gt;&lt;/i&gt; Administrador &lt;br&gt; &lt;small&gt;Cliente (kubectl)&lt;/small&gt;"]
+              user["Administrador <br> (kubectl apply)"]
 
               subgraph CP [CONTROL PLANE - CEREBRO DEL CLUSTER]
                 apiserver
@@ -921,13 +921,13 @@ INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-
               end
 
               %% Connections
-              user -->| "1. kubectl apply" | apiserver
-              apiserver <-->| "2. Persiste Config" | etcd
-              apiserver <-->| "3. Elige Nodo" | scheduler
-              apiserver <-->| "4. Vigila Estado" | controller
-              apiserver <-->| "5. Ordena Crear Pods" | kubelet
-              kubelet -->| "6. Levanta Container" | runtime
-              apiserver <-->| "7. Configura Red" | kubeproxy
+              user -->|1. kubectl apply| apiserver
+              apiserver <-->|2. Persiste Config| etcd
+              apiserver <-->|3. Elige Nodo| scheduler
+              apiserver <-->|4. Vigila Estado| controller
+              apiserver <-->|5. Ordena Crear Pods| kubelet
+              kubelet -->|6. Levanta Container| runtime
+              apiserver <-->|7. Configura Red| kubeproxy
 
               %% Style classes
               classDef cpNode fill:#eff6ff,stroke:#2563eb,stroke-width:2px,color:#1e3a8a;
@@ -948,7 +948,7 @@ INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-
               linkStyle 6 stroke:#06b6d4,stroke-width:2.5px,stroke-dasharray: 3 3;
           </div>
         </div>
-        <aside class="notes">Esta es la arquitectura global de Kubernetes. El Administrador usa kubectl para enviar órdenes al kube-apiserver, que coordina con etcd para persistir el estado, el scheduler para asignar nodos, y el controller-manager para la reconciliación. En el nodo worker, el kubelet ejecuta las órdenes en el Container Runtime, y kube-proxy gestiona las reglas de red.</aside>
+        <aside class="notes">Esta es la arquitectura global de Kubernetes. El Administrador usa kubectl para enviar órdenes al kube-apiserver, que coordina con etcd para persistir el estado, el scheduler para asignar nodos, y el controller-manager para la reconciliación. En el nodo worker, el kubelet ejecuta las órdenes en el Container Runtime, y kube-proxy genera las reglas de red.</aside>
       </section>
 
       <section id="divider-objects" class="section-divider" data-state="is-section-divider">
