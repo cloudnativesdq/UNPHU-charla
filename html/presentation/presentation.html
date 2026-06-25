@@ -815,27 +815,64 @@ INTERVIEW TIP: "Explica la arquitectura de un cluster K8s". Control plane: kube-
 
       <section id="k8s-components-detail">
         <h2>Componentes clave</h2>
-        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:25px;">
+        <div class="content" style="display:grid; grid-template-columns: 1fr 1fr; gap:30px; margin-top:15px;">
+          
+          <!-- Left Side: Control Plane -->
           <div>
-            <h3 style="color:var(--accent-cyan); font-size:18pt;"><i class="fa-solid fa-brain"></i> Control Plane</h3>
-            <ul>
-              <li><strong>API Server</strong> &mdash; puerta de entrada, <code>kubectl</code> habla con el</li>
-              <li><strong>etcd</strong> &mdash; base de datos key-value. Guarda TODO</li>
-              <li><strong>Scheduler</strong> &mdash; decide en que nodo va cada pod</li>
-              <li><strong>Controllers</strong> &mdash; bucle: deseado vs real. Corrige diferencias</li>
-            </ul>
+            <h3 style="color:var(--primary-color); font-size:18pt; margin-bottom:12px; border-bottom: 1px solid rgba(0, 120, 212, 0.12); padding-bottom: 6px;"><i class="fa-solid fa-brain"></i> Control Plane</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              
+              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">API Server</span>
+                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Puerta de entrada del cluster. Recibe comandos desde <code>kubectl</code>.</span>
+              </div>
+
+              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">etcd</span>
+                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Base de datos clave-valor. Almacena el estado y configuración de todo el cluster.</span>
+              </div>
+
+              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">Scheduler</span>
+                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Asigna nodos disponibles para ejecutar los pods recién creados.</span>
+              </div>
+
+              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--primary-color); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">Controllers</span>
+                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Reguladores que comparan el estado deseado contra el real y corrigen diferencias.</span>
+              </div>
+
+            </div>
           </div>
+
+          <!-- Right Side: Worker Nodes -->
           <div>
-            <h3 style="color:var(--accent-green); font-size:18pt;"><i class="fa-solid fa-dumbbell"></i> Worker Nodes</h3>
-            <ul>
-              <li><strong>kubelet</strong> &mdash; el capataz. Recibe ordenes, gestiona pods</li>
-              <li><strong>kube-proxy</strong> &mdash; reglas de red + load balancing</li>
-              <li><strong>container runtime</strong> &mdash; ejecuta los contenedores (containerd, CRI-O)</li>
-            </ul>
-            <p class="text-muted" style="margin-top:15px; font-size:12pt;">
-              <i class="fa-solid fa-lightbulb"></i> Si un nodo se cae, K8s reubica los pods en otro automaticamente
-            </p>
+            <h3 style="color:var(--accent-green); font-size:18pt; margin-bottom:12px; border-bottom: 1px solid rgba(5, 150, 105, 0.12); padding-bottom: 6px;"><i class="fa-solid fa-server"></i> Worker Nodes</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+
+              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--accent-green); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">kubelet</span>
+                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Agente en cada nodo que recibe órdenes del Control Plane y gestiona los pods locales.</span>
+              </div>
+
+              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--accent-green); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">kube-proxy</span>
+                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Administrador de red en el nodo. Mantiene reglas de red y balanceo de carga interno.</span>
+              </div>
+
+              <div class="card" style="padding: 10px 14px; border-left: 4px solid var(--accent-green); background: #ffffff;">
+                <span style="font-weight: 700; font-size: 11pt; color: var(--unphu-navy); display: block; margin-bottom: 2px;">container runtime</span>
+                <span style="font-size: 9.5pt; color: var(--muted-color); display: block; line-height: 1.4;">Motor que ejecuta contenedores dentro de los pods (como <code>containerd</code> o <code>CRI-O</code>).</span>
+              </div>
+
+              <!-- Quick node description, clean and styled -->
+              <div style="padding: 10px 14px; background: rgba(5,150,105,0.06); border-radius: var(--box-radius); border: 1px dashed rgba(5,150,105,0.2); font-size: 9.5pt; color: var(--accent-green); line-height: 1.4; box-sizing: border-box;">
+                <i class="fa-solid fa-lightbulb"></i> Si un nodo se cae, Kubernetes reubica los pods en otro nodo automáticamente.
+              </div>
+
+            </div>
           </div>
+
         </div>
         <aside class="notes">Los componentes trabajan juntos. El API server recibe tus comandos, el scheduler decide donde van los pods, el kubelet los ejecuta y los controllers vigilan que todo siga como debe.</aside>
       </section>
