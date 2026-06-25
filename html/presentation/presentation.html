@@ -766,27 +766,93 @@ services:
 
       <section id="k8s-history">
         <h2>De Google a todos</h2>
-        <div class="content">
-          <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:15px;">
-            <div class="card" style="text-align:center;">
-              <p class="text-primary font-bold">2003</p>
-              <p><strong>Borg</strong></p>
-              <p class="text-muted">Google gestiona billones de contenedores/semana</p>
-            </div>
-            <div class="card" style="text-align:center;">
-              <p class="text-primary font-bold">2014</p>
-              <p><strong>Open Source</strong></p>
-              <p class="text-muted">Google libera Kubernetes basado en 10 anos de experiencia con Borg</p>
-            </div>
-            <div class="card" style="text-align:center;">
-              <p class="text-primary font-bold">2015</p>
-              <p><strong>v1.0</strong></p>
-              <p class="text-muted">Primera release estable. Donado a la CNCF</p>
-            </div>
-            <div class="card" style="text-align:center; border-color: rgba(63,185,80,0.3);">
-              <p class="font-bold" style="color:var(--accent-green);">Hoy</p>
-              <p><strong>Estandar</strong></p>
-              <p class="text-muted">EKS, AKS, GKE. Miles de empresas. Top 1 en orquestacion</p>
+        <div class="content" style="margin-top: 5px;">
+          <div class="timeline-container" style="position: relative; margin-top: 15px; padding-bottom: 5px;">
+            <!-- Horizontal connecting line with beautiful gradient -->
+            <div style="position: absolute; top: 25px; left: 8%; right: 8%; height: 4px; background: linear-gradient(to right, var(--primary-color), var(--accent-cyan), var(--accent-purple), var(--unphu-gold)); z-index: 1; border-radius: 2px;"></div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1.65fr; gap: 20px; position: relative; z-index: 2;">
+              
+              <!-- Milestone 1: 2003 -->
+              <div style="display: flex; flex-direction: column; align-items: center;">
+                <div class="timeline-node" style="width: 50px; height: 50px; border-radius: 50%; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13pt; box-shadow: 0 0 0 6px #ffffff, 0 4px 10px rgba(0, 120, 212, 0.3); margin-bottom: 12px; cursor: pointer;">
+                  <i class="fa-brands fa-google" style="font-size: 14pt;"></i>
+                </div>
+                <span style="font-size: 13pt; font-weight: 700; color: var(--unphu-navy); margin-bottom: 10px;">2003</span>
+                
+                <div class="card timeline-card" style="padding: 15px; border-top: 4px solid var(--primary-color); border-radius: var(--box-radius); background: #ffffff; text-align: center; height: 260px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; width: 100%;">
+                  <h4 style="font-size: 13pt; color: var(--unphu-navy); margin: 0 0 8px 0; font-weight: 600;">Proyecto Borg</h4>
+                  <p style="font-size: 9.5pt; color: var(--muted-color); line-height: 1.45; margin: 0;">Sistema interno de Google para gestionar miles de millones de contenedores semanalmente.</p>
+                </div>
+              </div>
+
+              <!-- Milestone 2: 2014 -->
+              <div style="display: flex; flex-direction: column; align-items: center;">
+                <div class="timeline-node" style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent-cyan); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13pt; box-shadow: 0 0 0 6px #ffffff, 0 4px 10px rgba(0, 188, 242, 0.3); margin-bottom: 12px; cursor: pointer;">
+                  <i class="fa-solid fa-code-merge" style="font-size: 13pt;"></i>
+                </div>
+                <span style="font-size: 13pt; font-weight: 700; color: var(--unphu-navy); margin-bottom: 10px;">2014</span>
+                
+                <div class="card timeline-card" style="padding: 15px; border-top: 4px solid var(--accent-cyan); border-radius: var(--box-radius); background: #ffffff; text-align: center; height: 260px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; width: 100%;">
+                  <h4 style="font-size: 13pt; color: var(--unphu-navy); margin: 0 0 8px 0; font-weight: 600;">Código Abierto</h4>
+                  <p style="font-size: 9.5pt; color: var(--muted-color); line-height: 1.45; margin: 0;">Google libera Kubernetes, aplicando más de una década de experiencia real con Borg.</p>
+                </div>
+              </div>
+
+              <!-- Milestone 3: 2015 -->
+              <div style="display: flex; flex-direction: column; align-items: center;">
+                <div class="timeline-node" style="width: 50px; height: 50px; border-radius: 50%; background: var(--accent-purple); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13pt; box-shadow: 0 0 0 6px #ffffff, 0 4px 10px rgba(124, 58, 237, 0.3); margin-bottom: 12px; cursor: pointer;">
+                  <i class="fa-solid fa-rocket" style="font-size: 12pt;"></i>
+                </div>
+                <span style="font-size: 13pt; font-weight: 700; color: var(--unphu-navy); margin-bottom: 10px;">2015</span>
+                
+                <div class="card timeline-card" style="padding: 15px; border-top: 4px solid var(--accent-purple); border-radius: var(--box-radius); background: #ffffff; text-align: center; height: 260px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: center; width: 100%;">
+                  <h4 style="font-size: 13pt; color: var(--unphu-navy); margin: 0 0 8px 0; font-weight: 600;">Lanzamiento v1.0</h4>
+                  <p style="font-size: 9.5pt; color: var(--muted-color); line-height: 1.45; margin: 0;">Llega la primera versión estable y se funda la CNCF para garantizar una gobernanza neutral.</p>
+                </div>
+              </div>
+
+              <!-- Milestone 4: 2025 -->
+              <div style="display: flex; flex-direction: column; align-items: center;">
+                <div class="timeline-node timeline-node-active" style="width: 50px; height: 50px; border-radius: 50%; background: var(--unphu-gold); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13pt; margin-bottom: 12px; cursor: pointer;">
+                  <i class="fa-solid fa-chart-line" style="font-size: 12pt;"></i>
+                </div>
+                <span style="font-size: 13pt; font-weight: 700; color: var(--unphu-navy); margin-bottom: 10px;">2025</span>
+                
+                <div class="card timeline-card" style="padding: 12px 14px; border-top: 4px solid var(--unphu-gold); border-radius: var(--box-radius); background: #ffffff; height: 260px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; width: 100%; text-align: left;">
+                  
+                  <div style="margin-bottom: 2px;">
+                    <span style="font-size: 8.5pt; font-weight: 700; color: var(--unphu-gold); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 2px;">CNCF Annual Survey 2025</span>
+                    <h4 style="font-size: 11pt; color: var(--unphu-navy); margin: 0; font-weight: 600;">La Era de la Inteligencia Artificial</h4>
+                  </div>
+
+                  <!-- Metrics -->
+                  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 4px 0;">
+                    <div style="background: rgba(0, 120, 212, 0.04); padding: 4px 3px; border-radius: 6px; text-align: center; border: 1px solid rgba(0, 120, 212, 0.08);">
+                      <span style="font-size: 12pt; font-weight: 700; color: var(--primary-color); display: block; line-height: 1;">82%</span>
+                      <span style="font-size: 6.5pt; color: var(--muted-color); display: block; margin-top: 1px; line-height: 1.1;">K8s en Producción</span>
+                    </div>
+                    <div style="background: rgba(0, 188, 242, 0.04); padding: 4px 3px; border-radius: 6px; text-align: center; border: 1px solid rgba(0, 188, 242, 0.08);">
+                      <span style="font-size: 12pt; font-weight: 700; color: var(--accent-cyan); display: block; line-height: 1;">66%</span>
+                      <span style="font-size: 6.5pt; color: var(--muted-color); display: block; margin-top: 1px; line-height: 1.1;">Workloads de IA</span>
+                    </div>
+                    <div style="background: rgba(201, 162, 39, 0.04); padding: 4px 3px; border-radius: 6px; text-align: center; border: 1px solid rgba(201, 162, 39, 0.08);">
+                      <span style="font-size: 12pt; font-weight: 700; color: var(--unphu-gold); display: block; line-height: 1;">47%</span>
+                      <span style="font-size: 6.5pt; color: var(--muted-color); display: block; margin-top: 1px; line-height: 1.1;">Reto Cultural</span>
+                    </div>
+                  </div>
+
+                  <!-- Footer -->
+                  <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 4px;">
+                    <span style="font-size: 7.5pt; color: var(--muted-color); line-height: 1.2;">K8s consolida su rol como motor de cargas GenAI.</span>
+                    <a href="https://www.cncf.io/reports/annual-survey-2025/" target="_blank" style="font-size: 7.5pt; font-weight: 600; color: var(--primary-color); display: inline-flex; align-items: center; gap: 2px; text-decoration: none;">
+                      CNCF <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 6.5pt;"></i>
+                    </a>
+                  </div>
+
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
