@@ -518,7 +518,7 @@ docker image history ubuntu
       <section id="build-cache-demo" class="demo-slide">
         <h2><i class="fa-solid fa-bolt"></i> Build Cache en acción</h2>
         <div class="content">
-          <pre><code class="language-bash" data-trim data-line-numbers>
+          <pre style="max-height:560px; overflow:hidden; font-size:11pt !important; line-height:1.5 !important;"><code class="language-bash" data-trim>
 $ docker build -t mi-app:v1 .
 
 Step 1/6 : FROM ubuntu
@@ -538,7 +538,7 @@ Step 6/6 : ENTRYPOINT ["flask", "run"]
 Successfully built f1a2b3c4d5e6
 Successfully tagged mi-app:v1
           </code></pre>
-          <p style="margin-top:12pt;" class="text-muted">
+          <p style="margin-top:10pt;" class="text-muted">
             <i class="fa-solid fa-lightbulb"></i> Si solo cambias <code>app.py</code>, solo se reconstruyen los pasos 4, 5 y 6
           </p>
         </div>
